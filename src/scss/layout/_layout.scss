@@ -1,0 +1,19 @@
+@use '../abstracts/variables' as *;
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding: $spacing-lg;
+}
+
+.app-footer {
+  padding: $spacing-md $spacing-lg;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.5);
+}

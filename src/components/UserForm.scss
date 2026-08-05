@@ -1,0 +1,46 @@
+@use '../scss/abstracts/variables' as *;
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  &__intro {
+    margin-bottom: $spacing-md;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm * 0.5;
+    font-size: 0.9rem;
+    color: $color-text;
+  }
+
+  input {
+    padding: $spacing-sm;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: $radius-base;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 1px;
+    }
+  }
+
+  &__submit {
+    margin-top: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: $radius-base;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}

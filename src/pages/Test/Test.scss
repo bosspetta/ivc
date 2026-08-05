@@ -1,0 +1,188 @@
+@use '../../scss/abstracts/variables' as *;
+
+.test {
+  background-color: $color-surface;
+  border-radius: $radius-base;
+  padding: $spacing-lg;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  max-width: 480px;
+  margin: 0 auto;
+
+  &__counter {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: $spacing-sm;
+  }
+
+  &__hint {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-lg;
+
+    strong {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm * 0.5;
+      font-size: 0.9rem;
+      color: $color-text;
+    }
+
+    input {
+      width: 100%;
+      padding: $spacing-sm $spacing-lg $spacing-sm $spacing-sm;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: $radius-base;
+      font-size: 1rem;
+
+      &:focus {
+        outline: 2px solid $color-primary;
+        outline-offset: 1px;
+      }
+
+      &.is-correct {
+        border-color: $color-success;
+        background-color: rgba(22, 163, 74, 0.08);
+      }
+
+      &.is-incorrect {
+        border-color: $color-error;
+        background-color: rgba(220, 38, 38, 0.08);
+      }
+
+      &:disabled {
+        background-color: rgba(0, 0, 0, 0.08);
+        border-color: rgba(0, 0, 0, 0.12);
+        color: rgba(0, 0, 0, 0.5);
+        cursor: not-allowed;
+
+        &.is-correct {
+          background-color: rgba(22, 163, 74, 0.08);
+        }
+      }
+    }
+
+    button {
+      margin-top: $spacing-sm;
+      padding: $spacing-sm $spacing-md;
+      background-color: $color-primary;
+      color: white;
+      border: none;
+      border-radius: $radius-base;
+      font-weight: 600;
+
+      &:hover {
+        background-color: $color-primary-dark;
+      }
+    }
+  }
+
+  &__input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input-icon {
+    position: absolute;
+    right: $spacing-sm;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+
+    &--correct {
+      color: $color-success;
+    }
+
+    &--incorrect {
+      color: $color-error;
+    }
+  }
+
+  &__help-btn {
+    background-color: transparent !important;
+    color: $color-primary !important;
+    border: 1px solid $color-primary !important;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(79, 70, 229, 0.06) !important;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: rgba(0, 0, 0, 0.2) !important;
+      color: rgba(0, 0, 0, 0.4) !important;
+    }
+  }
+
+  &__help-block {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-left: 3px solid $color-primary;
+    border-radius: $radius-base;
+    padding: $spacing-sm $spacing-md;
+  }
+
+  &__help-answer {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__success-block {
+    background-color: rgba(22, 163, 74, 0.06);
+    border-radius: $radius-base;
+    padding: $spacing-sm $spacing-md;
+  }
+
+  &__success {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $color-success;
+  }
+
+  &__verb-info {
+    margin-top: $spacing-sm * 0.5;
+    font-size: 0.85rem;
+    color: $color-text;
+
+    em {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &--finished {
+    text-align: center;
+  }
+
+  &__result {
+    font-size: 1.1rem;
+    margin: $spacing-md 0 $spacing-lg;
+  }
+
+  &__finished-actions {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+
+    button {
+      padding: $spacing-sm $spacing-md;
+      border-radius: $radius-base;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background-color: $color-surface;
+
+      &:hover {
+        border-color: $color-primary;
+        color: $color-primary;
+      }
+    }
+  }
+}

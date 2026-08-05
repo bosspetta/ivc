@@ -1,0 +1,66 @@
+@use '../scss/abstracts/variables' as *;
+@use '../scss/abstracts/mixins' as *;
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  background-color: $color-surface;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-primary;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    a {
+      color: $color-text;
+      text-decoration: none;
+      font-size: 0.95rem;
+
+      &.is-active {
+        color: $color-primary;
+        font-weight: 600;
+      }
+
+      &:hover {
+        color: $color-primary-dark;
+      }
+    }
+  }
+
+  &__lang {
+    display: flex;
+    gap: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: $radius-base;
+    overflow: hidden;
+
+    button {
+      padding: 4px $spacing-sm;
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.5);
+
+      &.is-active {
+        background-color: $color-primary;
+        color: white;
+      }
+
+      &:not(.is-active):hover {
+        color: $color-primary;
+      }
+    }
+  }
+}

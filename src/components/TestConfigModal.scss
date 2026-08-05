@@ -1,0 +1,51 @@
+@use '../scss/abstracts/variables' as *;
+
+.test-config {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm * 0.5;
+    font-size: 0.9rem;
+    color: $color-text;
+  }
+
+  input[type='number'] {
+    padding: $spacing-sm;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: $radius-base;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 1px;
+    }
+  }
+
+  &__checkbox {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: $spacing-sm;
+
+    input {
+      margin-top: 0.2rem;
+    }
+  }
+
+  &__submit {
+    margin-top: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: $radius-base;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "header": {
+    "verbs": "Verb list",
+    "progress": "My progress"
+  },
+  "home": {
+    "title": "Ready to test your irregular verbs?",
+    "subtitle": "Practice the three forms of English irregular verbs and track your progress challenge after challenge.",
+    "cta": "Take the challenge"
+  },
+  "userForm": {
+    "title": "Before you start",
+    "intro": "Tell us who you are so we can keep track of your progress.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "continue": "Continue"
+  },
+  "testConfig": {
+    "title": "Set up your challenge",
+    "verbCountLabel": "Number of verbs ({{min}}-{{max}})",
+    "randomFormsLabel": "Randomly ask for any of the three forms (instead of always the base form)",
+    "start": "Start challenge"
+  },
+  "test": {
+    "hint": "Hint ({{form}}):",
+    "base": "Base form",
+    "pastSimple": "Simple past",
+    "pastParticiple": "Past participle",
+    "check": "Check",
+    "next": "Next",
+    "correct": "Well done! Let's move on to the next one.",
+    "correctLast": "Well done! Let's see your result.",
+    "help": "Help me {{count}}",
+    "helpAnswer": "Correct answer: {{base}} / {{pastSimple}} / {{pastParticiple}}",
+    "seeResult": "See result",
+    "finishedTitle": "Challenge complete!",
+    "result": "You got {{score}} out of {{total}} verbs right ({{percentage}}%)",
+    "seeProgress": "See my progress",
+    "backHome": "Back to home",
+    "noConfig": "No challenge has been set up.",
+    "forms": {
+      "base": "base form",
+      "pastSimple": "simple past",
+      "pastParticiple": "past participle"
+    }
+  },
+  "verbList": {
+    "title": "Full list of irregular verbs",
+    "count": "{{count}} verbs in total",
+    "searchPlaceholder": "Search a verb...",
+    "noResults": "No results",
+    "showingAll": "Showing all",
+    "showingCommon": "Showing most common",
+    "columns": {
+      "base": "Base",
+      "pastSimple": "Simple past",
+      "pastParticiple": "Past participle",
+      "translationAndExample": "Translation and example",
+      "example": "Example"
+    }
+  },
+  "progress": {
+    "title": "My progress",
+    "empty": "You haven't completed any challenge yet. Give the first one a try!",
+    "tooltipVerbs": "{{correct}}/{{total}} verbs ({{percentage}}%)"
+  },
+  "layout": {
+    "footer": "Practice English irregular verbs"
+  },
+  "modal": {
+    "close": "Close"
+  }
+}

@@ -1,0 +1,35 @@
+@use '../../scss/abstracts/variables' as *;
+
+.home {
+  background-color: $color-surface;
+  border-radius: $radius-base;
+  padding: $spacing-lg * 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.65);
+    margin-bottom: $spacing-lg;
+  }
+
+  &__cta {
+    padding: $spacing-sm $spacing-lg;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: $radius-base;
+    font-size: 1rem;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}

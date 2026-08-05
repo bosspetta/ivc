@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+@mixin respond-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}

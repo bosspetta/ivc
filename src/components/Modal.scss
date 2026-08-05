@@ -1,0 +1,50 @@
+@use '../scss/abstracts/variables' as *;
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md;
+  z-index: 100;
+}
+
+.modal {
+  background-color: $color-surface;
+  border-radius: $radius-base;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    h3 {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+
+  &__body {
+    padding: $spacing-lg;
+  }
+}

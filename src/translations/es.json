@@ -1,0 +1,72 @@
+{
+  "header": {
+    "verbs": "Listado de verbos",
+    "progress": "Mi progreso"
+  },
+  "home": {
+    "title": "¿Listo para poner a prueba tus verbos irregulares?",
+    "subtitle": "Practica las tres formas de los verbos irregulares en inglés y sigue tu progreso reto tras reto.",
+    "cta": "Realizar el reto"
+  },
+  "userForm": {
+    "title": "Antes de empezar",
+    "intro": "Cuéntanos quién eres para poder llevar un registro de tu progreso.",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "continue": "Continuar"
+  },
+  "testConfig": {
+    "title": "Configura tu reto",
+    "verbCountLabel": "Número de verbos ({{min}}-{{max}})",
+    "randomFormsLabel": "Preguntar aleatoriamente por cualquiera de las tres formas (en vez de siempre la forma base)",
+    "start": "Empezar reto"
+  },
+  "test": {
+    "hint": "Pista ({{form}}):",
+    "base": "Forma base",
+    "pastSimple": "Pasado simple",
+    "pastParticiple": "Participio",
+    "check": "Comprobar",
+    "next": "Siguiente",
+    "correct": "¡Bien hecho! Vamos a por el siguiente.",
+    "correctLast": "¡Bien hecho! Vamos a ver tu resultado.",
+    "help": "Ayúdame {{count}}",
+    "helpAnswer": "Respuesta correcta: {{base}} / {{pastSimple}} / {{pastParticiple}}",
+    "seeResult": "Ver resultado",
+    "finishedTitle": "¡Reto completado!",
+    "result": "Acertaste {{score}} de {{total}} verbos ({{percentage}}%)",
+    "seeProgress": "Ver mi progreso",
+    "backHome": "Volver al inicio",
+    "noConfig": "No hay ningún reto configurado.",
+    "forms": {
+      "base": "forma base",
+      "pastSimple": "pasado simple",
+      "pastParticiple": "participio"
+    }
+  },
+  "verbList": {
+    "title": "Listado completo de verbos irregulares",
+    "count": "{{count}} verbos en total",
+    "searchPlaceholder": "Buscar un verbo...",
+    "noResults": "Sin resultados",
+    "showingAll": "Mostrando todos",
+    "showingCommon": "Mostrando más comunes",
+    "columns": {
+      "base": "Base",
+      "pastSimple": "Pasado simple",
+      "pastParticiple": "Participio",
+      "translationAndExample": "Traducción y ejemplo"
+    }
+  },
+  "progress": {
+    "title": "Mi progreso",
+    "empty": "Todavía no has completado ningún reto. ¡Anímate a hacer el primero!",
+    "tooltipVerbs": "{{correct}}/{{total}} verbos ({{percentage}}%)"
+  },
+  "layout": {
+    "footer": "Practica los verbos irregulares en inglés"
+  },
+  "modal": {
+    "close": "Cerrar"
+  }
+}

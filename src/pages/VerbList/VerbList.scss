@@ -1,0 +1,234 @@
+@use '../../scss/abstracts/variables' as *;
+
+.verb-list {
+  background-color: $color-surface;
+  border-radius: $radius-base;
+  padding: $spacing-lg;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  &__count {
+    color: rgba(0, 0, 0, 0.55);
+    margin-bottom: $spacing-md;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__search {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 360px;
+
+    input {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: $radius-base;
+      font-size: 0.95rem;
+
+      &:focus {
+        outline: 2px solid $color-primary;
+        outline-offset: 1px;
+      }
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: $color-surface;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: $radius-base;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    max-height: 280px;
+    overflow-y: auto;
+
+    li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $spacing-sm;
+      padding: $spacing-sm $spacing-md;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: rgba(79, 70, 229, 0.06);
+      }
+    }
+  }
+
+  &__dropdown-base {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__dropdown-translation {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.85rem;
+  }
+
+  &__dropdown-empty {
+    padding: $spacing-sm $spacing-md;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+  }
+
+  &__switch {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: $color-text;
+    white-space: nowrap;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  &__switch-track {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  &__switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.15s ease;
+  }
+
+  &__switch input:checked + &__switch-track {
+    background-color: $color-primary;
+  }
+
+  &__switch input:checked + &__switch-track &__switch-thumb {
+    transform: translateX(18px);
+  }
+
+  &__switch input:focus-visible + &__switch-track {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      padding: $spacing-sm $spacing-md;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    th {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tbody tr {
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: rgba(79, 70, 229, 0.04);
+      }
+
+      &.is-highlighted {
+        background-color: rgba(79, 70, 229, 0.15);
+      }
+    }
+  }
+
+  &__translation {
+    display: block;
+  }
+
+  &__example {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $spacing-sm * 0.5;
+    margin-top: $spacing-lg;
+
+    button {
+      min-width: 2.25rem;
+      padding: $spacing-sm * 0.5 $spacing-sm;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: $radius-base;
+      background-color: $color-surface;
+      font-size: 0.9rem;
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
+        border-color: $color-primary;
+        color: $color-primary;
+      }
+
+      &.is-active {
+        background-color: $color-primary;
+        color: white;
+        border-color: $color-primary;
+      }
+    }
+  }
+
+  &__ellipsis {
+    padding: 0 $spacing-sm * 0.5;
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
