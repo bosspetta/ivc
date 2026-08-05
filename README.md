@@ -1,25 +1,12 @@
-# React + Vite
+# Irregular Verbs Challenge
 
-## Desarrollo local y estilos (SCSS)
+**Irregular Verbs Challenge** is a simple web application to help you learn and practice English irregular verbs.
 
-1. Instala las dependencias: `npm install`.
-2. Levanta el servidor de desarrollo local con `npm run dev` (disponible en `http://localhost:5173`, con recarga en caliente).
-3. Los estilos viven en `src/scss` — variables, mixins, reset y layout globales, importados una única vez desde `main.scss` — y también junto a cada componente o página como archivos `.scss` propios (por ejemplo, `src/pages/Test/Test.scss`).
-4. No hace falta compilar el SCSS aparte: Vite lo transforma automáticamente en cuanto un componente importa un archivo `.scss`, y recarga los cambios al guardar.
-5. Para generar la build de producción usa `npm run build`; los estilos se compilan y minifican junto con el resto del bundle en `dist/`.
-6. Para previsualizar esa build en local: `npm run preview`.
+## Local development and styles (SCSS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. Install the dependencies: `npm install`.
+2. Start the local development server with `npm run dev` (available at `http://localhost:5173`, with hot reload).
+3. Styles live in `src/scss` — global variables, mixins, reset, and layout, imported once from `main.scss` — and also alongside each component or page as their own `.scss` files (for example, `src/pages/Test/Test.scss`).
+4. There's no need to compile SCSS separately: Vite transforms it automatically as soon as a component imports a `.scss` file, and reloads changes on save.
+5. To generate the production build, use `npm run build`; the styles are compiled and minified together with the rest of the bundle in `dist/`.
+6. To preview that build locally: `npm run preview`.
