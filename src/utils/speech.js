@@ -1,5 +1,10 @@
 export const SPEECH_LANG = { uk: 'en-GB', us: 'en-US' }
 
+// Voces de alta calidad descargadas manualmente en macOS (Ajustes → Accesibilidad →
+// Contenido hablado). macOS no siempre expone su nivel de calidad en el nombre, así
+// que se listan explícitamente para priorizarlas sobre las voces remotas de Google.
+const PREFERRED_VOICE_NAMES = ['Serena', 'Zoe']
+
 let voicesPromise = null
 
 function cleanForSpeech(text) {
@@ -30,6 +35,7 @@ function loadVoices() {
 }
 
 function scoreVoice(voice) {
+  if (PREFERRED_VOICE_NAMES.includes(voice.name)) return 4
   if (/enhanced|premium|neural/i.test(voice.name)) return 3
   if (/google/i.test(voice.name)) return 2
   return 1
