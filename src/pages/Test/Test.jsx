@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS } from '../../data/verbs.js'
 import { addProgressEntry } from '../../utils/storage.js'
 import { isAnswerCorrect, pickRandomForm, shuffle } from '../../utils/verbAnswers.js'
+import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import './Test.scss'
 
 const EMPTY_ANSWERS = { base: '', pastSimple: '', pastParticiple: '' }
@@ -194,6 +195,7 @@ function Test() {
       <p className="test__hint">
         {t('test.hint', { form: t(`test.forms.${question.hintForm}`) })}{' '}
         <strong>{hintValue}</strong>
+        <PronunciationToggle text={hintValue} alwaysOpen />
       </p>
 
       <form

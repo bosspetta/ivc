@@ -4,9 +4,13 @@
     "progress": "Mi progreso"
   },
   "home": {
-    "title": "¿Listo para poner a prueba tus verbos irregulares?",
-    "subtitle": "Practica las tres formas de los verbos irregulares en inglés y sigue tu progreso reto tras reto.",
-    "cta": "Realizar el reto"
+    "title": "Bienvenido a 'Irregular Verbs Challenge'",
+    "subtitle": "Aquí podrás reforzar y afianzar tu memoria practicando unos sencillos retos.",
+    "cta": "Realizar el reto",
+    "card": {
+      "title": "Irregulares al azar",
+      "description": "¿Te sabes las tres formas de los verbos irregulares más habituales? Ponte a prueba. Te doy el infinitivo (base form) del verbo como pista, y tú partes de ahí. O también puedes activar el 'Modo experto', en el que te daré cualquiera de las tres formas verbales como pista, y desde ahí tú completarás el trío."
+    }
   },
   "userForm": {
     "title": "Antes de empezar",
@@ -68,5 +72,10 @@
   },
   "modal": {
     "close": "Cerrar"
+  },
+  "pronunciation": {
+    "toggle": "Escuchar pronunciación",
+    "uk": "Pronunciación británica (UK)",
+    "us": "Pronunciación estadounidense (US)"
   }
 }

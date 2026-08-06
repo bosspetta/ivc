@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS, VERBS } from '../../data/verbs.js'
 import { getPaginationRange } from '../../utils/pagination.js'
+import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import './VerbList.scss'
 
 const PAGE_SIZE = 20
@@ -27,6 +28,7 @@ function VerbList() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const [highlightedVerbId, setHighlightedVerbId] = useState(null)
+  const [openPronunciationId, setOpenPronunciationId] = useState(null)
   const highlightTimeoutRef = useRef(null)
 
   const activeList = showAll ? VERBS : COMMON_VERBS
@@ -148,14 +150,51 @@ function VerbList() {
                 key={verb.id}
                 className={verb.id === highlightedVerbId ? 'is-highlighted' : ''}
               >
-                <td>{verb.base}</td>
-                <td>{verb.pastSimple}</td>
-                <td>{verb.pastParticiple}</td>
+                <td>
+                  {verb.base}
+                  <PronunciationToggle
+                    id={`${verb.id}-base`}
+                    text={verb.base}
+                    openId={openPronunciationId}
+                    onOpen={setOpenPronunciationId}
+                    onClose={() => setOpenPronunciationId(null)}
+                  />
+                </td>
+                <td>
+                  {verb.pastSimple}
+                  <PronunciationToggle
+                    id={`${verb.id}-pastSimple`}
+                    text={verb.pastSimple}
+                    openId={openPronunciationId}
+                    onOpen={setOpenPronunciationId}
+                    onClose={() => setOpenPronunciationId(null)}
+                  />
+                </td>
+                <td>
+                  {verb.pastParticiple}
+                  <PronunciationToggle
+                    id={`${verb.id}-pastParticiple`}
+                    text={verb.pastParticiple}
+                    openId={openPronunciationId}
+                    onOpen={setOpenPronunciationId}
+                    onClose={() => setOpenPronunciationId(null)}
+                  />
+                </td>
                 <td>
                   {!isEnglish && (
                     <span className="verb-list__translation">{verb.translation}</span>
                   )}
-                  <span className="verb-list__example">{verb.example}</span>
+                  <span className="verb-list__example">
+                    {verb.example}
+                    <PronunciationToggle
+                      id={`${verb.id}-example`}
+                      text={verb.example}
+                      openId={openPronunciationId}
+                      onOpen={setOpenPronunciationId}
+                      onClose={() => setOpenPronunciationId(null)}
+                      rate={0.9}
+                    />
+                  </span>
                 </td>
               </tr>
             ))}

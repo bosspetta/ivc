@@ -1,0 +1,71 @@
+.pronunciation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+
+  &__toggle,
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.55;
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+      opacity: 1;
+    }
+  }
+
+  &__toggle svg,
+  &__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &__options {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.85em;
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+      opacity: 0.75;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+    }
+
+    &-separator {
+      opacity: 0.4;
+    }
+  }
+}

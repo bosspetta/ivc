@@ -26,11 +26,16 @@ function Home() {
 
   return (
     <section className="home">
-      <h2>{t('home.title')}</h2>
-      <p>{t('home.subtitle')}</p>
-      <button type="button" className="home__cta" onClick={handleStartClick}>
-        {t('home.cta')}
-      </button>
+      <h1 className="home__title">{t('home.title')}</h1>
+      <p className="home__subtitle">{t('home.subtitle')}</p>
+
+      <div className="home__card">
+        <h2 className="home__card-title">{t('home.card.title')}</h2>
+        <p className="home__card-description">{t('home.card.description')}</p>
+        <button type="button" className="home__cta" onClick={handleStartClick}>
+          {t('home.cta')}
+        </button>
+      </div>
 
       {step === 'user' && (
         <UserForm onClose={() => setStep(null)} onSaved={handleUserSaved} />

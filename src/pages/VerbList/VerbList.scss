@@ -152,6 +152,8 @@
 
   &__table {
     width: 100%;
+    min-width: 640px;
+    table-layout: fixed;
     border-collapse: collapse;
 
     th,
@@ -159,6 +161,21 @@
       text-align: left;
       padding: $spacing-sm $spacing-md;
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      overflow-wrap: break-word;
+    }
+
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(2),
+    td:nth-child(2),
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 15%;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+      width: 55%;
     }
 
     th {

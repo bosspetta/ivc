@@ -1,20 +1,33 @@
 @use '../../scss/abstracts/variables' as *;
 
 .home {
-  background-color: $color-surface;
-  border-radius: $radius-base;
-  padding: $spacing-lg * 1.5;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   text-align: center;
   max-width: 560px;
   margin: 0 auto;
 
-  h2 {
+  &__title {
+    font-size: 1.75rem;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__subtitle {
+    color: rgba(0, 0, 0, 0.65);
+    margin-bottom: $spacing-lg;
+  }
+
+  &__card {
+    background-color: $color-surface;
+    border-radius: $radius-base;
+    padding: $spacing-lg * 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  &__card-title {
     font-size: 1.5rem;
     margin-bottom: $spacing-md;
   }
 
-  p {
+  &__card-description {
     color: rgba(0, 0, 0, 0.65);
     margin-bottom: $spacing-lg;
   }
@@ -30,6 +43,11 @@
 
     &:hover {
       background-color: $color-primary-dark;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-dark;
+      outline-offset: 2px;
     }
   }
 }

@@ -4,9 +4,13 @@
     "progress": "My progress"
   },
   "home": {
-    "title": "Ready to test your irregular verbs?",
-    "subtitle": "Practice the three forms of English irregular verbs and track your progress challenge after challenge.",
-    "cta": "Take the challenge"
+    "title": "Welcome to 'Irregular Verbs Challenge'",
+    "subtitle": "Here you can strengthen and reinforce your memory by practicing a few simple challenges.",
+    "cta": "Take the challenge",
+    "card": {
+      "title": "Random irregulars",
+      "description": "Do you know the three forms of the most common irregular verbs? Put yourself to the test. I'll give you the verb's infinitive (base form) as a hint, and you take it from there. Or you can turn on 'Expert mode', where I'll give you any of the three verb forms as a hint, and you'll complete the trio from there."
+    }
   },
   "userForm": {
     "title": "Before you start",
@@ -69,5 +73,10 @@
   },
   "modal": {
     "close": "Close"
+  },
+  "pronunciation": {
+    "toggle": "Listen to pronunciation",
+    "uk": "British pronunciation (UK)",
+    "us": "American pronunciation (US)"
   }
 }
