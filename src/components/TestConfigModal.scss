@@ -15,9 +15,11 @@
 
   input[type='number'] {
     padding: $spacing-sm;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(var(--color-ink-rgb), 0.15);
     border-radius: $radius-base;
     font-size: 1rem;
+    background-color: $color-surface;
+    color: $color-text;
 
     &:focus {
       outline: 2px solid $color-primary;
@@ -25,10 +27,11 @@
     }
   }
 
-  &__checkbox {
+  .test-config__checkbox {
     flex-direction: row;
     align-items: flex-start;
     gap: $spacing-sm;
+    text-align: left;
 
     input {
       margin-top: 0.2rem;

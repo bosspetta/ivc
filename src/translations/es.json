@@ -1,10 +1,13 @@
 {
   "header": {
     "verbs": "Listado de verbos",
-    "progress": "Mi progreso"
+    "progress": "Mi progreso",
+    "darkMode": "Activar modo oscuro",
+    "lightMode": "Activar modo claro"
   },
   "home": {
-    "title": "Bienvenido a 'Irregular Verbs Challenge'",
+    "titleLabel": "Bienvenido a",
+    "titleSiteName": "'Irregular Verbs Challenge'",
     "subtitle": "Aquí podrás reforzar y afianzar tu memoria practicando unos sencillos retos.",
     "cta": "Realizar el reto",
     "card": {
@@ -68,7 +71,9 @@
     "tooltipVerbs": "{{correct}}/{{total}} verbos ({{percentage}}%)"
   },
   "layout": {
-    "footer": "Practica los verbos irregulares en inglés"
+    "creditBefore": "Hecho con amor",
+    "creditTech": "y tecnología",
+    "creditAuthor": "por Enrique Rodríguez."
   },
   "modal": {
     "close": "Cerrar"

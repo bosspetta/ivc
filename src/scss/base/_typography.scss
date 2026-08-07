@@ -5,4 +5,16 @@ body {
   color: $color-text;
   background-color: $color-background;
   line-height: 1.5;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-heading;
 }

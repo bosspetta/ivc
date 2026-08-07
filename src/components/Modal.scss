@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: space-between;
     padding: $spacing-md $spacing-lg;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.08);
 
     h3 {
       font-size: 1.1rem;
@@ -37,7 +37,7 @@
     border: none;
     font-size: 1.5rem;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(var(--color-ink-rgb), 0.5);
 
     &:hover {
       color: $color-text;

@@ -1,4 +1,5 @@
 @use '../../scss/abstracts/variables' as *;
+@use '../../scss/abstracts/mixins' as *;
 
 .home {
   text-align: center;
@@ -7,11 +8,35 @@
 
   &__title {
     font-size: 1.75rem;
-    margin-bottom: $spacing-sm;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.08);
+    margin-bottom: 1rem;
+
+    @include respond-below-md {
+      font-size: 1.5rem;
+    }
+
+    &__label {
+      @include respond-below-md {
+        display: block;
+      }
+    }
+
+    &__label:not(&__label--site-name) {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      color: rgba(var(--color-ink-rgb), 0.65);
+      font-size: 1.875rem;
+    }
+
+    &__label--site-name {
+      font-weight: 700;
+      color: var(--color-primary);
+    }
   }
 
   &__subtitle {
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(var(--color-ink-rgb), 0.65);
     margin-bottom: $spacing-lg;
   }
 
@@ -28,7 +53,7 @@
   }
 
   &__card-description {
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(var(--color-ink-rgb), 0.65);
     margin-bottom: $spacing-lg;
   }
 
@@ -38,7 +63,6 @@
     color: white;
     border: none;
     border-radius: $radius-base;
-    font-size: 1rem;
     font-weight: 600;
 
     &:hover {

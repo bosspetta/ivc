@@ -26,7 +26,12 @@ function Home() {
 
   return (
     <section className="home">
-      <h1 className="home__title">{t('home.title')}</h1>
+      <h1 className="home__title">
+        <span className="home__title__label">{t('home.titleLabel')}</span>{' '}
+        <span className="home__title__label home__title__label--site-name">
+          {t('home.titleSiteName')}
+        </span>
+      </h1>
       <p className="home__subtitle">{t('home.subtitle')}</p>
 
       <div className="home__card">

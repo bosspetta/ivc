@@ -150,7 +150,7 @@ function VerbList() {
                 key={verb.id}
                 className={verb.id === highlightedVerbId ? 'is-highlighted' : ''}
               >
-                <td>
+                <td data-label={t('verbList.columns.base')}>
                   {verb.base}
                   <PronunciationToggle
                     id={`${verb.id}-base`}
@@ -160,7 +160,7 @@ function VerbList() {
                     onClose={() => setOpenPronunciationId(null)}
                   />
                 </td>
-                <td>
+                <td data-label={t('verbList.columns.pastSimple')}>
                   {verb.pastSimple}
                   <PronunciationToggle
                     id={`${verb.id}-pastSimple`}
@@ -170,7 +170,7 @@ function VerbList() {
                     onClose={() => setOpenPronunciationId(null)}
                   />
                 </td>
-                <td>
+                <td data-label={t('verbList.columns.pastParticiple')}>
                   {verb.pastParticiple}
                   <PronunciationToggle
                     id={`${verb.id}-pastParticiple`}
@@ -180,7 +180,13 @@ function VerbList() {
                     onClose={() => setOpenPronunciationId(null)}
                   />
                 </td>
-                <td>
+                <td
+                  data-label={
+                    isEnglish
+                      ? t('verbList.columns.example')
+                      : t('verbList.columns.translationAndExample')
+                  }
+                >
                   {!isEnglish && (
                     <span className="verb-list__translation">{verb.translation}</span>
                   )}

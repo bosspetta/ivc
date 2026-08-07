@@ -7,7 +7,7 @@
 
   &__intro {
     margin-bottom: $spacing-md;
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(var(--color-ink-rgb), 0.65);
   }
 
   label {
@@ -20,9 +20,11 @@
 
   input {
     padding: $spacing-sm;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(var(--color-ink-rgb), 0.15);
     border-radius: $radius-base;
     font-size: 1rem;
+    background-color: $color-surface;
+    color: $color-text;
 
     &:focus {
       outline: 2px solid $color-primary;

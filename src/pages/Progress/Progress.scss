@@ -7,14 +7,14 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
   &__empty {
-    color: rgba(0, 0, 0, 0.55);
+    color: rgba(var(--color-ink-rgb), 0.55);
   }
 }
 
 .progress-chart {
   &__tooltip {
     background-color: $color-surface;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(var(--color-ink-rgb), 0.1);
     border-radius: $radius-base;
     padding: $spacing-sm $spacing-md;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
       color: $color-text;
 
       &:first-child {
-        color: rgba(0, 0, 0, 0.5);
+        color: rgba(var(--color-ink-rgb), 0.5);
         margin-bottom: 2px;
       }
     }

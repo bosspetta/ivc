@@ -5,3 +5,9 @@
     @content;
   }
 }
+
+@mixin respond-below-md {
+  @media (max-width: $breakpoint-md - 1) {
+    @content;
+  }
+}

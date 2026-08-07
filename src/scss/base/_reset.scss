@@ -1,3 +1,5 @@
+@use '../abstracts/variables' as *;
+
 *,
 *::before,
 *::after {
@@ -26,4 +28,8 @@ img {
 button {
   font: inherit;
   cursor: pointer;
+  font-family: $font-family-heading;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.025rem;
 }
