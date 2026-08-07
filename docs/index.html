@@ -2,11 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var stored = localStorage.getItem('ivc_theme')
+        var theme =
+          stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
     <title>Irregular Verbs Challenge</title>
-    <script type="module" crossorigin src="/assets/index-DpfSH1AL.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-8pLTSR0w.css">
+    <script type="module" crossorigin src="/assets/index-CWzra6Pc.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C9IzI5-a.css">
   </head>
   <body>
     <div id="root"></div>
