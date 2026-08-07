@@ -2,6 +2,7 @@
   "header": {
     "verbs": "Listado de verbos",
     "progress": "Mi progreso",
+    "help": "Ayuda",
     "darkMode": "Activar modo oscuro",
     "lightMode": "Activar modo claro"
   },
@@ -82,5 +83,57 @@
     "toggle": "Escuchar pronunciación",
     "uk": "Pronunciación británica (UK)",
     "us": "Pronunciación estadounidense (US)"
+  },
+  "help": {
+    "title": "Ayuda",
+    "voices": {
+      "title": "Sobre las voces de pronunciación",
+      "intro": "Las voces que se escuchan con cada tiempo verbal (y con los ejemplos) dependen en gran medida de las voces que tenga instaladas en su sistema operativo. Esta aplicación utiliza el sintetizador de voz del propio navegador, así que cuantas más voces —y de mejor calidad— tenga instaladas en su equipo o dispositivo, más natural sonará la pronunciación.",
+      "outro": "A continuación tiene una guía rápida para instalar voces más naturales (de tipo \"Enhanced\", \"Premium\" o neuronales) en cada sistema operativo. Tras instalarlas, reinicie el navegador para que las detecte.",
+      "windows": {
+        "title": "Windows",
+        "steps": [
+          "Abra Configuración → Hora e idioma → Voz (o Configuración → Accesibilidad → Narrador, según la versión).",
+          "En \"Administrar voces\", pulse \"Agregar voces\".",
+          "Busque \"Inglés (Reino Unido)\" e \"Inglés (Estados Unidos)\" e instale las voces disponibles.",
+          "En Windows 11, algunas voces aparecen marcadas como \"Natural\": son las de mejor calidad, generadas con redes neuronales.",
+          "Reinicie el navegador para que reconozca las voces recién instaladas."
+        ]
+      },
+      "macos": {
+        "title": "macOS",
+        "steps": [
+          "Abra Ajustes del Sistema → Accesibilidad → Contenido hablado (en versiones antiguas: Preferencias del Sistema → Accesibilidad → Voz).",
+          "Pulse el desplegable \"Voz del sistema\" y elija \"Gestionar voces...\".",
+          "Busque las voces en inglés y descargue las marcadas como \"Enhanced\" o \"Premium\" (por ejemplo, Serena o Zoe para inglés británico/estadounidense): usan una síntesis mucho más natural que las voces compactas por defecto.",
+          "Cierre y vuelva a abrir el navegador después de la descarga."
+        ]
+      },
+      "linux": {
+        "title": "Linux",
+        "steps": [
+          "En Linux, las voces del sistema suelen depender de speech-dispatcher junto con un motor como espeak-ng o Festival, que por defecto suenan bastante robóticas.",
+          "La forma más sencilla de obtener una pronunciación natural es usar Google Chrome: cuando hay conexión a internet, Chrome ofrece voces \"de red\" de Google (por ejemplo, \"Google UK English Female\") con mucha mejor calidad.",
+          "Si prefiere voces sin conexión, puede instalar un motor alternativo como RHVoice desde el gestor de paquetes de su distribución y configurarlo como voz por defecto en speech-dispatcher."
+        ]
+      },
+      "ios": {
+        "title": "iOS / iPadOS",
+        "steps": [
+          "Abra Ajustes → Accesibilidad → Contenido hablado → Voces.",
+          "Elija \"Inglés\" y seleccione la variante que prefiera (Reino Unido o Estados Unidos).",
+          "Toque la voz deseada y descargue la calidad \"Mejorada\" o \"Premium\" (aparece un icono de descarga; requiere Wi-Fi y algo de espacio de almacenamiento)."
+        ]
+      },
+      "android": {
+        "title": "Android",
+        "steps": [
+          "Abra Ajustes → Sistema → Idiomas e introducción de texto → Salida de texto a voz (la ruta puede variar según el fabricante; en algunos equipos está en Ajustes → Accesibilidad).",
+          "Compruebe que el \"Motor preferido\" sea \"Síntesis de voz de Google\", que suele venir preinstalado.",
+          "Pulse el icono de ajustes junto al motor de Google, entre en \"Instalar datos de voz\" y descargue el paquete de inglés de mayor calidad disponible.",
+          "Si no aparecen voces de calidad, actualice la app \"Síntesis de voz de Google\" desde la Play Store."
+        ]
+      }
+    }
   }
 }

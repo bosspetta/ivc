@@ -73,7 +73,7 @@ function VerbList() {
 
   useEffect(() => {
     if (highlightedVerbId === null) return
-    rowRefs.current[highlightedVerbId]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    rowRefs.current[highlightedVerbId]?.scrollIntoView({ behavior: 'auto', block: 'start' })
   }, [highlightedVerbId])
 
   function goToPage(nextPage) {

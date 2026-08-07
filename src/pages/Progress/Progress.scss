@@ -1,6 +1,8 @@
 @use '../../scss/abstracts/variables' as *;
 
 .progress-page {
+  max-width: 1400px;
+  margin-inline: auto;
   background-color: $color-surface;
   border-radius: $radius-base;
   padding: $spacing-lg;

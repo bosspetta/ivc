@@ -1,0 +1,54 @@
+@use '../../scss/abstracts/variables' as *;
+
+.help-page {
+  max-width: 1400px;
+  margin-inline: auto;
+  background-color: $color-surface;
+  border-radius: $radius-base;
+  padding: $spacing-lg;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    margin-bottom: $spacing-md;
+  }
+
+  &__block {
+    p {
+      color: rgba(var(--color-ink-rgb), 0.7);
+      margin-bottom: $spacing-sm;
+      max-width: 70ch;
+    }
+  }
+
+  &__os-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+  }
+
+  &__os {
+    border: 1px solid rgba(var(--color-ink-rgb), 0.1);
+    border-radius: $radius-base;
+    padding: $spacing-md;
+
+    h4 {
+      font-family: $font-family-heading;
+      margin-bottom: $spacing-sm;
+    }
+
+    ol {
+      padding-left: 1.1em;
+      color: rgba(var(--color-ink-rgb), 0.7);
+
+      li {
+        margin-bottom: $spacing-sm * 0.5;
+        line-height: 1.45;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

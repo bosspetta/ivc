@@ -2,6 +2,8 @@
 @use '../../scss/abstracts/mixins' as *;
 
 .verb-list {
+  max-width: 1400px;
+  margin-inline: auto;
   background-color: $color-surface;
   border-radius: $radius-base;
   padding: $spacing-lg;

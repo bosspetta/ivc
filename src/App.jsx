@@ -3,6 +3,7 @@ import Layout from './Layout.jsx'
 import Home from './pages/Home/Home.jsx'
 import VerbList from './pages/VerbList/VerbList.jsx'
 import Progress from './pages/Progress/Progress.jsx'
+import Help from './pages/Help/Help.jsx'
 import Test from './pages/Test/Test.jsx'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/verbs" element={<VerbList />} />
         <Route path="/progress" element={<Progress />} />
+        <Route path="/help" element={<Help />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </Layout>

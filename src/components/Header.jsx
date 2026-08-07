@@ -53,6 +53,12 @@ function Header() {
             >
               {t('header.progress')}
             </NavLink>
+            <NavLink
+              to="/help"
+              className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+            >
+              {t('header.help')}
+            </NavLink>
           </span>
           <span className="site-header__nav__actions">
             <div className="site-header__lang">
