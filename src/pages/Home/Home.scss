@@ -32,6 +32,10 @@
     &__label--site-name {
       font-weight: 700;
       color: var(--color-primary);
+
+      :root[data-theme='dark'] & {
+        color: $color-primary-light;
+      }
     }
   }
 

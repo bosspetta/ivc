@@ -5,6 +5,7 @@
   background-color: $color-surface;
   border-radius: $radius-base;
   padding: $spacing-lg;
+  padding-inline: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
   &__count {
@@ -39,6 +40,10 @@
       &:focus {
         outline: 2px solid $color-primary;
         outline-offset: 1px;
+
+        :root[data-theme='dark'] & {
+          outline-color: $color-primary-light;
+        }
       }
     }
   }
@@ -146,6 +151,10 @@
   &__switch input:focus-visible + &__switch-track {
     outline: 2px solid $color-primary;
     outline-offset: 2px;
+
+    :root[data-theme='dark'] & {
+      outline-color: $color-primary-light;
+    }
   }
 
   &__table-wrapper {
@@ -154,7 +163,8 @@
 
   &__table {
     width: 100%;
-    min-width: 640px;
+    min-width: 1080px;
+    font-size: 1.5rem;
     table-layout: fixed;
     border-collapse: collapse;
 
@@ -183,6 +193,7 @@
     th {
       color: rgba(var(--color-ink-rgb), 0.55);
       font-size: 0.85rem;
+      font-family: $font-family-heading;
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
@@ -234,6 +245,7 @@
           display: block;
           color: rgba(var(--color-ink-rgb), 0.55);
           font-size: 0.85rem;
+          font-family: $font-family-heading;
           text-transform: uppercase;
           letter-spacing: 0.03em;
           margin-bottom: 2px;
@@ -249,7 +261,7 @@
   &__example {
     display: block;
     margin-top: 2px;
-    font-size: 0.82rem;
+    font-size: 1.5rem;
     font-style: italic;
     color: rgba(var(--color-ink-rgb), 0.5);
   }
@@ -269,6 +281,13 @@
       border-radius: $radius-base;
       background-color: $color-surface;
 
+      &:not(.is-active) {
+        :root[data-theme='dark'] & {
+          background-color: rgba(var(--color-ink-rgb), 0.08);
+          color: $color-text;
+        }
+      }
+
       &:disabled {
         opacity: 0.4;
         cursor: not-allowed;
@@ -277,12 +296,21 @@
       &:not(:disabled):hover {
         border-color: $color-primary;
         color: $color-primary;
+
+        :root[data-theme='dark'] & {
+          border-color: $color-primary-light;
+          color: $color-primary-light;
+        }
       }
 
       &.is-active {
         background-color: $color-primary;
         color: white;
         border-color: $color-primary;
+
+        :root[data-theme='dark'] & {
+          border-color: $color-primary-light;
+        }
       }
     }
   }

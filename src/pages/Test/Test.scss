@@ -19,7 +19,13 @@
     margin-bottom: $spacing-lg;
 
     strong {
+      font-size: 2rem;
+      font-family: $font-family-heading;
       color: $color-primary-dark;
+
+      :root[data-theme='dark'] & {
+        color: $color-primary-light;
+      }
     }
   }
 
@@ -48,6 +54,10 @@
       &:focus {
         outline: 2px solid $color-primary;
         outline-offset: 1px;
+
+        :root[data-theme='dark'] & {
+          outline-color: $color-primary-light;
+        }
       }
 
       &.is-correct {
@@ -114,6 +124,11 @@
     color: $color-primary !important;
     border: 1px solid $color-primary !important;
 
+    :root[data-theme='dark'] & {
+      color: $color-primary-light !important;
+      border-color: $color-primary-light !important;
+    }
+
     &:hover:not(:disabled) {
       background-color: rgba(79, 70, 229, 0.06) !important;
     }
@@ -131,10 +146,13 @@
     border-left: 3px solid $color-primary;
     border-radius: $radius-base;
     padding: $spacing-sm $spacing-md;
+
+    :root[data-theme='dark'] & {
+      border-left-color: $color-primary-light;
+    }
   }
 
   &__help-answer {
-    font-size: 0.9rem;
     font-weight: 600;
     color: $color-text;
   }
@@ -146,14 +164,12 @@
   }
 
   &__success {
-    font-size: 0.95rem;
     font-weight: 600;
     color: $color-success;
   }
 
   &__verb-info {
     margin-top: $spacing-sm * 0.5;
-    font-size: 0.85rem;
     color: $color-text;
 
     em {
@@ -178,12 +194,19 @@
     button {
       padding: $spacing-sm $spacing-md;
       border-radius: $radius-base;
-      border: 1px solid rgba(var(--color-ink-rgb), 0.15);
-      background-color: $color-surface;
+      border: 1px solid $color-primary;
+      background-color: transparent;
+      color: $color-primary;
+      font-weight: 600;
 
       &:hover {
-        border-color: $color-primary;
-        color: $color-primary;
+        background-color: rgba(79, 70, 229, 0.06);
+      }
+
+      :root[data-theme='dark'] & {
+        background-color: var(--color-primary);
+        color: var(--color-text);
+        border-color: $color-primary-light;
       }
     }
   }

@@ -27,6 +27,10 @@
     text-decoration: none;
     letter-spacing: 0.05em;
 
+    :root[data-theme='dark'] & {
+      color: $color-primary-light;
+    }
+
     @include respond-below-md {
       font-size: 1.875rem;
       padding-bottom: $spacing-sm;
@@ -82,10 +86,18 @@
       &.is-active {
         color: $color-primary;
         font-weight: 600;
+
+        :root[data-theme='dark'] & {
+          color: $color-primary-light;
+        }
       }
 
       &:hover {
         color: $color-primary-dark;
+
+        :root[data-theme='dark'] & {
+          color: $color-primary-light;
+        }
       }
     }
   }
@@ -119,6 +131,10 @@
 
       &:not(.is-active):hover {
         color: $color-primary;
+
+        :root[data-theme='dark'] & {
+          color: $color-primary-light;
+        }
       }
     }
   }
@@ -142,6 +158,11 @@
     &:hover {
       color: $color-primary;
       border-color: $color-primary;
+
+      :root[data-theme='dark'] & {
+        color: $color-primary-light;
+        border-color: $color-primary-light;
+      }
     }
 
     @include respond-below-md {
