@@ -9,6 +9,28 @@ const PAGE_SIZE = 20
 const MAX_SUGGESTIONS = 8
 const HIGHLIGHT_DURATION = 2500
 
+function escapeRegExp(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function highlightVerbForm(sentence, candidates) {
+  for (const candidate of candidates) {
+    const match = sentence.match(new RegExp(`\\b${escapeRegExp(candidate)}\\b`, 'i'))
+    if (match) {
+      const start = match.index
+      const end = start + match[0].length
+      return (
+        <>
+          {sentence.slice(0, start)}
+          <strong>{sentence.slice(start, end)}</strong>
+          {sentence.slice(end)}
+        </>
+      )
+    }
+  }
+  return sentence
+}
+
 function matchesQuery(verb, query) {
   const needle = query.trim().toLowerCase()
   if (!needle) return false
@@ -23,13 +45,14 @@ function matchesQuery(verb, query) {
 function VerbList() {
   const { t, i18n } = useTranslation()
   const isEnglish = i18n.resolvedLanguage === 'en'
-  const [showAll, setShowAll] = useState(true)
+  const [showAll, setShowAll] = useState(false)
   const [page, setPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const [highlightedVerbId, setHighlightedVerbId] = useState(null)
   const [openPronunciationId, setOpenPronunciationId] = useState(null)
   const highlightTimeoutRef = useRef(null)
+  const rowRefs = useRef({})
 
   const activeList = showAll ? VERBS : COMMON_VERBS
   const totalPages = Math.ceil(activeList.length / PAGE_SIZE)
@@ -47,6 +70,11 @@ function VerbList() {
   useEffect(() => {
     return () => clearTimeout(highlightTimeoutRef.current)
   }, [])
+
+  useEffect(() => {
+    if (highlightedVerbId === null) return
+    rowRefs.current[highlightedVerbId]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [highlightedVerbId])
 
   function goToPage(nextPage) {
     const clamped = Math.min(Math.max(nextPage, 1), totalPages)
@@ -125,7 +153,7 @@ function VerbList() {
             <span className="verb-list__switch-thumb" />
           </span>
           <span className="verb-list__switch-label">
-            {showAll ? t('verbList.showingAll') : t('verbList.showingCommon')}
+            {showAll ? t('verbList.viewCommon') : t('verbList.viewAll')}
           </span>
         </label>
       </div>
@@ -148,6 +176,9 @@ function VerbList() {
             {pageVerbs.map((verb) => (
               <tr
                 key={verb.id}
+                ref={(el) => {
+                  rowRefs.current[verb.id] = el
+                }}
                 className={verb.id === highlightedVerbId ? 'is-highlighted' : ''}
               >
                 <td data-label={t('verbList.columns.base')}>
@@ -191,15 +222,48 @@ function VerbList() {
                     <span className="verb-list__translation">{verb.translation}</span>
                   )}
                   <span className="verb-list__example">
-                    {verb.example}
-                    <PronunciationToggle
-                      id={`${verb.id}-example`}
-                      text={verb.example}
-                      openId={openPronunciationId}
-                      onOpen={setOpenPronunciationId}
-                      onClose={() => setOpenPronunciationId(null)}
-                      rate={0.9}
-                    />
+                    <span className="verb-list__example__vform verb-list__example__vform--infinitive">
+                      <span className="verb-list__example__vform__title">
+                        {t('verbList.columns.base')}
+                      </span>
+                      {highlightVerbForm(verb.example, verb.baseCandidates)}
+                      <PronunciationToggle
+                        id={`${verb.id}-example-base`}
+                        text={verb.example}
+                        openId={openPronunciationId}
+                        onOpen={setOpenPronunciationId}
+                        onClose={() => setOpenPronunciationId(null)}
+                        rate={0.9}
+                      />
+                    </span>
+                    <span className="verb-list__example__vform verb-list__example__vform--past-simple">
+                      <span className="verb-list__example__vform__title">
+                        {t('verbList.columns.pastSimple')}
+                      </span>
+                      {highlightVerbForm(verb.examplePastSimple, verb.pastSimpleCandidates)}
+                      <PronunciationToggle
+                        id={`${verb.id}-example-pastSimple`}
+                        text={verb.examplePastSimple}
+                        openId={openPronunciationId}
+                        onOpen={setOpenPronunciationId}
+                        onClose={() => setOpenPronunciationId(null)}
+                        rate={0.9}
+                      />
+                    </span>
+                    <span className="verb-list__example__vform verb-list__example__vform--past-participle">
+                      <span className="verb-list__example__vform__title">
+                        {t('verbList.columns.pastParticiple')}
+                      </span>
+                      {highlightVerbForm(verb.examplePresentPerfect, verb.pastParticipleCandidates)}
+                      <PronunciationToggle
+                        id={`${verb.id}-example-pastParticiple`}
+                        text={verb.examplePresentPerfect}
+                        openId={openPronunciationId}
+                        onOpen={setOpenPronunciationId}
+                        onClose={() => setOpenPronunciationId(null)}
+                        rate={0.9}
+                      />
+                    </span>
                   </span>
                 </td>
               </tr>

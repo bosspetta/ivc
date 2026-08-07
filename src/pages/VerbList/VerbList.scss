@@ -119,6 +119,10 @@
     }
   }
 
+  &__switch-label {
+    font-family: $font-family-heading;
+  }
+
   &__switch-track {
     position: relative;
     width: 40px;
@@ -259,11 +263,26 @@
   }
 
   &__example {
-    display: block;
+    display: grid;
+    gap: $spacing-sm;
     margin-top: 2px;
     font-size: 1.5rem;
     font-style: italic;
     color: rgba(var(--color-ink-rgb), 0.5);
+
+    strong {
+      color: $color-text;
+      font-weight: 700;
+    }
+  }
+
+  &__example__vform__title {
+    font-family: $font-family-heading;
+    font-style: normal;
+    display: block;
+    font-size: 1rem;
+    color: rgba(var(--color-ink-rgb), 0.55);
+    margin-bottom: 2px;
   }
 
   &__pagination {

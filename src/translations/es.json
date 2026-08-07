@@ -56,10 +56,10 @@
     "count": "{{count}} verbos en total",
     "searchPlaceholder": "Buscar un verbo...",
     "noResults": "Sin resultados",
-    "showingAll": "Mostrando todos",
-    "showingCommon": "Mostrando más comunes",
+    "viewAll": "Ver lista completa",
+    "viewCommon": "Ver verbos más comunes",
     "columns": {
-      "base": "Base",
+      "base": "Infinitivo",
       "pastSimple": "Pasado simple",
       "pastParticiple": "Participio",
       "translationAndExample": "Traducción y ejemplo"
