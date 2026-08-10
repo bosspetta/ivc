@@ -1,21 +1,28 @@
+import { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Layout from './Layout.jsx'
 import Home from './pages/Home/Home.jsx'
 import VerbList from './pages/VerbList/VerbList.jsx'
-import Progress from './pages/Progress/Progress.jsx'
 import Help from './pages/Help/Help.jsx'
 import Test from './pages/Test/Test.jsx'
 
+const Progress = lazy(() => import('./pages/Progress/Progress.jsx'))
+
 function App() {
+  const { t } = useTranslation()
+
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/verbs" element={<VerbList />} />
-        <Route path="/progress" element={<Progress />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/test" element={<Test />} />
-      </Routes>
+      <Suspense fallback={<p className="app-loading">{t('common.loading')}</p>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/verbs" element={<VerbList />} />
+          <Route path="/progress" element={<Progress />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/test" element={<Test />} />
+        </Routes>
+      </Suspense>
     </Layout>
   )
 }

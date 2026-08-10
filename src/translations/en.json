@@ -1,4 +1,7 @@
 {
+  "common": {
+    "loading": "Loading..."
+  },
   "header": {
     "verbs": "Verb list",
     "progress": "My progress",
@@ -10,6 +13,7 @@
     "titleLabel": "Welcome to",
     "titleSiteName": "'Irregular Verbs Challenge'",
     "subtitle": "Here you can strengthen and reinforce your memory by practicing a few simple challenges.",
+    "greeting": "Welcome back, {{firstName}}!",
     "cta": "Take the challenge",
     "card": {
       "title": "Random irregulars",

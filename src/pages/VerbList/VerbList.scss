@@ -43,7 +43,7 @@
         outline: 2px solid $color-primary;
         outline-offset: 1px;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           outline-color: $color-primary-light;
         }
       }
@@ -158,7 +158,7 @@
     outline: 2px solid $color-primary;
     outline-offset: 2px;
 
-    :root[data-theme='dark'] & {
+    @include dark-mode {
       outline-color: $color-primary-light;
     }
   }
@@ -260,6 +260,23 @@
     }
   }
 
+  &__form {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__form--block {
+    display: flex;
+    align-items: center;
+  }
+
+  &__form__location {
+    font-family: $font-family-heading;
+    font-size: 0.875rem;
+    color: rgba(var(--color-ink-rgb), 0.55);
+    padding-right: calc(15px * 0.5);
+  }
+
   &__translation {
     display: block;
   }
@@ -303,7 +320,7 @@
       background-color: $color-surface;
 
       &:not(.is-active) {
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           background-color: rgba(var(--color-ink-rgb), 0.08);
           color: $color-text;
         }
@@ -318,7 +335,7 @@
         border-color: $color-primary;
         color: $color-primary;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           border-color: $color-primary-light;
           color: $color-primary-light;
         }
@@ -329,7 +346,7 @@
         color: white;
         border-color: $color-primary;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           border-color: $color-primary-light;
         }
       }

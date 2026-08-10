@@ -10,12 +10,14 @@ function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [step, setStep] = useState(null) // null | 'user' | 'config'
+  const [user, setUser] = useState(() => getUser())
 
   function handleStartClick() {
-    setStep(getUser() ? 'config' : 'user')
+    setStep(user ? 'config' : 'user')
   }
 
-  function handleUserSaved() {
+  function handleUserSaved(savedUser) {
+    setUser(savedUser)
     setStep('config')
   }
 
@@ -33,6 +35,11 @@ function Home() {
         </span>
       </h1>
       <p className="home__subtitle">{t('home.subtitle')}</p>
+      {user && (
+        <p className="home__greeting">
+          {t('home.greeting', { firstName: user.firstName })}
+        </p>
+      )}
 
       <div className="home__card">
         <h2 className="home__card-title">{t('home.card.title')}</h2>

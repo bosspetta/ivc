@@ -27,7 +27,7 @@
     text-decoration: none;
     letter-spacing: 0.05em;
 
-    :root[data-theme='dark'] & {
+    @include dark-mode {
       color: $color-primary-light;
     }
 
@@ -87,7 +87,7 @@
         color: $color-primary;
         font-weight: 600;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           color: $color-primary-light;
         }
       }
@@ -95,7 +95,7 @@
       &:hover {
         color: $color-primary-dark;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           color: $color-primary-light;
         }
       }
@@ -132,7 +132,7 @@
       &:not(.is-active):hover {
         color: $color-primary;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           color: $color-primary-light;
         }
       }
@@ -159,7 +159,7 @@
       color: $color-primary;
       border-color: $color-primary;
 
-      :root[data-theme='dark'] & {
+      @include dark-mode {
         color: $color-primary-light;
         border-color: $color-primary-light;
       }

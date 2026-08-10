@@ -1,4 +1,5 @@
 @use '../../scss/abstracts/variables' as *;
+@use '../../scss/abstracts/mixins' as *;
 
 .test {
   background-color: $color-surface;
@@ -23,7 +24,7 @@
       font-family: $font-family-heading;
       color: $color-primary-dark;
 
-      :root[data-theme='dark'] & {
+      @include dark-mode {
         color: $color-primary-light;
       }
     }
@@ -55,7 +56,7 @@
         outline: 2px solid $color-primary;
         outline-offset: 1px;
 
-        :root[data-theme='dark'] & {
+        @include dark-mode {
           outline-color: $color-primary-light;
         }
       }
@@ -82,7 +83,7 @@
       }
     }
 
-    button {
+    button:not(.test__help-btn) {
       margin-top: $spacing-sm;
       padding: $spacing-sm $spacing-md;
       background-color: $color-primary;
@@ -120,24 +121,28 @@
   }
 
   &__help-btn {
-    background-color: transparent !important;
-    color: $color-primary !important;
-    border: 1px solid $color-primary !important;
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+    margin-top: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-base;
+    font-weight: 600;
 
-    :root[data-theme='dark'] & {
-      color: $color-primary-light !important;
-      border-color: $color-primary-light !important;
+    @include dark-mode {
+      color: $color-primary-light;
+      border-color: $color-primary-light;
     }
 
     &:hover:not(:disabled) {
-      background-color: rgba(79, 70, 229, 0.06) !important;
+      background-color: rgba(79, 70, 229, 0.06);
     }
 
     &:disabled {
       opacity: 0.4;
       cursor: not-allowed;
-      border-color: rgba(var(--color-ink-rgb), 0.2) !important;
-      color: rgba(var(--color-ink-rgb), 0.4) !important;
+      border-color: rgba(var(--color-ink-rgb), 0.2);
+      color: rgba(var(--color-ink-rgb), 0.4);
     }
   }
 
@@ -147,7 +152,7 @@
     border-radius: $radius-base;
     padding: $spacing-sm $spacing-md;
 
-    :root[data-theme='dark'] & {
+    @include dark-mode {
       border-left-color: $color-primary-light;
     }
   }
@@ -203,7 +208,7 @@
         background-color: rgba(79, 70, 229, 0.06);
       }
 
-      :root[data-theme='dark'] & {
+      @include dark-mode {
         background-color: var(--color-primary);
         color: var(--color-text);
         border-color: $color-primary-light;

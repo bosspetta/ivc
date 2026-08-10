@@ -1,4 +1,7 @@
 {
+  "common": {
+    "loading": "Cargando..."
+  },
   "header": {
     "verbs": "Listado de verbos",
     "progress": "Mi progreso",
@@ -10,6 +13,7 @@
     "titleLabel": "Bienvenido a",
     "titleSiteName": "'Irregular Verbs Challenge'",
     "subtitle": "Aquí podrás reforzar y afianzar tu memoria practicando unos sencillos retos.",
+    "greeting": "¡Hola de nuevo, {{firstName}}!",
     "cta": "Realizar el reto",
     "card": {
       "title": "Irregulares al azar",

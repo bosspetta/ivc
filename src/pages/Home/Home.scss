@@ -33,7 +33,7 @@
       font-weight: 700;
       color: var(--color-primary);
 
-      :root[data-theme='dark'] & {
+      @include dark-mode {
         color: $color-primary-light;
       }
     }
@@ -42,6 +42,17 @@
   &__subtitle {
     color: rgba(var(--color-ink-rgb), 0.65);
     margin-bottom: $spacing-lg;
+  }
+
+  &__greeting {
+    font-family: $font-family-heading;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: $spacing-lg;
+
+    @include dark-mode {
+      color: $color-primary-light;
+    }
   }
 
   &__card {

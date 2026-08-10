@@ -1,4 +1,5 @@
 @use '../scss/abstracts/variables' as *;
+@use '../scss/abstracts/mixins' as *;
 
 .test-config {
   display: flex;
@@ -25,7 +26,7 @@
       outline: 2px solid $color-primary;
       outline-offset: 1px;
 
-      :root[data-theme='dark'] & {
+      @include dark-mode {
         outline-color: $color-primary-light;
       }
     }

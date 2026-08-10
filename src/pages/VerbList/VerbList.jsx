@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { COMMON_VERBS, VERBS } from '../../data/verbs.js'
+import { COMMON_VERBS, DIALECT_VARIANTS, VERBS } from '../../data/verbs.js'
 import { getPaginationRange } from '../../utils/pagination.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import './VerbList.scss'
@@ -8,6 +8,20 @@ import './VerbList.scss'
 const PAGE_SIZE = 20
 const MAX_SUGGESTIONS = 8
 const HIGHLIGHT_DURATION = 2500
+const MOBILE_QUERY = '(max-width: 767px)' // debe coincidir con $breakpoint-md en _variables.scss
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_QUERY)
+    const handleChange = (event) => setIsMobile(event.matches)
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  return isMobile
+}
 
 function escapeRegExp(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -29,6 +43,45 @@ function highlightVerbForm(sentence, candidates) {
     }
   }
   return sentence
+}
+
+function VerbFormWithAudio({ id, candidates, dialect, openPronunciationId, onOpenPronunciation, onClosePronunciation }) {
+  if (dialect) {
+    return [
+      { locale: 'US', word: dialect.us },
+      { locale: 'UK', word: dialect.uk },
+    ].map(({ locale, word }) => (
+      <span className="verb-list__form verb-list__form--block" key={locale}>
+        <span className="verb-list__form__location">({locale})</span>
+        {word}
+        <PronunciationToggle
+          id={`${id}-${locale}`}
+          text={word}
+          openId={openPronunciationId}
+          onOpen={onOpenPronunciation}
+          onClose={onClosePronunciation}
+        />
+      </span>
+    ))
+  }
+
+  const isMultiple = candidates.length > 1
+
+  return candidates.map((candidate, index) => (
+    <span
+      className={isMultiple ? 'verb-list__form verb-list__form--block' : 'verb-list__form'}
+      key={candidate}
+    >
+      {candidate}
+      <PronunciationToggle
+        id={`${id}-${index}`}
+        text={candidate}
+        openId={openPronunciationId}
+        onOpen={onOpenPronunciation}
+        onClose={onClosePronunciation}
+      />
+    </span>
+  ))
 }
 
 function matchesQuery(verb, query) {
@@ -53,6 +106,8 @@ function VerbList() {
   const [openPronunciationId, setOpenPronunciationId] = useState(null)
   const highlightTimeoutRef = useRef(null)
   const rowRefs = useRef({})
+  const searchContainerRef = useRef(null)
+  const isMobile = useIsMobile()
 
   const activeList = showAll ? VERBS : COMMON_VERBS
   const totalPages = Math.ceil(activeList.length / PAGE_SIZE)
@@ -75,6 +130,11 @@ function VerbList() {
     if (highlightedVerbId === null) return
     rowRefs.current[highlightedVerbId]?.scrollIntoView({ behavior: 'auto', block: 'start' })
   }, [highlightedVerbId])
+
+  function handleSearchBlur(event) {
+    if (searchContainerRef.current?.contains(event.relatedTarget)) return
+    setDropdownOpen(false)
+  }
 
   function goToPage(nextPage) {
     const clamped = Math.min(Math.max(nextPage, 1), totalPages)
@@ -103,7 +163,7 @@ function VerbList() {
     }, HIGHLIGHT_DURATION)
   }
 
-  const pageNumbers = getPaginationRange(page, totalPages)
+  const pageNumbers = getPaginationRange(page, totalPages, isMobile ? 1 : 2)
 
   return (
     <section className="verb-list">
@@ -111,7 +171,7 @@ function VerbList() {
       <p className="verb-list__count">{t('verbList.count', { count: activeList.length })}</p>
 
       <div className="verb-list__controls">
-        <div className="verb-list__search">
+        <div className="verb-list__search" ref={searchContainerRef}>
           <input
             type="text"
             placeholder={t('verbList.searchPlaceholder')}
@@ -121,7 +181,7 @@ function VerbList() {
               setDropdownOpen(true)
             }}
             onFocus={() => setDropdownOpen(true)}
-            onBlur={() => setDropdownOpen(false)}
+            onBlur={handleSearchBlur}
           />
           {isDropdownOpen && searchQuery.trim() && (
             <ul className="verb-list__dropdown">
@@ -182,33 +242,32 @@ function VerbList() {
                 className={verb.id === highlightedVerbId ? 'is-highlighted' : ''}
               >
                 <td data-label={t('verbList.columns.base')}>
-                  {verb.base}
-                  <PronunciationToggle
+                  <VerbFormWithAudio
                     id={`${verb.id}-base`}
-                    text={verb.base}
-                    openId={openPronunciationId}
-                    onOpen={setOpenPronunciationId}
-                    onClose={() => setOpenPronunciationId(null)}
+                    candidates={verb.baseCandidates}
+                    openPronunciationId={openPronunciationId}
+                    onOpenPronunciation={setOpenPronunciationId}
+                    onClosePronunciation={() => setOpenPronunciationId(null)}
                   />
                 </td>
                 <td data-label={t('verbList.columns.pastSimple')}>
-                  {verb.pastSimple}
-                  <PronunciationToggle
+                  <VerbFormWithAudio
                     id={`${verb.id}-pastSimple`}
-                    text={verb.pastSimple}
-                    openId={openPronunciationId}
-                    onOpen={setOpenPronunciationId}
-                    onClose={() => setOpenPronunciationId(null)}
+                    candidates={verb.pastSimpleCandidates}
+                    dialect={DIALECT_VARIANTS[verb.base]?.pastSimple}
+                    openPronunciationId={openPronunciationId}
+                    onOpenPronunciation={setOpenPronunciationId}
+                    onClosePronunciation={() => setOpenPronunciationId(null)}
                   />
                 </td>
                 <td data-label={t('verbList.columns.pastParticiple')}>
-                  {verb.pastParticiple}
-                  <PronunciationToggle
+                  <VerbFormWithAudio
                     id={`${verb.id}-pastParticiple`}
-                    text={verb.pastParticiple}
-                    openId={openPronunciationId}
-                    onOpen={setOpenPronunciationId}
-                    onClose={() => setOpenPronunciationId(null)}
+                    candidates={verb.pastParticipleCandidates}
+                    dialect={DIALECT_VARIANTS[verb.base]?.pastParticiple}
+                    openPronunciationId={openPronunciationId}
+                    onOpenPronunciation={setOpenPronunciationId}
+                    onClosePronunciation={() => setOpenPronunciationId(null)}
                   />
                 </td>
                 <td

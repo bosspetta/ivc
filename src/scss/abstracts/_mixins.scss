@@ -11,3 +11,9 @@
     @content;
   }
 }
+
+@mixin dark-mode {
+  :root[data-theme='dark'] & {
+    @content;
+  }
+}
