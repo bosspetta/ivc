@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { applyTheme, getStoredTheme } from '../utils/theme.js'
+import Logo from './Logo.jsx'
 import './Header.scss'
 
 function SunIcon() {
@@ -23,6 +24,21 @@ function MoonIcon() {
   )
 }
 
+function HelpIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M7.6 7.6a2.4 2.4 0 1 1 3.4 2.18c-.6.3-1 .7-1 1.32v.3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="10" cy="14.2" r="0.9" fill="currentColor" />
+    </svg>
+  )
+}
+
 function Header() {
   const { t, i18n } = useTranslation()
   const [theme, setTheme] = useState(getStoredTheme)
@@ -36,8 +52,8 @@ function Header() {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <NavLink to="/" className="site-header__logo">
-          IVC
+        <NavLink to="/" className="site-header__logo" aria-label={t('header.siteName')}>
+          <Logo className="site-header__logo-icon" />
         </NavLink>
         <nav className="site-header__nav">
           <span className="site-header__nav__links">
@@ -52,12 +68,6 @@ function Header() {
               className={({ isActive }) => (isActive ? 'is-active' : undefined)}
             >
               {t('header.progress')}
-            </NavLink>
-            <NavLink
-              to="/help"
-              className={({ isActive }) => (isActive ? 'is-active' : undefined)}
-            >
-              {t('header.help')}
             </NavLink>
           </span>
           <span className="site-header__nav__actions">
@@ -77,9 +87,18 @@ function Header() {
                 EN
               </button>
             </div>
+            <NavLink
+              to="/help"
+              className={({ isActive }) =>
+                isActive ? 'site-header__icon-btn is-active' : 'site-header__icon-btn'
+              }
+            >
+              <HelpIcon />
+              <span className="visually-hidden">{t('header.help')}</span>
+            </NavLink>
             <button
               type="button"
-              className="site-header__theme-toggle"
+              className="site-header__icon-btn"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? t('header.lightMode') : t('header.darkMode')}
             >

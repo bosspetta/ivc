@@ -21,21 +21,35 @@
   }
 
   &__logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $color-primary;
-    text-decoration: none;
-    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    margin-left: -15px;
 
-    @include dark-mode {
-      color: $color-primary-light;
+    @include respond-md {
+      margin-top: -16px;
+      margin-bottom: -65px;
     }
 
     @include respond-below-md {
-      font-size: 1.875rem;
-      padding-bottom: $spacing-sm;
-      border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.08);
       width: 100%;
+      margin-bottom: -90px;
+    }
+  }
+
+  &__logo-icon {
+    width: auto;
+    position: relative;
+    z-index: 1;
+
+    @include respond-md {
+      height: 151px;
+    }
+
+    @include respond-below-md {
+      height: 115px;
+      margin-top: -16px;
+      margin-bottom: 16px;
+      margin-left: -15px;
     }
   }
 
@@ -55,6 +69,43 @@
       flex: 1;
       display: flex;
       gap: calc(30px * 0.5);
+
+      @include respond-below-md {
+        justify-content: end;
+        border-top: 1px solid rgba(var(--color-ink-rgb), 0.08);
+        padding-top: 0.5rem;
+      }
+
+      a {
+        font-family: $font-family-heading;
+        color: $color-text;
+        text-decoration: none;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.025rem;
+
+        @include respond-below-md {
+          font-size: 0.85rem;
+        }
+
+        &.is-active {
+          color: $color-primary;
+          font-weight: 600;
+
+          @include dark-mode {
+            color: $color-primary-light;
+          }
+        }
+
+        &:hover {
+          color: $color-primary-dark;
+
+          @include dark-mode {
+            color: $color-primary-light;
+          }
+        }
+      }
     }
 
     &__actions {
@@ -67,37 +118,6 @@
         position: absolute;
         top: 1rem;
         right: 2rem;
-      }
-    }
-
-    a {
-      font-family: $font-family-heading;
-      color: $color-text;
-      text-decoration: none;
-      font-size: 0.95rem;
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.025rem;
-
-      @include respond-below-md {
-        font-size: 0.85rem;
-      }
-
-      &.is-active {
-        color: $color-primary;
-        font-weight: 600;
-
-        @include dark-mode {
-          color: $color-primary-light;
-        }
-      }
-
-      &:hover {
-        color: $color-primary-dark;
-
-        @include dark-mode {
-          color: $color-primary-light;
-        }
       }
     }
   }
@@ -139,7 +159,7 @@
     }
   }
 
-  &__theme-toggle {
+  &__icon-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -149,10 +169,21 @@
     background: none;
     color: rgba(var(--color-ink-rgb), 0.6);
     flex-shrink: 0;
+    text-decoration: none;
 
     svg {
       width: 14px;
       height: 14px;
+    }
+
+    &.is-active {
+      color: $color-primary;
+      border-color: $color-primary;
+
+      @include dark-mode {
+        color: $color-primary-light;
+        border-color: $color-primary-light;
+      }
     }
 
     &:hover {

@@ -3,6 +3,7 @@
     "loading": "Cargando..."
   },
   "header": {
+    "siteName": "Irregular Verbs Challenge",
     "verbs": "Listado de verbos",
     "progress": "Mi progreso",
     "help": "Ayuda",

@@ -3,6 +3,7 @@
     "loading": "Loading..."
   },
   "header": {
+    "siteName": "Irregular Verbs Challenge",
     "verbs": "Verb list",
     "progress": "My progress",
     "help": "Help",
