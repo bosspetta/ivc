@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS, DIALECT_VARIANTS, VERBS } from '../../data/verbs.js'
 import { getPaginationRange } from '../../utils/pagination.js'
+import { findVerbFormMatch } from '../../utils/verbForm.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import './VerbList.scss'
 
@@ -23,26 +24,19 @@ function useIsMobile() {
   return isMobile
 }
 
-function escapeRegExp(text) {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
 function highlightVerbForm(sentence, candidates) {
-  for (const candidate of candidates) {
-    const match = sentence.match(new RegExp(`\\b${escapeRegExp(candidate)}\\b`, 'i'))
-    if (match) {
-      const start = match.index
-      const end = start + match[0].length
-      return (
-        <>
-          {sentence.slice(0, start)}
-          <strong>{sentence.slice(start, end)}</strong>
-          {sentence.slice(end)}
-        </>
-      )
-    }
-  }
-  return sentence
+  const match = findVerbFormMatch(sentence, candidates)
+  if (!match) return sentence
+
+  const start = match.index
+  const end = start + match.text.length
+  return (
+    <>
+      {sentence.slice(0, start)}
+      <strong>{sentence.slice(start, end)}</strong>
+      {sentence.slice(end)}
+    </>
+  )
 }
 
 function VerbFormWithAudio({ id, candidates, dialect, openPronunciationId, onOpenPronunciation, onClosePronunciation }) {

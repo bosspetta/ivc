@@ -19,6 +19,10 @@
     "card": {
       "title": "Irregulares al azar",
       "description": "¿Te sabes las tres formas de los verbos irregulares más habituales? Ponte a prueba. Te doy el infinitivo (base form) del verbo como pista, y tú partes de ahí. O también puedes activar el 'Modo experto', en el que te daré cualquiera de las tres formas verbales como pista, y desde ahí tú completarás el trío."
+    },
+    "fillGapsCard": {
+      "title": "Rellena los huecos",
+      "description": "¿Prefieres verlos en contexto? Te mostramos frases reales con un hueco en el lugar del verbo, y tú escribes la forma correcta. Iremos alternando las tres formas verbales —infinitivo, pasado simple y participio— repartidas entre distintas frases, para que practiques la ortografía exacta de cada una."
     }
   },
   "userForm": {
@@ -33,6 +37,33 @@
     "verbCountLabel": "Número de verbos ({{min}}-{{max}})",
     "randomFormsLabel": "Preguntar aleatoriamente por cualquiera de las tres formas (en vez de siempre la forma base)",
     "start": "Empezar reto"
+  },
+  "fillGapsConfig": {
+    "title": "Configura tu reto",
+    "sentenceCountLabel": "Número de frases ({{min}}-{{max}})",
+    "start": "Empezar reto"
+  },
+  "fillGaps": {
+    "inputLabel": "Tu respuesta",
+    "definitionLabel": "Definición:",
+    "check": "Comprobar",
+    "help": "Ayúdame",
+    "next": "Siguiente",
+    "correct": "¡Correcto!",
+    "almost": "¡Casi!…",
+    "tryAgain": "Inténtalo de nuevo. Te quedan {{count}} intentos.",
+    "fullConjugationPrefix": "Conjugación completa:",
+    "abbr": {
+      "base": "V1",
+      "pastSimple": "V2",
+      "pastParticiple": "V3"
+    },
+    "seeResult": "Ver resultado",
+    "finishedTitle": "¡Reto completado!",
+    "result": "Acertaste {{score}} de {{total}} frases ({{percentage}}%)",
+    "backHome": "Volver al inicio",
+    "repeat": "Repetir reto",
+    "noConfig": "No hay ningún reto configurado."
   },
   "test": {
     "hint": "Pista ({{form}}):",

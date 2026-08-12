@@ -3,7 +3,7 @@
 
 .home {
   text-align: center;
-  max-width: 560px;
+  max-width: 735px;
   margin: 0 auto;
 
   &__title {
@@ -55,11 +55,27 @@
     }
   }
 
+  &__grid {
+    @include respond-md {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: calc(60px * 0.5);
+    }
+  }
+
   &__card {
     background-color: $color-surface;
     border-radius: $radius-base;
     padding: $spacing-lg * 1.5;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    & + & {
+      margin-top: $spacing-lg;
+
+      @include respond-md {
+        margin-top: 0;
+      }
+    }
   }
 
   &__card-title {

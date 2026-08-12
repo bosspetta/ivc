@@ -6,6 +6,7 @@ import Home from './pages/Home/Home.jsx'
 import VerbList from './pages/VerbList/VerbList.jsx'
 import Help from './pages/Help/Help.jsx'
 import Test from './pages/Test/Test.jsx'
+import FillGaps from './pages/FillGaps/FillGaps.jsx'
 
 const Progress = lazy(() => import('./pages/Progress/Progress.jsx'))
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/progress" element={<Progress />} />
           <Route path="/help" element={<Help />} />
           <Route path="/test" element={<Test />} />
+          <Route path="/fill-gaps" element={<FillGaps />} />
         </Routes>
       </Suspense>
     </Layout>

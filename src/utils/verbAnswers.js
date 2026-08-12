@@ -17,6 +17,10 @@ export function isAnswerCorrect(userInput, correctValue) {
   )
 }
 
+export function isGapAnswerCorrect(userInput, answer) {
+  return userInput.trim().toLowerCase() === answer.trim().toLowerCase()
+}
+
 export function pickRandomForm() {
   const forms = ['base', 'pastSimple', 'pastParticiple']
   return forms[Math.floor(Math.random() * forms.length)]

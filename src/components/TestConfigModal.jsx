@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from './Modal.jsx'
 import './TestConfigModal.scss'
 
-const MIN_VERBS = 10
+const MIN_VERBS = 5
 const MAX_VERBS = 100
 
 function TestConfigModal({ onClose, onStart }) {

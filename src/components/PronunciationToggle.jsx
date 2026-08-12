@@ -20,7 +20,7 @@ function SpeakerIcon() {
   )
 }
 
-function PronunciationToggle({ text, id, openId, onOpen, onClose, alwaysOpen = false, rate = 1 }) {
+function PronunciationToggle({ text, id, openId, onOpen, onClose, alwaysOpen = false, rate = 0.8 }) {
   const { t } = useTranslation()
   const containerRef = useRef(null)
   const isOpen = alwaysOpen || openId === id

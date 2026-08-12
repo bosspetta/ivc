@@ -1,15 +1,10 @@
 @use '../scss/abstracts/variables' as *;
 @use '../scss/abstracts/mixins' as *;
 
-.user-form {
+.fill-gaps-config {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-
-  &__intro {
-    margin-bottom: $spacing-md;
-    color: rgba(var(--color-ink-rgb), 0.65);
-  }
 
   label {
     display: flex;
@@ -19,7 +14,7 @@
     color: $color-text;
   }
 
-  input {
+  input[type='number'] {
     padding: $spacing-sm;
     border: 1px solid rgba(var(--color-ink-rgb), 0.15);
     border-radius: $radius-base;

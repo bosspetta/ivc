@@ -19,6 +19,10 @@
     "card": {
       "title": "Random irregulars",
       "description": "Do you know the three forms of the most common irregular verbs? Put yourself to the test. I'll give you the verb's infinitive (base form) as a hint, and you take it from there. Or you can turn on 'Expert mode', where I'll give you any of the three verb forms as a hint, and you'll complete the trio from there."
+    },
+    "fillGapsCard": {
+      "title": "Fill in the gaps",
+      "description": "Prefer to see them in context? We'll show you real sentences with a gap where the verb should be, and you type in the correct form. We mix all three verb forms — infinitive, simple past, and participle — across different sentences, so you practice the exact spelling of each one."
     }
   },
   "userForm": {
@@ -33,6 +37,33 @@
     "verbCountLabel": "Number of verbs ({{min}}-{{max}})",
     "randomFormsLabel": "Randomly ask for any of the three forms (instead of always the base form)",
     "start": "Start challenge"
+  },
+  "fillGapsConfig": {
+    "title": "Set up your challenge",
+    "sentenceCountLabel": "Number of sentences ({{min}}-{{max}})",
+    "start": "Start challenge"
+  },
+  "fillGaps": {
+    "inputLabel": "Your answer",
+    "definitionLabel": "Definition:",
+    "check": "Check",
+    "help": "Help me",
+    "next": "Next",
+    "correct": "Correct!",
+    "almost": "So close!…",
+    "tryAgain": "Try again. You have {{count}} attempts left.",
+    "fullConjugationPrefix": "Full conjugation:",
+    "abbr": {
+      "base": "V1",
+      "pastSimple": "V2",
+      "pastParticiple": "V3"
+    },
+    "seeResult": "See result",
+    "finishedTitle": "Challenge complete!",
+    "result": "You got {{score}} out of {{total}} sentences right ({{percentage}}%)",
+    "backHome": "Back to home",
+    "repeat": "Repeat challenge",
+    "noConfig": "No challenge has been set up."
   },
   "test": {
     "hint": "Hint ({{form}}):",
