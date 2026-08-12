@@ -105,7 +105,10 @@
   "progress": {
     "title": "Mi progreso",
     "empty": "Todavía no has completado ningún reto. ¡Anímate a hacer el primero!",
-    "tooltipVerbs": "{{correct}}/{{total}} verbos ({{percentage}}%)"
+    "tooltipVerbs": "{{correct}}/{{total}} verbos ({{percentage}}%)",
+    "tooltipSentences": "{{correct}}/{{total}} frases ({{percentage}}%)",
+    "legendTest": "Irregulares al azar",
+    "legendFillGaps": "Rellena los huecos"
   },
   "layout": {
     "creditBefore": "Hecho con amor",

@@ -20,15 +20,27 @@
     border-radius: $radius-base;
     padding: $spacing-sm $spacing-md;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 
+  &__tooltip-row {
     p {
       font-size: 1.2rem;
       color: $color-text;
-
-      &:first-child {
-        color: rgba(var(--color-ink-rgb), 0.5);
-        margin-bottom: 2px;
-      }
     }
+
+    & + & {
+      margin-top: $spacing-sm * 0.5;
+      padding-top: $spacing-sm * 0.5;
+      border-top: 1px solid rgba(var(--color-ink-rgb), 0.08);
+    }
+  }
+
+  &__tooltip-name {
+    font-weight: 600;
+  }
+
+  &__tooltip-date {
+    color: rgba(var(--color-ink-rgb), 0.5);
+    margin-bottom: 2px;
   }
 }

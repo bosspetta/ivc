@@ -106,7 +106,10 @@
   "progress": {
     "title": "My progress",
     "empty": "You haven't completed any challenge yet. Give the first one a try!",
-    "tooltipVerbs": "{{correct}}/{{total}} verbs ({{percentage}}%)"
+    "tooltipVerbs": "{{correct}}/{{total}} verbs ({{percentage}}%)",
+    "tooltipSentences": "{{correct}}/{{total}} sentences ({{percentage}}%)",
+    "legendTest": "Random irregulars",
+    "legendFillGaps": "Fill in the gaps"
   },
   "layout": {
     "creditBefore": "Made with love",

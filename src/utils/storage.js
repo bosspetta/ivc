@@ -27,10 +27,11 @@ export function getProgress() {
   }
 }
 
-export function addProgressEntry({ correctCount, totalCount }) {
+export function addProgressEntry({ correctCount, totalCount, type = 'test' }) {
   const entries = getProgress()
   const entry = {
     date: new Date().toISOString(),
+    type,
     correctCount,
     totalCount,
     percentage: Math.round((correctCount / totalCount) * 100),

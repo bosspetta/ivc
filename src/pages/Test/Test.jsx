@@ -141,7 +141,7 @@ function Test() {
   function handleNext() {
     const isLast = currentIndex === questions.length - 1
     if (isLast) {
-      addProgressEntry({ correctCount: score, totalCount: questions.length })
+      addProgressEntry({ correctCount: score, totalCount: questions.length, type: 'test' })
       setFinished(true)
       return
     }

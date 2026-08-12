@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS, VERB_DEFINITIONS } from '../../data/verbs.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
 import { isGapAnswerCorrect, shuffle } from '../../utils/verbAnswers.js'
+import { addProgressEntry } from '../../utils/storage.js'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import './FillGaps.scss'
@@ -183,6 +184,7 @@ function FillGaps() {
 
   function handleNext() {
     if (isLast) {
+      addProgressEntry({ correctCount: score, totalCount: questions.length, type: 'fillGaps' })
       setFinished(true)
       return
     }
