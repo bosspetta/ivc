@@ -52,11 +52,22 @@ function StatusIcon({ correct }) {
   )
 }
 
+function escapeRegExp(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function highlightVerb(sentence, verbBase) {
+  const pattern = new RegExp(`\\b(${escapeRegExp(verbBase)})\\b`, 'i')
+  return sentence
+    .split(pattern)
+    .map((part, index) => (index % 2 === 1 ? <strong key={index}>{part}</strong> : part))
+}
+
 function VerbInfo({ verb, isSpanish }) {
   return (
     <p className="test__verb-info">
       {isSpanish && <strong>{verb.translation} — </strong>}
-      <em>{verb.example}</em>
+      <em>{highlightVerb(verb.example, verb.base)}</em>
     </p>
   )
 }

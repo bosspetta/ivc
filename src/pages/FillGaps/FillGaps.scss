@@ -10,7 +10,7 @@
   margin: 0 auto;
 
   &__counter {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: rgba(var(--color-ink-rgb), 0.5);
     margin-bottom: $spacing-sm * 0.5;
   }
@@ -49,7 +49,7 @@
   }
 
   &__translation {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: rgba(var(--color-ink-rgb), 0.55);
 
     em {
@@ -112,7 +112,7 @@
 
     &__label {
       display: block;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       margin-bottom: $spacing-sm * 0.5;
     }
 
@@ -186,7 +186,7 @@
     }
 
     &__form {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: $color-text;
 
       &.is-tested {
@@ -238,7 +238,7 @@
   }
 
   &__result {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     margin: $spacing-md 0 $spacing-lg;
   }
 

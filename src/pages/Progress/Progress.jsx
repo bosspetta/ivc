@@ -20,7 +20,7 @@ function formatDate(isoDate, language) {
 const CHART_MUTED = 'rgba(var(--color-ink-rgb), 0.55)'
 const CHART_GRID = 'rgba(var(--color-ink-rgb), 0.12)'
 const CHART_AXIS = 'rgba(var(--color-ink-rgb), 0.25)'
-const CHART_FONT_FAMILY = "'Hanken Grotesk', Arial, sans-serif"
+const CHART_FONT_FAMILY = "'Nunito', Arial, sans-serif"
 const TEST_COLOR = '#8b05e4'
 const FILL_GAPS_COLOR = '#e40938'
 

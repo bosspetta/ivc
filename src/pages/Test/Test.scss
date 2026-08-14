@@ -10,13 +10,13 @@
   margin: 0 auto;
 
   &__counter {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: rgba(var(--color-ink-rgb), 0.5);
     margin-bottom: $spacing-sm;
   }
 
   &__hint {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     margin-bottom: $spacing-lg;
 
     strong {
@@ -39,7 +39,11 @@
       display: flex;
       flex-direction: column;
       gap: $spacing-sm * 0.5;
-      font-size: 1.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.025rem;
+      text-transform: uppercase;
+      text-align: left;
+      font-weight: 600;
       color: $color-text;
     }
 
@@ -187,7 +191,7 @@
   }
 
   &__result {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     margin: $spacing-md 0 $spacing-lg;
   }
 

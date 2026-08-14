@@ -23,7 +23,7 @@
     }
 
     &__label:not(&__label--site-name) {
-      font-family: 'Newsreader', Georgia, serif;
+      font-family: 'Nunito', Georgia, serif;
       font-style: italic;
       color: rgba(var(--color-ink-rgb), 0.65);
       font-size: 1.875rem;
@@ -69,6 +69,10 @@
     padding: $spacing-lg * 1.5;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
+    @include respond-below-md {
+      padding: 2rem;
+    }
+
     & + & {
       margin-top: $spacing-lg;
 
@@ -84,6 +88,7 @@
   }
 
   &__card-description {
+    font-size: 1.05rem;
     color: rgba(var(--color-ink-rgb), 0.65);
     margin-bottom: $spacing-lg;
   }
