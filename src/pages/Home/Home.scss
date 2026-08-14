@@ -31,7 +31,7 @@
 
     &__label--site-name {
       font-weight: 700;
-      color: var(--color-primary);
+      color: var(--color-primary-dark);
 
       @include dark-mode {
         color: $color-primary-light;
@@ -47,7 +47,7 @@
   &__greeting {
     font-family: $font-family-heading;
     font-weight: 600;
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
     margin-bottom: $spacing-lg;
 
     @include dark-mode {

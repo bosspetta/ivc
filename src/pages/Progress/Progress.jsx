@@ -21,8 +21,8 @@ const CHART_MUTED = 'rgba(var(--color-ink-rgb), 0.55)'
 const CHART_GRID = 'rgba(var(--color-ink-rgb), 0.12)'
 const CHART_AXIS = 'rgba(var(--color-ink-rgb), 0.25)'
 const CHART_FONT_FAMILY = "'Nunito', Arial, sans-serif"
-const TEST_COLOR = '#8b05e4'
-const FILL_GAPS_COLOR = '#e40938'
+const TEST_COLOR = '#ffb46e'
+const FILL_GAPS_COLOR = '#5fc8ff'
 
 function CustomTooltip({ active, payload }) {
   const { t } = useTranslation()

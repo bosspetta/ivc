@@ -8,7 +8,7 @@ function Logo(props) {
             .ivc-logo-cls-2 { fill: #fff; }
             .ivc-logo-cls-3 { fill: #686969; }
             .ivc-logo-cls-4 { fill: #e40938; }
-            .ivc-logo-cls-5 { fill: #ffdf05; }
+            .ivc-logo-cls-5 { fill: var(--color-logo-highlight); }
             .ivc-logo-cls-6 { fill: #333; }
           `}
         </style>
