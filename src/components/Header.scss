@@ -121,6 +121,38 @@
         top: 1rem;
         right: 2rem;
       }
+
+      @include respond-md {
+        padding-left: $spacing-md;
+        border-left: 1px solid rgba(var(--color-ink-rgb), 0.15);
+
+        a.site-header__icon-btn {
+          order: -1;
+          padding: 0;
+          margin-right: 15px;
+          border: none;
+          border-radius: 0;
+          background: none;
+          color: $color-text;
+
+          &.is-active {
+            color: $color-primary;
+            font-weight: 600;
+
+            @include dark-mode {
+              color: $color-primary-light;
+            }
+          }
+
+          &:hover {
+            color: $color-primary;
+
+            @include dark-mode {
+              color: $color-primary-light;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -165,6 +197,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     padding: 4px $spacing-sm;
     border: 1px solid rgba(var(--color-ink-rgb), 0.15);
     border-radius: $radius-base;
@@ -176,6 +209,31 @@
     svg {
       width: 14px;
       height: 14px;
+    }
+
+    &__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+
+      @include respond-md {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        font-family: $font-family-heading;
+        text-transform: uppercase;
+        font-size: 0.95rem;
+        letter-spacing: 0.025rem;
+      }
     }
 
     &.is-active {

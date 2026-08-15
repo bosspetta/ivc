@@ -94,7 +94,7 @@ function Header() {
               }
             >
               <HelpIcon />
-              <span className="visually-hidden">{t('header.help')}</span>
+              <span className="site-header__icon-btn__label">{t('header.help')}</span>
             </NavLink>
             <button
               type="button"
