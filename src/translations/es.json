@@ -61,8 +61,9 @@
     "seeResult": "Ver resultado",
     "finishedTitle": "¡Reto completado!",
     "result": "Acertaste {{score}} de {{total}} frases ({{percentage}}%)",
-    "backHome": "Volver al inicio",
+    "backHome": "Inicio",
     "repeat": "Repetir reto",
+    "seeProgress": "Ver mi progreso",
     "noConfig": "No hay ningún reto configurado."
   },
   "test": {
@@ -75,12 +76,12 @@
     "correct": "¡Bien hecho! Vamos a por el siguiente.",
     "correctLast": "¡Bien hecho! Vamos a ver tu resultado.",
     "help": "Ayúdame {{count}}",
-    "helpAnswer": "Respuesta correcta: {{base}} / {{pastSimple}} / {{pastParticiple}}",
     "seeResult": "Ver resultado",
     "finishedTitle": "¡Reto completado!",
     "result": "Acertaste {{score}} de {{total}} verbos ({{percentage}}%)",
     "seeProgress": "Ver mi progreso",
-    "backHome": "Volver al inicio",
+    "backHome": "Inicio",
+    "repeat": "Repetir reto",
     "noConfig": "No hay ningún reto configurado.",
     "forms": {
       "base": "forma base",
@@ -90,6 +91,7 @@
   },
   "verbList": {
     "title": "Listado completo de verbos irregulares",
+    "titleCommon": "Listado de verbos irregulares más comunes",
     "count": "{{count}} verbos en total",
     "searchPlaceholder": "Buscar un verbo...",
     "noResults": "Sin resultados",

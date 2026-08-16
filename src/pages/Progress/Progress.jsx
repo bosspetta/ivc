@@ -21,8 +21,8 @@ const CHART_MUTED = 'rgba(var(--color-ink-rgb), 0.55)'
 const CHART_GRID = 'rgba(var(--color-ink-rgb), 0.12)'
 const CHART_AXIS = 'rgba(var(--color-ink-rgb), 0.25)'
 const CHART_FONT_FAMILY = "'Nunito', Arial, sans-serif"
-const TEST_COLOR = '#ffb46e'
-const FILL_GAPS_COLOR = '#5fc8ff'
+const TEST_COLOR = 'var(--color-primary)'
+const FILL_GAPS_COLOR = 'var(--color-secondary)'
 
 function CustomTooltip({ active, payload }) {
   const { t } = useTranslation()
@@ -45,7 +45,12 @@ function CustomTooltip({ active, payload }) {
     <div className="progress-chart__tooltip">
       {rows.map((row) => (
         <div key={row.key} className="progress-chart__tooltip-row">
-          <p className="progress-chart__tooltip-name" style={{ color: row.color }}>
+          <p className="progress-chart__tooltip-name">
+            <span
+              className="progress-chart__swatch"
+              style={{ backgroundColor: row.color }}
+              aria-hidden="true"
+            />
             {t(row.isTest ? 'progress.legendTest' : 'progress.legendFillGaps')}
           </p>
           <p className="progress-chart__tooltip-date">{row.dateLabel}</p>
@@ -64,6 +69,26 @@ function CustomTooltip({ active, payload }) {
 
 function legendFormatter(value, t) {
   return t(value === 'testPercentage' ? 'progress.legendTest' : 'progress.legendFillGaps')
+}
+
+function CustomLegend({ payload }) {
+  const { t } = useTranslation()
+  if (!payload) return null
+
+  return (
+    <ul className="progress-chart__legend">
+      {payload.map((entry) => (
+        <li key={entry.value} className="progress-chart__legend-item">
+          <span
+            className="progress-chart__swatch"
+            style={{ backgroundColor: entry.color }}
+            aria-hidden="true"
+          />
+          {legendFormatter(entry.value, t)}
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 function Progress() {
@@ -115,7 +140,7 @@ function Progress() {
                 width={48}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Legend formatter={(value) => legendFormatter(value, t)} />
+              <Legend content={<CustomLegend />} />
               <Line
                 type="monotone"
                 dataKey="testPercentage"

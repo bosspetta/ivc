@@ -1,0 +1,106 @@
+@use '../scss/abstracts/variables' as *;
+@use '../scss/abstracts/mixins' as *;
+
+.verb-forms-table {
+  color: $color-text;
+
+  &__label {
+    display: block;
+    font-size: 1.25rem;
+    margin-bottom: $spacing-sm * 0.5;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: $spacing-sm * 0.5 $spacing-sm $spacing-sm * 0.5 0;
+  }
+
+  &__header {
+    position: relative;
+    display: inline-block;
+    font-family: $font-family-heading;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(var(--color-ink-rgb), 0.55);
+  }
+
+  &__header-abbr {
+    display: none;
+    position: relative;
+
+    button {
+      font: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline dotted;
+      text-underline-offset: 2px;
+    }
+
+    @include respond-below-md {
+      display: inline-block;
+    }
+  }
+
+  &__header-full {
+    @include respond-below-md {
+      display: none;
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 6px;
+    padding: 4px 8px;
+    background-color: $color-text;
+    color: $color-background;
+    border-radius: $radius-base * 0.5;
+    white-space: nowrap;
+    z-index: 5;
+
+    @include dark-mode {
+      background-color: $color-surface;
+      border: 1px solid rgba(var(--color-ink-rgb), 0.15);
+      color: $color-text;
+    }
+  }
+
+  &__form {
+    font-size: 1.25rem;
+    color: $color-text;
+
+    &.is-tested {
+      font-weight: 700;
+      color: $color-success;
+    }
+  }
+}
+
+.verb-forms-table thead tr {
+  border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.08);
+}
+
+.verb-forms-table__header,
+.verb-forms-table__form {
+  border-right: 1px solid rgba(var(--color-ink-rgb), 0.08);
+  display: flex;
+}
+
+.verb-forms-table table tr th:last-child .verb-forms-table__header,
+.verb-forms-table table tr td:last-child .verb-forms-table__form {
+  border: none;
+}

@@ -7,6 +7,8 @@ import { isGapAnswerCorrect, shuffle } from '../../utils/verbAnswers.js'
 import { addProgressEntry } from '../../utils/storage.js'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
+import VerbFormsTable from '../../components/VerbFormsTable.jsx'
+import useIsMobile from '../../hooks/useIsMobile.js'
 import './FillGaps.scss'
 
 const MAX_ATTEMPTS = 3
@@ -38,6 +40,7 @@ function buildGapPool(verbs) {
         id: `${verb.id}-${field.tense}`,
         tense: field.tense,
         definition: VERB_DEFINITIONS[verb.base],
+        translation: verb.translation,
         before: sentence.slice(0, match.index),
         answer: match.text,
         after: sentence.slice(match.index + match.text.length),
@@ -59,48 +62,8 @@ function buildQuestions(sentenceCount) {
   return shuffle(buildGapPool(COMMON_VERBS)).slice(0, sentenceCount)
 }
 
-function TenseHeaderCell({ full, abbr }) {
-  const [tooltipOpen, setTooltipOpen] = useState(false)
-  const abbrRef = useRef(null)
-
-  useEffect(() => {
-    if (!tooltipOpen) return
-
-    function handleClickOutside(event) {
-      if (abbrRef.current && !abbrRef.current.contains(event.target)) {
-        setTooltipOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [tooltipOpen])
-
-  return (
-    <th>
-      <span className="fill-gaps__other-forms__header">
-        <span className="fill-gaps__other-forms__header-full">{full}</span>
-        <span className="fill-gaps__other-forms__header-abbr" ref={abbrRef}>
-          <button
-            type="button"
-            aria-expanded={tooltipOpen}
-            onClick={() => setTooltipOpen((prev) => !prev)}
-          >
-            {abbr}
-          </button>
-          {tooltipOpen && (
-            <span className="fill-gaps__other-forms__tooltip" role="tooltip">
-              {full}
-            </span>
-          )}
-        </span>
-      </span>
-    </th>
-  )
-}
-
 function FillGaps() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
   const initialConfig = location.state
@@ -119,6 +82,7 @@ function FillGaps() {
   const [finished, setFinished] = useState(false)
   const inputRef = useRef(null)
   const nextButtonRef = useRef(null)
+  const isMobile = useIsMobile()
 
   function startChallenge(newConfig) {
     setConfig(newConfig)
@@ -133,8 +97,9 @@ function FillGaps() {
   }
 
   useEffect(() => {
+    if (isMobile) return
     inputRef.current?.focus()
-  }, [currentIndex])
+  }, [currentIndex, isMobile])
 
   useEffect(() => {
     if (feedback?.correct || feedback?.revealed) {
@@ -158,6 +123,7 @@ function FillGaps() {
   const question = questions[currentIndex]
   const solved = Boolean(feedback?.correct) || Boolean(feedback?.revealed)
   const isLast = currentIndex === questions.length - 1
+  const isSpanish = i18n.resolvedLanguage === 'es'
 
   function handleCheck(event) {
     event.preventDefault()
@@ -221,6 +187,9 @@ function FillGaps() {
           >
             {t('fillGaps.repeat')}
           </button>
+          <button type="button" className="fill-gaps__back-btn" onClick={() => navigate('/progress')}>
+            {t('fillGaps.seeProgress')}
+          </button>
         </div>
 
         {showConfigModal && (
@@ -283,46 +252,20 @@ function FillGaps() {
           </p>
         )}
 
+        {solved && isSpanish && (
+          <p className="fill-gaps__answer-translation">{question.translation}</p>
+        )}
+
         {solved && (
-          <div className="fill-gaps__other-forms">
-            <span className="fill-gaps__other-forms__label">
-              {t('fillGaps.fullConjugationPrefix')}
-            </span>
-            <table>
-              <thead>
-                <tr>
-                  {GAP_FIELDS.map((field) => (
-                    <TenseHeaderCell
-                      key={field.tense}
-                      full={t(`verbList.columns.${field.tense}`)}
-                      abbr={t(`fillGaps.abbr.${field.tense}`)}
-                    />
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {GAP_FIELDS.map((field) => {
-                    const isTested = field.tense === question.tense
-                    const value = isTested ? question.answer : question[field.field]
-                    return (
-                      <td key={field.tense}>
-                        <span
-                          className={
-                            isTested
-                              ? 'fill-gaps__other-forms__form is-tested'
-                              : 'fill-gaps__other-forms__form'
-                          }
-                        >
-                          {value}
-                        </span>
-                      </td>
-                    )
-                  })}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <VerbFormsTable
+            forms={{
+              base: question.tense === 'base' ? question.answer : question.base,
+              pastSimple: question.tense === 'pastSimple' ? question.answer : question.pastSimple,
+              pastParticiple:
+                question.tense === 'pastParticiple' ? question.answer : question.pastParticiple,
+            }}
+            testedTense={question.tense}
+          />
         )}
 
         <div className="fill-gaps__actions">

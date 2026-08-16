@@ -4,25 +4,12 @@ import { COMMON_VERBS, DIALECT_VARIANTS, VERBS } from '../../data/verbs.js'
 import { getPaginationRange } from '../../utils/pagination.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
+import useIsMobile from '../../hooks/useIsMobile.js'
 import './VerbList.scss'
 
 const PAGE_SIZE = 20
 const MAX_SUGGESTIONS = 8
 const HIGHLIGHT_DURATION = 2500
-const MOBILE_QUERY = '(max-width: 767px)' // debe coincidir con $breakpoint-md en _variables.scss
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(MOBILE_QUERY)
-    const handleChange = (event) => setIsMobile(event.matches)
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  return isMobile
-}
 
 function highlightVerbForm(sentence, candidates) {
   const match = findVerbFormMatch(sentence, candidates)
@@ -161,7 +148,7 @@ function VerbList() {
 
   return (
     <section className="verb-list">
-      <h2>{t('verbList.title')}</h2>
+      <h2>{t(showAll ? 'verbList.title' : 'verbList.titleCommon')}</h2>
       <p className="verb-list__count">{t('verbList.count', { count: activeList.length })}</p>
 
       <div className="verb-list__controls">

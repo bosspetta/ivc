@@ -3,6 +3,7 @@
 
 .test {
   background-color: $color-surface;
+  border: 1px solid var(--color-border);
   border-radius: $radius-base;
   padding: $spacing-lg;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -87,18 +88,19 @@
       }
     }
 
-    button:not(.test__help-btn) {
-      margin-top: $spacing-sm;
-      padding: $spacing-sm $spacing-md;
-      background-color: $color-primary;
-      color: white;
-      border: none;
-      border-radius: $radius-base;
-      font-weight: 600;
+  }
 
-      &:hover {
-        background-color: $color-primary-dark;
-      }
+  &__submit-btn {
+    margin-top: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: $radius-base;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $color-primary-dark;
     }
   }
 
@@ -161,11 +163,6 @@
     }
   }
 
-  &__help-answer {
-    font-weight: 600;
-    color: $color-text;
-  }
-
   &__success-block {
     background-color: rgba(22, 163, 74, 0.06);
     border-radius: $radius-base;
@@ -197,16 +194,26 @@
 
   &__finished-actions {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: $spacing-md;
 
+    @include respond-md {
+      flex-direction: row;
+    }
+
     button {
+      width: 100%;
       padding: $spacing-sm $spacing-md;
       border-radius: $radius-base;
       border: 1px solid $color-primary;
       background-color: transparent;
       color: $color-primary;
       font-weight: 600;
+
+      @include respond-md {
+        width: auto;
+      }
 
       &:hover {
         background-color: rgba(79, 70, 229, 0.06);

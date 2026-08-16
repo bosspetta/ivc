@@ -61,8 +61,9 @@
     "seeResult": "See result",
     "finishedTitle": "Challenge complete!",
     "result": "You got {{score}} out of {{total}} sentences right ({{percentage}}%)",
-    "backHome": "Back to home",
+    "backHome": "Home",
     "repeat": "Repeat challenge",
+    "seeProgress": "See my progress",
     "noConfig": "No challenge has been set up."
   },
   "test": {
@@ -75,12 +76,12 @@
     "correct": "Well done! Let's move on to the next one.",
     "correctLast": "Well done! Let's see your result.",
     "help": "Help me {{count}}",
-    "helpAnswer": "Correct answer: {{base}} / {{pastSimple}} / {{pastParticiple}}",
     "seeResult": "See result",
     "finishedTitle": "Challenge complete!",
     "result": "You got {{score}} out of {{total}} verbs right ({{percentage}}%)",
     "seeProgress": "See my progress",
-    "backHome": "Back to home",
+    "backHome": "Home",
+    "repeat": "Repeat challenge",
     "noConfig": "No challenge has been set up.",
     "forms": {
       "base": "base form",
@@ -90,6 +91,7 @@
   },
   "verbList": {
     "title": "Full list of irregular verbs",
+    "titleCommon": "List of the most common irregular verbs",
     "count": "{{count}} verbs in total",
     "searchPlaceholder": "Search a verb...",
     "noResults": "No results",

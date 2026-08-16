@@ -3,6 +3,7 @@
 
 .fill-gaps {
   background-color: $color-surface;
+  border: 1px solid var(--color-border);
   border-radius: $radius-base;
   padding: $spacing-lg;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -58,6 +59,12 @@
     }
   }
 
+  &__answer-translation {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+
   &__sentence input {
     display: inline-block;
     width: 9rem;
@@ -105,95 +112,6 @@
   &__retry {
     font-weight: 600;
     color: $color-error;
-  }
-
-  &__other-forms {
-    color: $color-text;
-
-    &__label {
-      display: block;
-      font-size: 1.25rem;
-      margin-bottom: $spacing-sm * 0.5;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: $spacing-sm * 0.5 $spacing-sm $spacing-sm * 0.5 0;
-    }
-
-    &__header {
-      position: relative;
-      display: inline-block;
-      font-family: $font-family-heading;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: rgba(var(--color-ink-rgb), 0.55);
-    }
-
-    &__header-abbr {
-      display: none;
-      position: relative;
-
-      button {
-        font: inherit;
-        text-transform: inherit;
-        letter-spacing: inherit;
-        color: inherit;
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        text-decoration: underline dotted;
-        text-underline-offset: 2px;
-      }
-
-      @include respond-below-md {
-        display: inline-block;
-      }
-    }
-
-    &__header-full {
-      @include respond-below-md {
-        display: none;
-      }
-    }
-
-    &__tooltip {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-top: 6px;
-      padding: 4px 8px;
-      background-color: $color-text;
-      color: $color-background;
-      border-radius: $radius-base * 0.5;
-      white-space: nowrap;
-      z-index: 5;
-
-      @include dark-mode {
-        background-color: $color-surface;
-        border: 1px solid rgba(var(--color-ink-rgb), 0.15);
-        color: $color-text;
-      }
-    }
-
-    &__form {
-      font-size: 1.25rem;
-      color: $color-text;
-
-      &.is-tested {
-        font-weight: 700;
-        color: $color-success;
-      }
-    }
   }
 
   &__actions {
@@ -244,17 +162,27 @@
 
   &__finished-actions {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: $spacing-md;
+
+    @include respond-md {
+      flex-direction: row;
+    }
   }
 
   &__back-btn {
+    width: 100%;
     padding: $spacing-sm $spacing-md;
     border-radius: $radius-base;
     border: 1px solid $color-primary;
     background-color: transparent;
     color: $color-primary;
     font-weight: 600;
+
+    @include respond-md {
+      width: auto;
+    }
 
     &:hover {
       background-color: rgba(79, 70, 229, 0.06);
@@ -266,19 +194,4 @@
       border-color: $color-primary-light;
     }
   }
-}
-
-.fill-gaps__other-forms thead tr {
-  border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.08);
-}
-
-.fill-gaps__other-forms__header,
-.fill-gaps__other-forms__form {
-  border-right: 1px solid rgba(var(--color-ink-rgb), 0.08);
-  display: flex;
-}
-
-.fill-gaps__other-forms table tr th:last-child .fill-gaps__other-forms__header,
-.fill-gaps__other-forms table tr td:last-child .fill-gaps__other-forms__form {
-  border: none;
 }

@@ -1,10 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS } from '../../data/verbs.js'
 import { addProgressEntry } from '../../utils/storage.js'
 import { isAnswerCorrect, pickRandomForm, shuffle } from '../../utils/verbAnswers.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
+import TestConfigModal from '../../components/TestConfigModal.jsx'
+import VerbFormsTable from '../../components/VerbFormsTable.jsx'
+import useIsMobile from '../../hooks/useIsMobile.js'
 import './Test.scss'
 
 const EMPTY_ANSWERS = { base: '', pastSimple: '', pastParticiple: '' }
@@ -68,6 +71,7 @@ function VerbInfo({ verb, isSpanish }) {
     <p className="test__verb-info">
       {isSpanish && <strong>{verb.translation} — </strong>}
       <em>{highlightVerb(verb.example, verb.base)}</em>
+      <PronunciationToggle text={verb.example} alwaysOpen />
     </p>
   )
 }
@@ -76,12 +80,13 @@ function Test() {
   const { t, i18n } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
-  const config = location.state
+  const initialConfig = location.state
 
-  const questions = useMemo(() => {
-    if (!config) return []
-    return buildQuestions(config.verbCount, config.randomForms)
-  }, [config])
+  const [config, setConfig] = useState(initialConfig)
+  const [questions, setQuestions] = useState(() =>
+    initialConfig ? buildQuestions(initialConfig.verbCount, initialConfig.randomForms) : [],
+  )
+  const [showConfigModal, setShowConfigModal] = useState(false)
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState(EMPTY_ANSWERS)
@@ -93,10 +98,26 @@ function Test() {
   const [finished, setFinished] = useState(false)
   const firstInputRef = useRef(null)
   const nextButtonRef = useRef(null)
+  const isMobile = useIsMobile()
+
+  function startChallenge(newConfig) {
+    setConfig(newConfig)
+    setQuestions(buildQuestions(newConfig.verbCount, newConfig.randomForms))
+    setCurrentIndex(0)
+    setAnswers(EMPTY_ANSWERS)
+    setFeedback(null)
+    setMistakeMade(false)
+    setWrongAttempts(0)
+    setHelped(false)
+    setScore(0)
+    setFinished(false)
+    setShowConfigModal(false)
+  }
 
   useEffect(() => {
+    if (isMobile) return
     firstInputRef.current?.focus()
-  }, [currentIndex])
+  }, [currentIndex, isMobile])
 
   useEffect(() => {
     if (feedback?.allCorrect || helped) {
@@ -181,13 +202,20 @@ function Test() {
           {t('test.result', { score, total: questions.length, percentage })}
         </p>
         <div className="test__finished-actions">
-          <button type="button" onClick={() => navigate('/progress')}>
-            {t('test.seeProgress')}
-          </button>
           <button type="button" onClick={() => navigate('/')}>
             {t('test.backHome')}
           </button>
+          <button type="button" onClick={() => setShowConfigModal(true)}>
+            {t('test.repeat')}
+          </button>
+          <button type="button" onClick={() => navigate('/progress')}>
+            {t('test.seeProgress')}
+          </button>
         </div>
+
+        {showConfigModal && (
+          <TestConfigModal onClose={() => setShowConfigModal(false)} onStart={startChallenge} />
+        )}
       </section>
     )
   }
@@ -272,13 +300,6 @@ function Test() {
 
         {helped && !feedback?.allCorrect && (
           <div className="test__help-block">
-            <p className="test__help-answer">
-              {t('test.helpAnswer', {
-                base: question.verb.base,
-                pastSimple: question.verb.pastSimple,
-                pastParticiple: question.verb.pastParticiple,
-              })}
-            </p>
             <VerbInfo verb={question.verb} isSpanish={isSpanish} />
           </div>
         )}
@@ -290,12 +311,29 @@ function Test() {
           </div>
         )}
 
+        {solved && (
+          <VerbFormsTable
+            forms={{
+              base: question.verb.base,
+              pastSimple: question.verb.pastSimple,
+              pastParticiple: question.verb.pastParticiple,
+            }}
+          />
+        )}
+
         {solved ? (
-          <button ref={nextButtonRef} type="button" onClick={handleNext}>
+          <button
+            ref={nextButtonRef}
+            type="button"
+            className="test__submit-btn"
+            onClick={handleNext}
+          >
             {isLast ? t('test.seeResult') : t('test.next')}
           </button>
         ) : (
-          <button type="submit">{t('test.check')}</button>
+          <button type="submit" className="test__submit-btn">
+            {t('test.check')}
+          </button>
         )}
       </form>
     </section>
