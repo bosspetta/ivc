@@ -252,6 +252,10 @@ function Test() {
               disabled={solved}
               onChange={(event) => handleChange('base', event.target.value)}
               className={feedback ? (feedback.results.base ? 'is-correct' : 'is-incorrect') : ''}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
             {feedback && <StatusIcon correct={feedback.results.base} />}
           </div>
@@ -267,6 +271,10 @@ function Test() {
               className={
                 feedback ? (feedback.results.pastSimple ? 'is-correct' : 'is-incorrect') : ''
               }
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
             {feedback && <StatusIcon correct={feedback.results.pastSimple} />}
           </div>
@@ -282,6 +290,10 @@ function Test() {
               className={
                 feedback ? (feedback.results.pastParticiple ? 'is-correct' : 'is-incorrect') : ''
               }
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
             {feedback && <StatusIcon correct={feedback.results.pastParticiple} />}
           </div>

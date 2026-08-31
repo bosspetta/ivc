@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import UserForm from '../../components/UserForm.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
@@ -10,8 +10,15 @@ import './Home.scss'
 function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [step, setStep] = useState(null) // null | 'user' | 'config' | 'fill-gaps-config'
+  const location = useLocation()
   const [user, setUser] = useState(() => getUser())
+  const [step, setStep] = useState(() => {
+    // null | 'user' | 'config' | 'fill-gaps-config'
+    const openConfig = location.state?.openConfig
+    if (openConfig === 'test') return user ? 'config' : 'user'
+    if (openConfig === 'fillGaps') return 'fill-gaps-config'
+    return null
+  })
 
   function handleStartClick() {
     setStep(user ? 'config' : 'user')

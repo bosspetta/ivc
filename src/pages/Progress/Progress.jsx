@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getProgress } from '../../utils/storage.js'
 import './Progress.scss'
@@ -79,12 +80,20 @@ function CustomLegend({ payload }) {
     <ul className="progress-chart__legend">
       {payload.map((entry) => (
         <li key={entry.value} className="progress-chart__legend-item">
-          <span
-            className="progress-chart__swatch"
-            style={{ backgroundColor: entry.color }}
-            aria-hidden="true"
-          />
-          {legendFormatter(entry.value, t)}
+          <Link
+            to="/"
+            state={{ openConfig: entry.value === 'testPercentage' ? 'test' : 'fillGaps' }}
+            className={
+              entry.value === 'testPercentage'
+                ? 'progress-chart__legend-link progress-chart__legend-link--test'
+                : 'progress-chart__legend-link progress-chart__legend-link--fill-gaps'
+            }
+          >
+            {legendFormatter(entry.value, t)}
+            <span className="progress-chart__legend-arrow" aria-hidden="true">
+              →
+            </span>
+          </Link>
         </li>
       ))}
     </ul>

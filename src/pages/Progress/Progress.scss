@@ -1,4 +1,5 @@
 @use '../../scss/abstracts/variables' as *;
+@use '../../scss/abstracts/mixins' as *;
 
 .progress-page {
   max-width: 1400px;
@@ -69,8 +70,42 @@
   &__legend-item {
     display: flex;
     align-items: center;
+  }
+
+  &__legend-link {
+    display: inline-flex;
+    align-items: center;
     gap: $spacing-sm * 0.5;
-    color: $color-text;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-base;
+    color: white;
     font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &--test {
+      background-color: $color-primary;
+
+      &:hover {
+        background-color: $color-primary-dark;
+      }
+    }
+
+    &--fill-gaps {
+      background-color: $color-secondary;
+
+      &:hover {
+        background-color: $color-secondary-dark;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__legend-arrow {
+    opacity: 0.85;
   }
 }

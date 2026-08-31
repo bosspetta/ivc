@@ -225,6 +225,8 @@ function FillGaps() {
             className={feedback ? (feedback.correct ? 'is-correct' : 'is-incorrect') : ''}
             aria-label={t('fillGaps.inputLabel')}
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
             spellCheck="false"
           />
           {question.after}
