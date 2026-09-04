@@ -22,6 +22,8 @@
     "subtitle": "Here you can strengthen and reinforce your memory by practicing a few simple challenges.",
     "greeting": "Welcome back, {{firstName}}!",
     "cta": "Take the challenge",
+    "averagePrefix": "Your average score is",
+    "noAverage": "No results yet",
     "card": {
       "title": "Random irregulars",
       "description": "Do you know the three forms of the most common irregular verbs? Put yourself to the test. I'll give you the verb's infinitive (base form) as a hint, and you take it from there. Or you can turn on 'Expert mode', where I'll give you any of the three verb forms as a hint, and you'll complete the trio from there."
@@ -139,8 +141,10 @@
     "empty": "You haven't completed any challenge yet. Give the first one a try!",
     "tooltipVerbs": "{{correct}}/{{total}} verbs ({{percentage}}%)",
     "tooltipSentences": "{{correct}}/{{total}} sentences ({{percentage}}%)",
+    "tooltipCrossword": "{{correct}}/{{total}} words ({{percentage}}%)",
     "legendTest": "Random irregulars",
-    "legendFillGaps": "Fill in the gaps"
+    "legendFillGaps": "Fill in the gaps",
+    "legendCrossword": "Crossword"
   },
   "layout": {
     "creditBefore": "Made with love",

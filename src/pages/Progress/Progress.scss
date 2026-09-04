@@ -99,10 +99,27 @@
       }
     }
 
+    &--crossword {
+      background-color: $color-logo-highlight;
+      color: $color-logo-highlight-text;
+
+      &:hover {
+        filter: brightness(0.92);
+      }
+    }
+
     &:focus-visible {
       outline: 2px solid currentColor;
       outline-offset: 2px;
     }
+  }
+
+  &__legend-average {
+    font-weight: 400;
+  }
+
+  &__legend-average--perfect {
+    color: $color-success;
   }
 
   &__legend-arrow {

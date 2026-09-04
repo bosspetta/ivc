@@ -5,14 +5,39 @@ import UserForm from '../../components/UserForm.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import CrosswordConfigModal from '../../components/CrosswordConfigModal.jsx'
-import { getUser } from '../../utils/storage.js'
+import { getUser, getAverageForType } from '../../utils/storage.js'
 import './Home.scss'
+
+function CardAverage({ average }) {
+  const { t } = useTranslation()
+  if (average === null) return null
+
+  if (average === 0) {
+    return <p className="home__card-average">{t('home.noAverage')}</p>
+  }
+
+  return (
+    <p className="home__card-average">
+      {t('home.averagePrefix')}{' '}
+      <strong
+        className={
+          average === 100 ? 'home__card-average-value home__card-average-value--perfect' : 'home__card-average-value'
+        }
+      >
+        {average}%
+      </strong>
+    </p>
+  )
+}
 
 function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [user, setUser] = useState(() => getUser())
+  const testAverage = getAverageForType('test')
+  const fillGapsAverage = getAverageForType('fillGaps')
+  const crosswordAverage = getAverageForType('crossword')
   const [step, setStep] = useState(() => {
     // null | 'user' | 'config' | 'fill-gaps-config' | 'crossword-config'
     const openConfig = location.state?.openConfig
@@ -72,6 +97,7 @@ function Home() {
       <div className="home__grid">
         <div className="home__card">
           <h2 className="home__card-title">{t('home.card.title')}</h2>
+          <CardAverage average={testAverage} />
           <p className="home__card-description">{t('home.card.description')}</p>
           <button type="button" className="home__cta" onClick={handleStartClick}>
             {t('home.cta')}
@@ -80,6 +106,7 @@ function Home() {
 
         <div className="home__card">
           <h2 className="home__card-title">{t('home.fillGapsCard.title')}</h2>
+          <CardAverage average={fillGapsAverage} />
           <p className="home__card-description">{t('home.fillGapsCard.description')}</p>
           <button type="button" className="home__cta" onClick={handleFillGapsClick}>
             {t('home.cta')}
@@ -88,6 +115,7 @@ function Home() {
 
         <div className="home__card">
           <h2 className="home__card-title">{t('home.crosswordCard.title')}</h2>
+          <CardAverage average={crosswordAverage} />
           <p className="home__card-description">{t('home.crosswordCard.description')}</p>
           <button type="button" className="home__cta" onClick={handleCrosswordClick}>
             {t('home.cta')}

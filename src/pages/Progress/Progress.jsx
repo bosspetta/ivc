@@ -10,7 +10,7 @@ import {
 } from 'recharts'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getProgress } from '../../utils/storage.js'
+import { getProgress, averagePercentage } from '../../utils/storage.js'
 import './Progress.scss'
 
 function formatDate(isoDate, language) {
@@ -24,6 +24,40 @@ const CHART_AXIS = 'rgba(var(--color-ink-rgb), 0.25)'
 const CHART_FONT_FAMILY = "'Nunito', Arial, sans-serif"
 const TEST_COLOR = 'var(--color-primary)'
 const FILL_GAPS_COLOR = 'var(--color-secondary)'
+const CROSSWORD_COLOR = 'var(--color-logo-highlight)'
+
+const SERIES = [
+  {
+    key: 'testPercentage',
+    type: 'test',
+    variant: 'test',
+    correctKey: 'testCorrectCount',
+    totalKey: 'testTotalCount',
+    dateKey: 'testDateLabel',
+    nameKey: 'progress.legendTest',
+    tooltipKey: 'progress.tooltipVerbs',
+  },
+  {
+    key: 'fillGapsPercentage',
+    type: 'fillGaps',
+    variant: 'fill-gaps',
+    correctKey: 'fillGapsCorrectCount',
+    totalKey: 'fillGapsTotalCount',
+    dateKey: 'fillGapsDateLabel',
+    nameKey: 'progress.legendFillGaps',
+    tooltipKey: 'progress.tooltipSentences',
+  },
+  {
+    key: 'crosswordPercentage',
+    type: 'crossword',
+    variant: 'crossword',
+    correctKey: 'crosswordCorrectCount',
+    totalKey: 'crosswordTotalCount',
+    dateKey: 'crosswordDateLabel',
+    nameKey: 'progress.legendCrossword',
+    tooltipKey: 'progress.tooltipCrossword',
+  },
+]
 
 function CustomTooltip({ active, payload }) {
   const { t } = useTranslation()
@@ -31,12 +65,13 @@ function CustomTooltip({ active, payload }) {
 
   const rows = payload
     .map((item) => {
-      const isTest = item.dataKey === 'testPercentage'
-      const correctCount = isTest ? item.payload.testCorrectCount : item.payload.fillGapsCorrectCount
-      const totalCount = isTest ? item.payload.testTotalCount : item.payload.fillGapsTotalCount
-      const dateLabel = isTest ? item.payload.testDateLabel : item.payload.fillGapsDateLabel
+      const series = SERIES.find((s) => s.key === item.dataKey)
+      if (!series) return null
+      const correctCount = item.payload[series.correctKey]
+      const totalCount = item.payload[series.totalKey]
+      const dateLabel = item.payload[series.dateKey]
       if (correctCount === undefined) return null
-      return { key: item.dataKey, color: item.color, isTest, correctCount, totalCount, dateLabel }
+      return { key: item.dataKey, color: item.color, series, correctCount, totalCount, dateLabel }
     })
     .filter(Boolean)
 
@@ -52,11 +87,11 @@ function CustomTooltip({ active, payload }) {
               style={{ backgroundColor: row.color }}
               aria-hidden="true"
             />
-            {t(row.isTest ? 'progress.legendTest' : 'progress.legendFillGaps')}
+            {t(row.series.nameKey)}
           </p>
           <p className="progress-chart__tooltip-date">{row.dateLabel}</p>
           <p>
-            {t(row.isTest ? 'progress.tooltipVerbs' : 'progress.tooltipSentences', {
+            {t(row.series.tooltipKey, {
               correct: row.correctCount,
               total: row.totalCount,
               percentage: Math.round((row.correctCount / row.totalCount) * 100),
@@ -68,28 +103,41 @@ function CustomTooltip({ active, payload }) {
   )
 }
 
-function legendFormatter(value, t) {
-  return t(value === 'testPercentage' ? 'progress.legendTest' : 'progress.legendFillGaps')
-}
-
-function CustomLegend({ payload }) {
+function CustomLegend({ payload, averages }) {
   const { t } = useTranslation()
   if (!payload) return null
 
+  const items = payload
+    .map((entry) => {
+      const series = SERIES.find((s) => s.key === entry.value)
+      if (!series) return null
+      return { entry, series, average: averages[series.type] }
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.average ?? -1) - (a.average ?? -1))
+
   return (
     <ul className="progress-chart__legend">
-      {payload.map((entry) => (
+      {items.map(({ entry, series, average }) => (
         <li key={entry.value} className="progress-chart__legend-item">
           <Link
             to="/"
-            state={{ openConfig: entry.value === 'testPercentage' ? 'test' : 'fillGaps' }}
-            className={
-              entry.value === 'testPercentage'
-                ? 'progress-chart__legend-link progress-chart__legend-link--test'
-                : 'progress-chart__legend-link progress-chart__legend-link--fill-gaps'
-            }
+            state={{ openConfig: series.type }}
+            className={`progress-chart__legend-link progress-chart__legend-link--${series.variant}`}
           >
-            {legendFormatter(entry.value, t)}
+            {t(series.nameKey)}
+            {average !== null && average !== 0 && (
+              <span
+                className={
+                  average === 100
+                    ? 'progress-chart__legend-average progress-chart__legend-average--perfect'
+                    : 'progress-chart__legend-average'
+                }
+              >
+                {' '}
+                ({average}%)
+              </span>
+            )}
             <span className="progress-chart__legend-arrow" aria-hidden="true">
               →
             </span>
@@ -105,11 +153,19 @@ function Progress() {
   const entries = getProgress()
   const testEntries = entries.filter((entry) => (entry.type ?? 'test') === 'test')
   const fillGapsEntries = entries.filter((entry) => entry.type === 'fillGaps')
-  const maxLength = Math.max(testEntries.length, fillGapsEntries.length)
+  const crosswordEntries = entries.filter((entry) => entry.type === 'crossword')
+  const maxLength = Math.max(testEntries.length, fillGapsEntries.length, crosswordEntries.length)
+
+  const averages = {
+    test: averagePercentage(testEntries),
+    fillGaps: averagePercentage(fillGapsEntries),
+    crossword: averagePercentage(crosswordEntries),
+  }
 
   const data = Array.from({ length: maxLength }, (_, index) => {
     const testEntry = testEntries[index]
     const fillGapsEntry = fillGapsEntries[index]
+    const crosswordEntry = crosswordEntries[index]
     return {
       label: `${index + 1}`,
       testPercentage: testEntry?.percentage,
@@ -120,6 +176,10 @@ function Progress() {
       fillGapsDateLabel: fillGapsEntry ? formatDate(fillGapsEntry.date, i18n.language) : undefined,
       fillGapsCorrectCount: fillGapsEntry?.correctCount,
       fillGapsTotalCount: fillGapsEntry?.totalCount,
+      crosswordPercentage: crosswordEntry?.percentage,
+      crosswordDateLabel: crosswordEntry ? formatDate(crosswordEntry.date, i18n.language) : undefined,
+      crosswordCorrectCount: crosswordEntry?.correctCount,
+      crosswordTotalCount: crosswordEntry?.totalCount,
     }
   })
 
@@ -149,7 +209,7 @@ function Progress() {
                 width={48}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Legend content={<CustomLegend />} />
+              <Legend content={(props) => <CustomLegend {...props} averages={averages} />} />
               <Line
                 type="monotone"
                 dataKey="testPercentage"
@@ -165,6 +225,14 @@ function Progress() {
                 strokeWidth={2}
                 dot={{ r: 4, fill: FILL_GAPS_COLOR, stroke: 'var(--color-surface)', strokeWidth: 2 }}
                 activeDot={{ r: 6, fill: FILL_GAPS_COLOR, stroke: 'var(--color-surface)', strokeWidth: 2 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="crosswordPercentage"
+                stroke={CROSSWORD_COLOR}
+                strokeWidth={2}
+                dot={{ r: 4, fill: CROSSWORD_COLOR, stroke: 'var(--color-surface)', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: CROSSWORD_COLOR, stroke: 'var(--color-surface)', strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>

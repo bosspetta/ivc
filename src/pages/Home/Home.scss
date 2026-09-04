@@ -85,12 +85,22 @@
 
   &__card-title {
     font-size: 1.5rem;
+  }
+
+  &__card-average {
+    font-size: 0.9rem;
+    color: rgba(var(--color-ink-rgb), 0.65);
     margin-bottom: $spacing-md;
+  }
+
+  &__card-average-value--perfect {
+    color: $color-success;
   }
 
   &__card-description {
     font-size: 1.05rem;
     color: rgba(var(--color-ink-rgb), 0.65);
+    margin-top: $spacing-sm;
     margin-bottom: $spacing-lg;
   }
 

@@ -27,6 +27,16 @@ export function getProgress() {
   }
 }
 
+export function averagePercentage(entries) {
+  if (entries.length === 0) return null
+  const total = entries.reduce((sum, entry) => sum + entry.percentage, 0)
+  return Math.round(total / entries.length)
+}
+
+export function getAverageForType(type) {
+  return averagePercentage(getProgress().filter((entry) => (entry.type ?? 'test') === type))
+}
+
 export function addProgressEntry({ correctCount, totalCount, type = 'test' }) {
   const entries = getProgress()
   const entry = {

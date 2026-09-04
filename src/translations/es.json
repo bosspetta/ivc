@@ -22,6 +22,8 @@
     "subtitle": "Aquí podrás reforzar y afianzar tu memoria practicando unos sencillos retos.",
     "greeting": "¡Hola de nuevo, {{firstName}}!",
     "cta": "Realizar el reto",
+    "averagePrefix": "Llevas una media de",
+    "noAverage": "Aún sin resultados",
     "card": {
       "title": "Irregulares al azar",
       "description": "¿Te sabes las tres formas de los verbos irregulares más habituales? Ponte a prueba. Te doy el infinitivo (base form) del verbo como pista, y tú partes de ahí. O también puedes activar el 'Modo experto', en el que te daré cualquiera de las tres formas verbales como pista, y desde ahí tú completarás el trío."
@@ -138,8 +140,10 @@
     "empty": "Todavía no has completado ningún reto. ¡Anímate a hacer el primero!",
     "tooltipVerbs": "{{correct}}/{{total}} verbos ({{percentage}}%)",
     "tooltipSentences": "{{correct}}/{{total}} frases ({{percentage}}%)",
+    "tooltipCrossword": "{{correct}}/{{total}} palabras ({{percentage}}%)",
     "legendTest": "Irregulares al azar",
-    "legendFillGaps": "Rellena los huecos"
+    "legendFillGaps": "Rellena los huecos",
+    "legendCrossword": "Crucigrama"
   },
   "layout": {
     "creditBefore": "Hecho con amor",
