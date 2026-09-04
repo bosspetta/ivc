@@ -1,0 +1,52 @@
+@use '../scss/abstracts/variables' as *;
+@use '../scss/abstracts/mixins' as *;
+
+.crossword-config {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm * 0.5;
+    font-size: 0.85rem;
+    letter-spacing: 0.025rem;
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  input[type='number'] {
+    padding: $spacing-sm;
+    border: 1px solid rgba(var(--color-ink-rgb), 0.15);
+    border-radius: $radius-base;
+    font-size: 1.2rem;
+    background-color: $color-surface;
+    color: $color-text;
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 1px;
+
+      @include dark-mode {
+        outline-color: $color-primary-light;
+      }
+    }
+  }
+
+  &__submit {
+    margin-top: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: $radius-base;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}

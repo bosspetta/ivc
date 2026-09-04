@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS } from '../../data/verbs.js'
 import { addProgressEntry } from '../../utils/storage.js'
 import { isAnswerCorrect, pickRandomForm, shuffle } from '../../utils/verbAnswers.js'
+import { getResultTitleKey } from '../../utils/resultTitle.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
 import VerbFormsTable from '../../components/VerbFormsTable.jsx'
@@ -197,7 +198,7 @@ function Test() {
     const percentage = Math.round((score / questions.length) * 100)
     return (
       <section className="test test--finished">
-        <h2>{t('test.finishedTitle')}</h2>
+        <h2>{t(getResultTitleKey(percentage))}</h2>
         <p className="test__result">
           {t('test.result', { score, total: questions.length, percentage })}
         </p>

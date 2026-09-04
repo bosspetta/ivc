@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import UserForm from '../../components/UserForm.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
+import CrosswordConfigModal from '../../components/CrosswordConfigModal.jsx'
 import { getUser } from '../../utils/storage.js'
 import './Home.scss'
 
@@ -13,10 +14,11 @@ function Home() {
   const location = useLocation()
   const [user, setUser] = useState(() => getUser())
   const [step, setStep] = useState(() => {
-    // null | 'user' | 'config' | 'fill-gaps-config'
+    // null | 'user' | 'config' | 'fill-gaps-config' | 'crossword-config'
     const openConfig = location.state?.openConfig
     if (openConfig === 'test') return user ? 'config' : 'user'
     if (openConfig === 'fillGaps') return 'fill-gaps-config'
+    if (openConfig === 'crossword') return 'crossword-config'
     return null
   })
 
@@ -26,6 +28,10 @@ function Home() {
 
   function handleFillGapsClick() {
     setStep('fill-gaps-config')
+  }
+
+  function handleCrosswordClick() {
+    setStep('crossword-config')
   }
 
   function handleUserSaved(savedUser) {
@@ -41,6 +47,11 @@ function Home() {
   function handleFillGapsStart(config) {
     setStep(null)
     navigate('/fill-gaps', { state: config })
+  }
+
+  function handleCrosswordStart(config) {
+    setStep(null)
+    navigate('/crossword', { state: config })
   }
 
   return (
@@ -74,6 +85,14 @@ function Home() {
             {t('home.cta')}
           </button>
         </div>
+
+        <div className="home__card">
+          <h2 className="home__card-title">{t('home.crosswordCard.title')}</h2>
+          <p className="home__card-description">{t('home.crosswordCard.description')}</p>
+          <button type="button" className="home__cta" onClick={handleCrosswordClick}>
+            {t('home.cta')}
+          </button>
+        </div>
       </div>
 
       {step === 'user' && (
@@ -84,6 +103,9 @@ function Home() {
       )}
       {step === 'fill-gaps-config' && (
         <FillGapsConfigModal onClose={() => setStep(null)} onStart={handleFillGapsStart} />
+      )}
+      {step === 'crossword-config' && (
+        <CrosswordConfigModal onClose={() => setStep(null)} onStart={handleCrosswordStart} />
       )}
     </section>
   )

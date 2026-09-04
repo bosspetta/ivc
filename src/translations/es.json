@@ -1,6 +1,12 @@
 {
   "common": {
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "resultTitle": {
+      "needsImprovement": "Hay que mejorar 😓",
+      "goodTry": "Buen intento 🤨",
+      "almostPerfect": "¡Casi perfecto! 😃",
+      "completed": "¡Reto completado! 🤪"
+    }
   },
   "header": {
     "siteName": "Irregular Verbs Challenge",
@@ -23,6 +29,10 @@
     "fillGapsCard": {
       "title": "Rellena los huecos",
       "description": "¿Prefieres verlos en contexto? Te mostramos frases reales con un hueco en el lugar del verbo, y tú escribes la forma correcta. Iremos alternando las tres formas verbales —infinitivo, pasado simple y participio— repartidas entre distintas frases, para que practiques la ortografía exacta de cada una."
+    },
+    "crosswordCard": {
+      "title": "Crucigrama",
+      "description": "¿Te gustan los retos clásicos? Resuelve un crucigrama de verbos irregulares: cada palabra tiene una definición en inglés como pista, y las palabras que se cruzan comparten letras entre sí."
     }
   },
   "userForm": {
@@ -43,6 +53,11 @@
     "sentenceCountLabel": "Número de frases ({{min}}-{{max}})",
     "start": "Empezar reto"
   },
+  "crosswordConfig": {
+    "title": "Configura tu reto",
+    "wordCountLabel": "Número de palabras ({{min}}-{{max}})",
+    "start": "Empezar reto"
+  },
   "fillGaps": {
     "inputLabel": "Tu respuesta",
     "definitionLabel": "Definición:",
@@ -59,7 +74,6 @@
       "pastParticiple": "V3"
     },
     "seeResult": "Ver resultado",
-    "finishedTitle": "¡Reto completado!",
     "result": "Acertaste {{score}} de {{total}} frases ({{percentage}}%)",
     "backHome": "Inicio",
     "repeat": "Repetir reto",
@@ -77,7 +91,6 @@
     "correctLast": "¡Bien hecho! Vamos a ver tu resultado.",
     "help": "Ayúdame {{count}}",
     "seeResult": "Ver resultado",
-    "finishedTitle": "¡Reto completado!",
     "result": "Acertaste {{score}} de {{total}} verbos ({{percentage}}%)",
     "seeProgress": "Ver mi progreso",
     "backHome": "Inicio",
@@ -88,6 +101,22 @@
       "pastSimple": "pasado simple",
       "pastParticiple": "participio"
     }
+  },
+  "crossword": {
+    "title": "Crucigrama de verbos irregulares",
+    "across": "Horizontales",
+    "down": "Verticales",
+    "check": "Comprobar",
+    "reveal": "Resolver crucigrama",
+    "seeResult": "Ver resultado",
+    "revealSummary": "Resultado: {{correct}} palabras acertadas y {{failed}} falladas.",
+    "incomplete": "Todavía hay letras vacías o incorrectas. Llevas {{correct}} aciertos y te quedan {{remaining}} letras para terminar. ¡Sigue intentándolo!",
+    "result": "Acertaste {{score}} de {{total}} palabras ({{percentage}}%)",
+    "backHome": "Inicio",
+    "repeat": "Repetir reto",
+    "seeProgress": "Ver mi progreso",
+    "noConfig": "No hay ningún reto configurado.",
+    "cellLabel": "Casilla, fila {{row}}, columna {{col}}"
   },
   "verbList": {
     "title": "Listado completo de verbos irregulares",

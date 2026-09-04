@@ -1,6 +1,12 @@
 {
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "resultTitle": {
+      "needsImprovement": "Needs improvement 😓",
+      "goodTry": "Good try 🤨",
+      "almostPerfect": "Almost perfect! 😃",
+      "completed": "Challenge completed! 🤪"
+    }
   },
   "header": {
     "siteName": "Irregular Verbs Challenge",
@@ -23,6 +29,10 @@
     "fillGapsCard": {
       "title": "Fill in the gaps",
       "description": "Prefer to see them in context? We'll show you real sentences with a gap where the verb should be, and you type in the correct form. We mix all three verb forms — infinitive, simple past, and participle — across different sentences, so you practice the exact spelling of each one."
+    },
+    "crosswordCard": {
+      "title": "Crossword",
+      "description": "Do you like classic challenges? Solve a crossword made of irregular verbs: each word has an English definition as a clue, and crossing words share letters with each other."
     }
   },
   "userForm": {
@@ -43,6 +53,11 @@
     "sentenceCountLabel": "Number of sentences ({{min}}-{{max}})",
     "start": "Start challenge"
   },
+  "crosswordConfig": {
+    "title": "Configure your challenge",
+    "wordCountLabel": "Number of words ({{min}}-{{max}})",
+    "start": "Start challenge"
+  },
   "fillGaps": {
     "inputLabel": "Your answer",
     "definitionLabel": "Definition:",
@@ -59,7 +74,6 @@
       "pastParticiple": "V3"
     },
     "seeResult": "See result",
-    "finishedTitle": "Challenge complete!",
     "result": "You got {{score}} out of {{total}} sentences right ({{percentage}}%)",
     "backHome": "Home",
     "repeat": "Repeat challenge",
@@ -77,7 +91,6 @@
     "correctLast": "Well done! Let's see your result.",
     "help": "Help me {{count}}",
     "seeResult": "See result",
-    "finishedTitle": "Challenge complete!",
     "result": "You got {{score}} out of {{total}} verbs right ({{percentage}}%)",
     "seeProgress": "See my progress",
     "backHome": "Home",
@@ -88,6 +101,22 @@
       "pastSimple": "simple past",
       "pastParticiple": "past participle"
     }
+  },
+  "crossword": {
+    "title": "Irregular verbs crossword",
+    "across": "Across",
+    "down": "Down",
+    "check": "Check",
+    "reveal": "Solve crossword",
+    "seeResult": "See result",
+    "revealSummary": "Result: {{correct}} words correct and {{failed}} wrong.",
+    "incomplete": "There are still empty or incorrect letters. You have {{correct}} correct so far and {{remaining}} letters left to finish. Keep trying!",
+    "result": "You got {{score}} of {{total}} words right ({{percentage}}%)",
+    "backHome": "Home",
+    "repeat": "Repeat challenge",
+    "seeProgress": "See my progress",
+    "noConfig": "No challenge is configured.",
+    "cellLabel": "Cell, row {{row}}, column {{col}}"
   },
   "verbList": {
     "title": "Full list of irregular verbs",

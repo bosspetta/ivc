@@ -5,6 +5,7 @@ import { COMMON_VERBS, VERB_DEFINITIONS } from '../../data/verbs.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
 import { isGapAnswerCorrect, shuffle } from '../../utils/verbAnswers.js'
 import { addProgressEntry } from '../../utils/storage.js'
+import { getResultTitleKey } from '../../utils/resultTitle.js'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import VerbFormsTable from '../../components/VerbFormsTable.jsx'
@@ -172,7 +173,7 @@ function FillGaps() {
     const percentage = Math.round((score / questions.length) * 100)
     return (
       <section className="fill-gaps fill-gaps--finished">
-        <h2>{t('fillGaps.finishedTitle')}</h2>
+        <h2>{t(getResultTitleKey(percentage))}</h2>
         <p className="fill-gaps__result">
           {t('fillGaps.result', { score, total: questions.length, percentage })}
         </p>

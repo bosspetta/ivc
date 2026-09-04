@@ -7,6 +7,7 @@ import VerbList from './pages/VerbList/VerbList.jsx'
 import Help from './pages/Help/Help.jsx'
 import Test from './pages/Test/Test.jsx'
 import FillGaps from './pages/FillGaps/FillGaps.jsx'
+import Crossword from './pages/Crossword/Crossword.jsx'
 
 const Progress = lazy(() => import('./pages/Progress/Progress.jsx'))
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/test" element={<Test />} />
           <Route path="/fill-gaps" element={<FillGaps />} />
+          <Route path="/crossword" element={<Crossword />} />
         </Routes>
       </Suspense>
     </Layout>
