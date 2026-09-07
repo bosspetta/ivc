@@ -1,13 +1,13 @@
-import { COMMON_VERBS, VERB_DEFINITIONS } from '../data/verbs.js'
+import { COMMON_VERBS, VERB_DEFINITIONS, VERB_HINTS } from '../data/verbs.js'
 import { shuffle } from './verbAnswers.js'
 
 const VIRTUAL_SIZE = 40
 const CENTER = Math.floor(VIRTUAL_SIZE / 2)
 
 const TENSE_FIELDS = [
-  { tense: 'base', candidatesKey: 'baseCandidates' },
-  { tense: 'pastSimple', candidatesKey: 'pastSimpleCandidates' },
-  { tense: 'pastParticiple', candidatesKey: 'pastParticipleCandidates' },
+  { tense: 'base', candidatesKey: 'baseCandidates', sentenceKey: 'example' },
+  { tense: 'pastSimple', candidatesKey: 'pastSimpleCandidates', sentenceKey: 'examplePastSimple' },
+  { tense: 'pastParticiple', candidatesKey: 'pastParticipleCandidates', sentenceKey: 'examplePresentPerfect' },
 ]
 
 function buildWordPool() {
@@ -16,11 +16,21 @@ function buildWordPool() {
   for (const verb of COMMON_VERBS) {
     const clue = VERB_DEFINITIONS[verb.base]
     if (!clue) continue
-    for (const { tense, candidatesKey } of TENSE_FIELDS) {
+    for (const { tense, candidatesKey, sentenceKey } of TENSE_FIELDS) {
       const word = verb[candidatesKey][0].toUpperCase()
       if (seenWords.has(word)) continue
       seenWords.add(word)
-      pool.push({ word, clue, tense })
+      pool.push({
+        word,
+        clue,
+        tense,
+        example: verb[sentenceKey],
+        hint: VERB_HINTS[verb.base],
+        base: verb.base,
+        pastSimple: verb.pastSimple,
+        pastParticiple: verb.pastParticiple,
+        translation: verb.translation,
+      })
     }
   }
   return pool

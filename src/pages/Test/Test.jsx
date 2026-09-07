@@ -8,10 +8,14 @@ import { getResultTitleKey } from '../../utils/resultTitle.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
 import VerbFormsTable from '../../components/VerbFormsTable.jsx'
+import VerbFormsRow from '../../components/VerbFormsRow.jsx'
+import RelatedChallenges from '../../components/RelatedChallenges.jsx'
 import useIsMobile from '../../hooks/useIsMobile.js'
 import './Test.scss'
 
 const EMPTY_ANSWERS = { base: '', pastSimple: '', pastParticiple: '' }
+const EMPTY_FIELD_FIRST_CORRECT = { base: null, pastSimple: null, pastParticiple: null }
+const FIELDS = ['base', 'pastSimple', 'pastParticiple']
 const HELP_ATTEMPTS = 3
 
 function buildQuestions(verbCount, randomForms) {
@@ -20,6 +24,80 @@ function buildQuestions(verbCount, randomForms) {
     verb,
     hintForm: randomForms ? pickRandomForm() : 'base',
   }))
+}
+
+// Cada intento de más resta un 10% al valor de la pregunta (100% a la
+// primera, 90% a la segunda, 80% a la tercera...).
+function attemptCredit(attemptNumber) {
+  return Math.max(100 - 10 * (attemptNumber - 1), 0)
+}
+
+// Agrupa los 3 campos según en qué intento se acertaron por primera vez
+// (o 'never' si nunca se acertaron), en orden cronológico.
+function buildFieldGroups(fieldFirstCorrect) {
+  const groups = new Map()
+  for (const field of FIELDS) {
+    const key = fieldFirstCorrect[field] ?? 'never'
+    if (!groups.has(key)) groups.set(key, [])
+    groups.get(key).push(field)
+  }
+  const orderedKeys = [...groups.keys()].sort((a, b) => {
+    if (a === 'never') return 1
+    if (b === 'never') return -1
+    return a - b
+  })
+  return orderedKeys.map((key) => ({ attempt: key, fields: groups.get(key) }))
+}
+
+function getOrdinal(t, attempt) {
+  if (attempt <= 6) return t(`test.summary.ordinal.${attempt}`)
+  return t('test.summary.ordinal.other', { n: attempt })
+}
+
+function buildQuestionNarrative(t, fieldFirstCorrect) {
+  const groups = buildFieldGroups(fieldFirstCorrect)
+  const solvedGroups = groups.filter((group) => group.attempt !== 'never')
+  const neverGroup = groups.find((group) => group.attempt === 'never')
+
+  const clauses = solvedGroups.map((group, index) => {
+    const ordinal = getOrdinal(t, group.attempt)
+    const prefix = index === 0 ? 'first' : 'later'
+    if (group.fields.length === 3) {
+      return t(`test.summary.${prefix}ClauseAll`, { ordinal })
+    }
+    if (group.fields.length === 2) {
+      const [field1, field2] = group.fields
+      return t(`test.summary.${prefix}ClauseTwo`, {
+        ordinal,
+        field1: t(`test.summary.field.${field1}`),
+        field2: t(`test.summary.field.${field2}`),
+      })
+    }
+    return t(`test.summary.${prefix}ClauseOne`, {
+      ordinal,
+      field: t(`test.summary.field.${group.fields[0]}`),
+    })
+  })
+
+  if (neverGroup) {
+    if (neverGroup.fields.length === 3) {
+      clauses.push(t('test.summary.neverThree'))
+    } else if (neverGroup.fields.length === 2) {
+      const [field1, field2] = neverGroup.fields
+      clauses.push(
+        t('test.summary.neverTwo', {
+          field1: t(`test.summary.field.${field1}`),
+          field2: t(`test.summary.field.${field2}`),
+        }),
+      )
+    } else {
+      clauses.push(
+        t('test.summary.neverOne', { field: t(`test.summary.field.${neverGroup.fields[0]}`) }),
+      )
+    }
+  }
+
+  return clauses.join(' ')
 }
 
 function StatusIcon({ correct }) {
@@ -92,10 +170,12 @@ function Test() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState(EMPTY_ANSWERS)
   const [feedback, setFeedback] = useState(null)
-  const [mistakeMade, setMistakeMade] = useState(false)
   const [wrongAttempts, setWrongAttempts] = useState(0)
+  const [fieldFirstCorrect, setFieldFirstCorrect] = useState(EMPTY_FIELD_FIRST_CORRECT)
   const [helped, setHelped] = useState(false)
   const [score, setScore] = useState(0)
+  const [questionSummaries, setQuestionSummaries] = useState([])
+  const [finalPercentage, setFinalPercentage] = useState(0)
   const [finished, setFinished] = useState(false)
   const firstInputRef = useRef(null)
   const nextButtonRef = useRef(null)
@@ -107,10 +187,12 @@ function Test() {
     setCurrentIndex(0)
     setAnswers(EMPTY_ANSWERS)
     setFeedback(null)
-    setMistakeMade(false)
     setWrongAttempts(0)
+    setFieldFirstCorrect(EMPTY_FIELD_FIRST_CORRECT)
     setHelped(false)
     setScore(0)
+    setQuestionSummaries([])
+    setFinalPercentage(0)
     setFinished(false)
     setShowConfigModal(false)
   }
@@ -145,6 +227,21 @@ function Test() {
     if (feedback) setFeedback(null)
   }
 
+  function pushSummary(finalFieldFirstCorrect, percentage) {
+    setQuestionSummaries((prev) => [
+      ...prev,
+      {
+        base: question.verb.base,
+        pastSimple: question.verb.pastSimple,
+        pastParticiple: question.verb.pastParticiple,
+        translation: question.verb.translation,
+        highlightedField: question.hintForm,
+        fieldFirstCorrect: finalFieldFirstCorrect,
+        percentage,
+      },
+    ])
+  }
+
   function handleCheck(event) {
     event.preventDefault()
 
@@ -158,31 +255,51 @@ function Test() {
       pastParticiple: isAnswerCorrect(answers.pastParticiple, question.verb.pastParticiple),
     }
     const allCorrect = results.base && results.pastSimple && results.pastParticiple
+    const attemptNumber = wrongAttempts + 1
+    const nextFieldFirstCorrect = { ...fieldFirstCorrect }
+    for (const field of FIELDS) {
+      if (results[field] && nextFieldFirstCorrect[field] == null) {
+        nextFieldFirstCorrect[field] = attemptNumber
+      }
+    }
+    setFieldFirstCorrect(nextFieldFirstCorrect)
+
     if (allCorrect) {
-      if (!mistakeMade) setScore((prev) => prev + 1)
+      setScore((prev) => prev + 1)
+      pushSummary(nextFieldFirstCorrect, attemptCredit(attemptNumber))
     } else {
-      setMistakeMade(true)
-      setWrongAttempts((prev) => Math.min(prev + 1, HELP_ATTEMPTS))
+      setWrongAttempts((prev) => prev + 1)
     }
     setFeedback({ results, allCorrect })
   }
 
   function handleHelp() {
     setHelped(true)
+    const correctFieldsCount = FIELDS.filter((field) => fieldFirstCorrect[field] != null).length
+    pushSummary(fieldFirstCorrect, (correctFieldsCount / FIELDS.length) * 100)
   }
 
   function handleNext() {
     const isLast = currentIndex === questions.length - 1
     if (isLast) {
-      addProgressEntry({ correctCount: score, totalCount: questions.length, type: 'test' })
+      const percentage = Math.round(
+        questionSummaries.reduce((sum, entry) => sum + entry.percentage, 0) / questions.length,
+      )
+      addProgressEntry({
+        correctCount: score,
+        totalCount: questions.length,
+        type: 'test',
+        percentage,
+      })
+      setFinalPercentage(percentage)
       setFinished(true)
       return
     }
     setCurrentIndex((prev) => prev + 1)
     setAnswers(EMPTY_ANSWERS)
     setFeedback(null)
-    setMistakeMade(false)
     setWrongAttempts(0)
+    setFieldFirstCorrect(EMPTY_FIELD_FIRST_CORRECT)
     setHelped(false)
   }
 
@@ -195,29 +312,54 @@ function Test() {
   }
 
   if (finished) {
-    const percentage = Math.round((score / questions.length) * 100)
     return (
-      <section className="test test--finished">
-        <h2>{t(getResultTitleKey(percentage))}</h2>
-        <p className="test__result">
-          {t('test.result', { score, total: questions.length, percentage })}
-        </p>
-        <div className="test__finished-actions">
-          <button type="button" onClick={() => navigate('/')}>
-            {t('test.backHome')}
-          </button>
-          <button type="button" onClick={() => setShowConfigModal(true)}>
-            {t('test.repeat')}
-          </button>
-          <button type="button" onClick={() => navigate('/progress')}>
-            {t('test.seeProgress')}
-          </button>
-        </div>
+      <>
+        <section className="test test--finished">
+          <h2>{t(getResultTitleKey(finalPercentage))}</h2>
+          <p className="test__result">
+            {t('test.result', { score, total: questions.length, percentage: finalPercentage })}
+          </p>
 
-        {showConfigModal && (
-          <TestConfigModal onClose={() => setShowConfigModal(false)} onStart={startChallenge} />
-        )}
-      </section>
+          <div className="test__summary">
+            <h3>{t('test.summary.title')}</h3>
+            <ol className="test__summary-list">
+              {questionSummaries.map((entry, index) => (
+                <li key={index}>
+                  <VerbFormsRow
+                    base={entry.base}
+                    pastSimple={entry.pastSimple}
+                    pastParticiple={entry.pastParticiple}
+                    highlightedField={entry.highlightedField}
+                    translation={entry.translation}
+                  />
+                  <br />
+                  {buildQuestionNarrative(t, entry.fieldFirstCorrect)}{' '}
+                  <span className="test__summary-percentage">
+                    ({Math.round(entry.percentage)}%)
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="test__finished-actions">
+            <button type="button" onClick={() => navigate('/')}>
+              {t('test.backHome')}
+            </button>
+            <button type="button" onClick={() => setShowConfigModal(true)}>
+              {t('test.repeat')}
+            </button>
+            <button type="button" onClick={() => navigate('/progress')}>
+              {t('test.seeProgress')}
+            </button>
+          </div>
+
+          {showConfigModal && (
+            <TestConfigModal onClose={() => setShowConfigModal(false)} onStart={startChallenge} />
+          )}
+        </section>
+        <RelatedChallenges exclude="test" />
+      </>
     )
   }
 

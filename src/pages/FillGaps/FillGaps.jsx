@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { COMMON_VERBS, VERB_DEFINITIONS } from '../../data/verbs.js'
+import { COMMON_VERBS, VERB_DEFINITIONS, VERB_HINTS } from '../../data/verbs.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
 import { isGapAnswerCorrect, shuffle } from '../../utils/verbAnswers.js'
 import { addProgressEntry } from '../../utils/storage.js'
@@ -9,10 +9,13 @@ import { getResultTitleKey } from '../../utils/resultTitle.js'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import VerbFormsTable from '../../components/VerbFormsTable.jsx'
+import VerbFormsRow from '../../components/VerbFormsRow.jsx'
+import RelatedChallenges from '../../components/RelatedChallenges.jsx'
 import useIsMobile from '../../hooks/useIsMobile.js'
 import './FillGaps.scss'
 
 const MAX_ATTEMPTS = 3
+const HINT_PENALTY = 0.25
 
 const GAP_FIELDS = [
   { tense: 'base', field: 'base', sentenceKey: 'example', candidatesKey: 'baseCandidates' },
@@ -41,6 +44,7 @@ function buildGapPool(verbs) {
         id: `${verb.id}-${field.tense}`,
         tense: field.tense,
         definition: VERB_DEFINITIONS[verb.base],
+        hint: VERB_HINTS[verb.base],
         translation: verb.translation,
         before: sentence.slice(0, match.index),
         answer: match.text,
@@ -63,6 +67,11 @@ function buildQuestions(sentenceCount) {
   return shuffle(buildGapPool(COMMON_VERBS)).slice(0, sentenceCount)
 }
 
+function summaryText(t, entry) {
+  if (entry.revealed) return t('fillGaps.summary.revealed')
+  return t(entry.hintUsed ? 'fillGaps.summary.correctWithHint' : 'fillGaps.summary.correctNoHint')
+}
+
 function FillGaps() {
   const { t, i18n } = useTranslation()
   const location = useLocation()
@@ -79,8 +88,11 @@ function FillGaps() {
   const [answer, setAnswer] = useState('')
   const [feedback, setFeedback] = useState(null)
   const [wrongAttempts, setWrongAttempts] = useState(0)
+  const [hintShown, setHintShown] = useState(false)
   const [score, setScore] = useState(0)
+  const [questionSummaries, setQuestionSummaries] = useState([])
   const [finished, setFinished] = useState(false)
+  const [finalPercentage, setFinalPercentage] = useState(0)
   const inputRef = useRef(null)
   const nextButtonRef = useRef(null)
   const isMobile = useIsMobile()
@@ -92,8 +104,11 @@ function FillGaps() {
     setAnswer('')
     setFeedback(null)
     setWrongAttempts(0)
+    setHintShown(false)
     setScore(0)
+    setQuestionSummaries([])
     setFinished(false)
+    setFinalPercentage(0)
     setShowConfigModal(false)
   }
 
@@ -133,25 +148,60 @@ function FillGaps() {
     const correct = isGapAnswerCorrect(answer, question.answer)
     if (correct) {
       setScore((prev) => prev + 1)
+      const percentage = hintShown ? 100 - HINT_PENALTY * 100 : 100
+      pushSummary(false, percentage)
       setFeedback({ correct: true })
       return
     }
 
-    const attemptsUsed = wrongAttempts + 1
+    const attemptsUsed = Math.min(wrongAttempts + 1, MAX_ATTEMPTS)
     setWrongAttempts(attemptsUsed)
-    const revealed = attemptsUsed >= MAX_ATTEMPTS
     const sameVerb = question.allForms.includes(answer.trim().toLowerCase())
-    setFeedback({ correct: false, revealed, sameVerb, attemptsLeft: MAX_ATTEMPTS - attemptsUsed })
-    if (!revealed) setAnswer('')
+    setFeedback({
+      correct: false,
+      sameVerb,
+      attemptsLeft: Math.max(MAX_ATTEMPTS - attemptsUsed, 0),
+    })
+    setAnswer('')
   }
 
-  function handleHelp() {
+  function handleHint() {
+    setHintShown(true)
+  }
+
+  function pushSummary(revealed, percentage) {
+    setQuestionSummaries((prev) => [
+      ...prev,
+      {
+        base: question.base,
+        pastSimple: question.pastSimple,
+        pastParticiple: question.pastParticiple,
+        translation: question.translation,
+        highlightedField: question.tense,
+        hintUsed: hintShown,
+        revealed,
+        percentage,
+      },
+    ])
+  }
+
+  function handleReveal() {
+    pushSummary(true, 0)
     setFeedback({ correct: false, revealed: true })
   }
 
   function handleNext() {
     if (isLast) {
-      addProgressEntry({ correctCount: score, totalCount: questions.length, type: 'fillGaps' })
+      const percentage = Math.round(
+        questionSummaries.reduce((sum, entry) => sum + entry.percentage, 0) / questions.length,
+      )
+      addProgressEntry({
+        correctCount: score,
+        totalCount: questions.length,
+        type: 'fillGaps',
+        percentage,
+      })
+      setFinalPercentage(percentage)
       setFinished(true)
       return
     }
@@ -159,6 +209,7 @@ function FillGaps() {
     setAnswer('')
     setFeedback(null)
     setWrongAttempts(0)
+    setHintShown(false)
   }
 
   function handleFormKeyDown(event) {
@@ -170,33 +221,58 @@ function FillGaps() {
   }
 
   if (finished) {
-    const percentage = Math.round((score / questions.length) * 100)
     return (
-      <section className="fill-gaps fill-gaps--finished">
-        <h2>{t(getResultTitleKey(percentage))}</h2>
-        <p className="fill-gaps__result">
-          {t('fillGaps.result', { score, total: questions.length, percentage })}
-        </p>
-        <div className="fill-gaps__finished-actions">
-          <button type="button" className="fill-gaps__back-btn" onClick={() => navigate('/')}>
-            {t('fillGaps.backHome')}
-          </button>
-          <button
-            type="button"
-            className="fill-gaps__back-btn"
-            onClick={() => setShowConfigModal(true)}
-          >
-            {t('fillGaps.repeat')}
-          </button>
-          <button type="button" className="fill-gaps__back-btn" onClick={() => navigate('/progress')}>
-            {t('fillGaps.seeProgress')}
-          </button>
-        </div>
+      <>
+        <section className="fill-gaps fill-gaps--finished">
+          <h2>{t(getResultTitleKey(finalPercentage))}</h2>
+          <p className="fill-gaps__result">
+            {t('fillGaps.result', { score, total: questions.length, percentage: finalPercentage })}
+          </p>
 
-        {showConfigModal && (
-          <FillGapsConfigModal onClose={() => setShowConfigModal(false)} onStart={startChallenge} />
-        )}
-      </section>
+          <div className="fill-gaps__summary">
+            <h3>{t('fillGaps.summary.title')}</h3>
+            <ol className="fill-gaps__summary-list">
+              {questionSummaries.map((entry, index) => (
+                <li key={index}>
+                  <VerbFormsRow
+                    base={entry.base}
+                    pastSimple={entry.pastSimple}
+                    pastParticiple={entry.pastParticiple}
+                    highlightedField={entry.highlightedField}
+                    translation={entry.translation}
+                  />
+                  <br />
+                  {summaryText(t, entry)}{' '}
+                  <span className="fill-gaps__summary-percentage">
+                    ({Math.round(entry.percentage)}%)
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="fill-gaps__finished-actions">
+            <button type="button" className="fill-gaps__back-btn" onClick={() => navigate('/')}>
+              {t('fillGaps.backHome')}
+            </button>
+            <button
+              type="button"
+              className="fill-gaps__back-btn"
+              onClick={() => setShowConfigModal(true)}
+            >
+              {t('fillGaps.repeat')}
+            </button>
+            <button type="button" className="fill-gaps__back-btn" onClick={() => navigate('/progress')}>
+              {t('fillGaps.seeProgress')}
+            </button>
+          </div>
+
+          {showConfigModal && (
+            <FillGapsConfigModal onClose={() => setShowConfigModal(false)} onStart={startChallenge} />
+          )}
+        </section>
+        <RelatedChallenges exclude="fillGaps" />
+      </>
     )
   }
 
@@ -248,11 +324,15 @@ function FillGaps() {
 
         {feedback?.correct && <p className="fill-gaps__success">{t('fillGaps.correct')}</p>}
 
-        {feedback && !feedback.correct && !feedback.revealed && (
+        {feedback && !feedback.correct && !feedback.revealed && feedback.attemptsLeft > 0 && (
           <p className="fill-gaps__retry">
             {feedback.sameVerb && <>{t('fillGaps.almost')} </>}
             {t('fillGaps.tryAgain', { count: feedback.attemptsLeft })}
           </p>
+        )}
+
+        {hintShown && (
+          <p className="fill-gaps__hint">{t('fillGaps.hintText', { hint: question.hint })}</p>
         )}
 
         {solved && isSpanish && (
@@ -279,8 +359,18 @@ function FillGaps() {
           ) : (
             <>
               <button type="submit">{t('fillGaps.check')}</button>
-              <button type="button" className="fill-gaps__help-btn" onClick={handleHelp}>
-                {t('fillGaps.help')}
+              {!hintShown && (
+                <button type="button" className="fill-gaps__hint-btn" onClick={handleHint}>
+                  {t('fillGaps.hint')}
+                </button>
+              )}
+              <button
+                type="button"
+                className="fill-gaps__reveal-btn"
+                disabled={wrongAttempts < MAX_ATTEMPTS}
+                onClick={handleReveal}
+              >
+                {t('fillGaps.reveal', { count: Math.max(MAX_ATTEMPTS - wrongAttempts, 0) })}
               </button>
             </>
           )}

@@ -208,7 +208,7 @@ function Progress() {
                 tickLine={false}
                 width={48}
               />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 20 }} />
               <Legend content={(props) => <CustomLegend {...props} averages={averages} />} />
               <Line
                 type="monotone"

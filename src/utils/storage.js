@@ -37,14 +37,14 @@ export function getAverageForType(type) {
   return averagePercentage(getProgress().filter((entry) => (entry.type ?? 'test') === type))
 }
 
-export function addProgressEntry({ correctCount, totalCount, type = 'test' }) {
+export function addProgressEntry({ correctCount, totalCount, type = 'test', percentage }) {
   const entries = getProgress()
   const entry = {
     date: new Date().toISOString(),
     type,
     correctCount,
     totalCount,
-    percentage: Math.round((correctCount / totalCount) * 100),
+    percentage: percentage ?? Math.round((correctCount / totalCount) * 100),
   }
   entries.push(entry)
   localStorage.setItem(PROGRESS_KEY, JSON.stringify(entries))

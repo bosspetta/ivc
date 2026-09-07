@@ -64,7 +64,9 @@
     "inputLabel": "Tu respuesta",
     "definitionLabel": "Definición:",
     "check": "Comprobar",
-    "help": "Ayúdame",
+    "hint": "Pista",
+    "hintText": "Pista: {{hint}}",
+    "reveal": "Resolver {{count}}",
     "next": "Siguiente",
     "correct": "¡Correcto!",
     "almost": "¡Casi!…",
@@ -80,7 +82,13 @@
     "backHome": "Inicio",
     "repeat": "Repetir reto",
     "seeProgress": "Ver mi progreso",
-    "noConfig": "No hay ningún reto configurado."
+    "noConfig": "No hay ningún reto configurado.",
+    "summary": {
+      "title": "Resumen del reto",
+      "correctNoHint": "Acertaste sin usar pistas.",
+      "correctWithHint": "Acertaste usando una pista.",
+      "revealed": "No lo conseguiste; se reveló la respuesta."
+    }
   },
   "test": {
     "hint": "Pista ({{form}}):",
@@ -102,6 +110,32 @@
       "base": "forma base",
       "pastSimple": "pasado simple",
       "pastParticiple": "participio"
+    },
+    "summary": {
+      "title": "Resumen del reto",
+      "firstClauseAll": "Acertaste {{ordinal}} las tres formas verbales.",
+      "firstClauseTwo": "Acertaste {{ordinal}} {{field1}} y {{field2}}.",
+      "firstClauseOne": "Acertaste {{ordinal}} {{field}}.",
+      "laterClauseAll": "Acertaste {{ordinal}} las tres formas verbales.",
+      "laterClauseTwo": "También acertaste {{ordinal}} {{field1}} y {{field2}}.",
+      "laterClauseOne": "También acertaste {{ordinal}} {{field}}.",
+      "neverThree": "No acertaste ninguna de las tres formas.",
+      "neverTwo": "No acertaste ni {{field1}} ni {{field2}}.",
+      "neverOne": "No acertaste {{field}}.",
+      "field": {
+        "base": "el infinitivo",
+        "pastSimple": "el pasado simple",
+        "pastParticiple": "el participio"
+      },
+      "ordinal": {
+        "1": "a la primera",
+        "2": "a la segunda",
+        "3": "a la tercera",
+        "4": "a la cuarta",
+        "5": "a la quinta",
+        "6": "a la sexta",
+        "other": "en el intento {{n}}"
+      }
     }
   },
   "crossword": {
@@ -109,6 +143,9 @@
     "across": "Horizontales",
     "down": "Verticales",
     "check": "Comprobar",
+    "hint": "Pista ({{count}})",
+    "hintText": "Pista: {{hint}}",
+    "giveUp": "Me rindo",
     "reveal": "Resolver crucigrama",
     "seeResult": "Ver resultado",
     "revealSummary": "Resultado: {{correct}} palabras acertadas y {{failed}} falladas.",
@@ -118,7 +155,14 @@
     "repeat": "Repetir reto",
     "seeProgress": "Ver mi progreso",
     "noConfig": "No hay ningún reto configurado.",
-    "cellLabel": "Casilla, fila {{row}}, columna {{col}}"
+    "cellLabel": "Casilla, fila {{row}}, columna {{col}}",
+    "summary": {
+      "title": "Resumen del reto",
+      "correctNoHint": "Acertaste sin usar pistas.",
+      "correctWithHint": "Acertaste usando {{count}} pistas.",
+      "revealed": "No la conseguiste; se reveló la respuesta.",
+      "givenUp": "No la conseguiste; te rendiste."
+    }
   },
   "verbList": {
     "title": "Listado completo de verbos irregulares",

@@ -64,7 +64,9 @@
     "inputLabel": "Your answer",
     "definitionLabel": "Definition:",
     "check": "Check",
-    "help": "Help me",
+    "hint": "Hint",
+    "hintText": "Hint: {{hint}}",
+    "reveal": "Reveal {{count}}",
     "next": "Next",
     "correct": "Correct!",
     "almost": "So close!…",
@@ -80,7 +82,13 @@
     "backHome": "Home",
     "repeat": "Repeat challenge",
     "seeProgress": "See my progress",
-    "noConfig": "No challenge has been set up."
+    "noConfig": "No challenge has been set up.",
+    "summary": {
+      "title": "Challenge summary",
+      "correctNoHint": "You got it right without using a hint.",
+      "correctWithHint": "You got it right using a hint.",
+      "revealed": "You didn't get it; the answer was revealed."
+    }
   },
   "test": {
     "hint": "Hint ({{form}}):",
@@ -102,6 +110,32 @@
       "base": "base form",
       "pastSimple": "simple past",
       "pastParticiple": "past participle"
+    },
+    "summary": {
+      "title": "Challenge summary",
+      "firstClauseAll": "You got all three verb forms right {{ordinal}}.",
+      "firstClauseTwo": "You got {{field1}} and {{field2}} right {{ordinal}}.",
+      "firstClauseOne": "You got {{field}} right {{ordinal}}.",
+      "laterClauseAll": "You got all three verb forms right {{ordinal}}.",
+      "laterClauseTwo": "You also got {{field1}} and {{field2}} right {{ordinal}}.",
+      "laterClauseOne": "You also got {{field}} right {{ordinal}}.",
+      "neverThree": "You didn't get any of the three forms right.",
+      "neverTwo": "You didn't get either {{field1}} or {{field2}} right.",
+      "neverOne": "You didn't get {{field}} right.",
+      "field": {
+        "base": "the infinitive",
+        "pastSimple": "the simple past",
+        "pastParticiple": "the past participle"
+      },
+      "ordinal": {
+        "1": "on your first try",
+        "2": "on your second try",
+        "3": "on your third try",
+        "4": "on your fourth try",
+        "5": "on your fifth try",
+        "6": "on your sixth try",
+        "other": "on attempt {{n}}"
+      }
     }
   },
   "crossword": {
@@ -109,6 +143,9 @@
     "across": "Across",
     "down": "Down",
     "check": "Check",
+    "hint": "Hint ({{count}})",
+    "hintText": "Hint: {{hint}}",
+    "giveUp": "Give up",
     "reveal": "Solve crossword",
     "seeResult": "See result",
     "revealSummary": "Result: {{correct}} words correct and {{failed}} wrong.",
@@ -118,7 +155,14 @@
     "repeat": "Repeat challenge",
     "seeProgress": "See my progress",
     "noConfig": "No challenge is configured.",
-    "cellLabel": "Cell, row {{row}}, column {{col}}"
+    "cellLabel": "Cell, row {{row}}, column {{col}}",
+    "summary": {
+      "title": "Challenge summary",
+      "correctNoHint": "You got it right without using any hints.",
+      "correctWithHint": "You got it right using {{count}} hints.",
+      "revealed": "You didn't get it; the answer was revealed.",
+      "givenUp": "You didn't get it; you gave up."
+    }
   },
   "verbList": {
     "title": "Full list of irregular verbs",

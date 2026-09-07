@@ -16,6 +16,11 @@
     --crossword-cell-size: 1.6rem;
   }
 
+  &--finished {
+    max-width: 660px;
+    text-align: center;
+  }
+
   &__title {
     font-size: 1.4rem;
     margin-bottom: $spacing-lg;
@@ -81,7 +86,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(var(--color-ink-rgb), 0.35);
     border-radius: 0;
     appearance: none;
     -webkit-appearance: none;
@@ -133,6 +138,11 @@
       }
     }
 
+    &.is-hint {
+      background-color: rgba(var(--color-ink-rgb), 0.08);
+      color: $color-text;
+    }
+
     &:disabled {
       cursor: not-allowed;
     }
@@ -161,7 +171,28 @@
       margin: 0;
     }
 
-    button {
+    .crossword__clue-item {
+      margin-bottom: $spacing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .crossword__clue-row {
+      display: flex;
+      align-items: flex-start;
+      gap: $spacing-sm * 0.5;
+    }
+
+    .crossword__clue-buttons {
+      display: flex;
+      align-items: stretch;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    button:not(.crossword__hint-btn) {
       display: block;
       width: 100%;
       padding: $spacing-sm * 0.5 0;
@@ -196,6 +227,109 @@
         @include dark-mode {
           color: $color-primary-light;
         }
+      }
+
+      &.is-solved,
+      &.is-revealed-clue {
+        cursor: not-allowed;
+        text-decoration: line-through;
+
+        &:hover {
+          color: inherit;
+        }
+
+        strong,
+        .crossword__clue-tense {
+          color: inherit;
+        }
+      }
+
+      &.is-solved {
+        color: $color-success;
+        background-color: rgba(var(--color-success-rgb), 0.15);
+
+        @include dark-mode {
+          background-color: rgba(var(--color-success-rgb), 0.3);
+        }
+      }
+
+      &.is-revealed-clue {
+        color: rgba(var(--color-ink-rgb), 0.45);
+        background-color: rgba(var(--color-ink-rgb), 0.06);
+      }
+    }
+
+    .crossword__clue-hint {
+      margin: $spacing-sm * 0.5 0 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-style: italic;
+      color: rgba(var(--color-ink-rgb), 0.65);
+    }
+
+    .crossword__clue-forms {
+      margin: $spacing-sm * 0.5 0 0;
+      font-size: 0.9rem;
+      color: $color-text;
+    }
+
+    .crossword__clue-example {
+      margin: $spacing-sm * 0.5 0 0;
+      padding-left: $spacing-sm;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: rgba(var(--color-ink-rgb), 0.65);
+      border-left: 2px solid rgba(var(--color-ink-rgb), 0.15);
+    }
+
+    .crossword__hint-btn {
+      flex-shrink: 0;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $radius-base;
+      font-weight: 600;
+      background-color: transparent;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+      cursor: pointer;
+
+      @include dark-mode {
+        color: $color-primary-light;
+        border-color: $color-primary-light;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: rgba(79, 70, 229, 0.06);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+
+    .crossword__giveup-btn {
+      flex-shrink: 0;
+      padding: 2px $spacing-sm * 0.5;
+      border: 1px solid rgba(var(--color-error-rgb), 0.4);
+      border-radius: $radius-base;
+      background: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(var(--color-error-rgb), 0.85);
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        border-color: $color-error;
+        background-color: rgba(var(--color-error-rgb), 0.08);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
       }
     }
   }
@@ -258,14 +392,40 @@
     }
   }
 
-  &--finished {
-    max-width: 480px;
-    text-align: center;
-  }
-
   &__result {
     font-size: 1.25rem;
     margin: $spacing-md 0 $spacing-lg;
+  }
+
+  &__summary {
+    text-align: left;
+    margin-bottom: $spacing-lg;
+
+    h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: rgba(var(--color-ink-rgb), 0.55);
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  &__summary-list {
+    list-style: decimal;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm * 0.5;
+
+    li {
+      font-size: 0.95rem;
+      color: $color-text;
+    }
+  }
+
+  &__summary-percentage {
+    font-weight: 600;
+    color: rgba(var(--color-ink-rgb), 0.6);
   }
 
   &__finished-actions {
