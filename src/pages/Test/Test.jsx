@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { COMMON_VERBS } from '../../data/verbs.js'
+import { COMMON_VERBS, getSpokenForm } from '../../data/verbs.js'
 import { addProgressEntry } from '../../utils/storage.js'
 import { isAnswerCorrect, pickRandomForm, shuffle } from '../../utils/verbAnswers.js'
 import { getResultTitleKey } from '../../utils/resultTitle.js'
@@ -377,7 +377,10 @@ function Test() {
       <p className="test__hint">
         {t('test.hint', { form: t(`test.forms.${question.hintForm}`) })}{' '}
         <strong>{hintValue}</strong>
-        <PronunciationToggle text={hintValue} alwaysOpen />
+        <PronunciationToggle
+          text={getSpokenForm(question.verb.base, question.hintForm, hintValue)}
+          alwaysOpen
+        />
       </p>
 
       <form

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { COMMON_VERBS, DIALECT_VARIANTS, VERBS } from '../../data/verbs.js'
+import { COMMON_VERBS, DIALECT_VARIANTS, VERBS, getSpokenForm } from '../../data/verbs.js'
 import { getPaginationRange } from '../../utils/pagination.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
@@ -26,7 +26,7 @@ function highlightVerbForm(sentence, candidates) {
   )
 }
 
-function VerbFormWithAudio({ id, candidates, dialect, openPronunciationId, onOpenPronunciation, onClosePronunciation }) {
+function VerbFormWithAudio({ id, base, tense, candidates, dialect, openPronunciationId, onOpenPronunciation, onClosePronunciation }) {
   if (dialect) {
     return [
       { locale: 'US', word: dialect.us },
@@ -56,7 +56,7 @@ function VerbFormWithAudio({ id, candidates, dialect, openPronunciationId, onOpe
       {candidate}
       <PronunciationToggle
         id={`${id}-${index}`}
-        text={candidate}
+        text={getSpokenForm(base, tense, candidate)}
         openId={openPronunciationId}
         onOpen={onOpenPronunciation}
         onClose={onClosePronunciation}
@@ -225,6 +225,8 @@ function VerbList() {
                 <td data-label={t('verbList.columns.base')}>
                   <VerbFormWithAudio
                     id={`${verb.id}-base`}
+                    base={verb.base}
+                    tense="base"
                     candidates={verb.baseCandidates}
                     openPronunciationId={openPronunciationId}
                     onOpenPronunciation={setOpenPronunciationId}
@@ -234,6 +236,8 @@ function VerbList() {
                 <td data-label={t('verbList.columns.pastSimple')}>
                   <VerbFormWithAudio
                     id={`${verb.id}-pastSimple`}
+                    base={verb.base}
+                    tense="pastSimple"
                     candidates={verb.pastSimpleCandidates}
                     dialect={DIALECT_VARIANTS[verb.base]?.pastSimple}
                     openPronunciationId={openPronunciationId}
@@ -244,6 +248,8 @@ function VerbList() {
                 <td data-label={t('verbList.columns.pastParticiple')}>
                   <VerbFormWithAudio
                     id={`${verb.id}-pastParticiple`}
+                    base={verb.base}
+                    tense="pastParticiple"
                     candidates={verb.pastParticipleCandidates}
                     dialect={DIALECT_VARIANTS[verb.base]?.pastParticiple}
                     openPronunciationId={openPronunciationId}

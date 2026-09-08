@@ -415,6 +415,27 @@ export const DIALECT_VARIANTS = {
   outleap: { pastSimple: { us: 'outleaped', uk: 'outleapt' }, pastParticiple: { us: 'outleaped', uk: 'outleapt' } },
 }
 
+// Verbos cuyo pasado simple y/o participio se escriben igual que el
+// infinitivo pero se PRONUNCIAN de forma distinta (p. ej. "read" /riːd/ en
+// infinitivo pero /rɛd/ en pasado). La síntesis de voz del navegador no
+// tiene forma de distinguirlo sin contexto de frase, así que para esas
+// formas se le pasa a la voz una grafía "señuelo" homófona (nunca se
+// muestra en pantalla, solo se usa al pronunciar la palabra aislada).
+export const PRONUNCIATION_OVERRIDES = {
+  read: { pastSimple: 'red', pastParticiple: 'red' },
+  misread: { pastSimple: 'misred', pastParticiple: 'misred' },
+  proofread: { pastSimple: 'proofred', pastParticiple: 'proofred' },
+  reread: { pastSimple: 'rered', pastParticiple: 'rered' },
+  'lip-read': { pastSimple: 'lip-red', pastParticiple: 'lip-red' },
+}
+
+// Devuelve la grafía a usar para la síntesis de voz de una forma verbal
+// aislada (sin frase de contexto), aplicando PRONUNCIATION_OVERRIDES si
+// procede; si no hay excepción, devuelve la forma tal cual.
+export function getSpokenForm(base, tense, form) {
+  return PRONUNCIATION_OVERRIDES[base]?.[tense] ?? form
+}
+
 // Definiciones breves en inglés (máx. 2 líneas) para los verbos comunes,
 // usadas como pista en el reto "Rellena los huecos".
 export const VERB_DEFINITIONS = {
