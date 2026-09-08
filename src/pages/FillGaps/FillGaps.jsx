@@ -64,7 +64,17 @@ function buildGapPool(verbs) {
 }
 
 function buildQuestions(sentenceCount) {
-  return shuffle(buildGapPool(COMMON_VERBS)).slice(0, sentenceCount)
+  const pool = shuffle(buildGapPool(COMMON_VERBS))
+  const usedBases = new Set()
+  const selected = []
+  for (const entry of pool) {
+    if (selected.length >= sentenceCount) break
+    // Nunca dos frases del mismo verbo en la misma ronda.
+    if (usedBases.has(entry.base)) continue
+    usedBases.add(entry.base)
+    selected.push(entry)
+  }
+  return selected
 }
 
 function summaryText(t, entry) {

@@ -125,13 +125,25 @@ function findBestPlacement(cells, word, bounds, maxCols) {
 const MAX_ATTEMPTS = 30
 
 function attemptGeneration(wordCount, maxCols) {
-  // Las palabras largas ofrecen más letras para cruzar; colocarlas primero
-  // reduce el riesgo de que la cuadrícula quede bloqueada sin salida.
-  const pool = shuffle(buildWordPool()).sort((a, b) => b.word.length - a.word.length)
+  const shuffled = shuffle(buildWordPool())
   const cells = new Map()
   const placements = []
+  const usedBases = new Set()
 
-  const first = pool[0]
+  // La palabra ancla se elige entre las más largas del banco (a menos de
+  // 3 letras de la más larga disponible): ofrece más letras para cruzar y
+  // reduce el riesgo de que la cuadrícula quede bloqueada sin salida. Se
+  // sortea entre varias candidatas (no siempre la única más larga) para
+  // que no sea siempre el mismo verbo el que abra todos los crucigramas.
+  // El resto se prueba en orden aleatorio (sin priorizar longitud) para
+  // que verbos de todas las longitudes tengan las mismas opciones de
+  // aparecer, en vez de que el crucigrama lo dominen siempre los mismos
+  // verbos con formas largas.
+  const maxLen = shuffled.reduce((max, entry) => Math.max(max, entry.word.length), 0)
+  const anchorIndex = shuffled.findIndex((entry) => entry.word.length >= maxLen - 2)
+  const first = shuffled[anchorIndex]
+  const rest = shuffled.filter((_, i) => i !== anchorIndex)
+
   // Si la primera palabra (la más larga del banco) no cabe en el ancho
   // máximo, se coloca en vertical para no comprometer el límite desde el inicio.
   const firstDirection = maxCols && first.word.length > maxCols ? 'down' : 'across'
@@ -139,16 +151,20 @@ function attemptGeneration(wordCount, maxCols) {
   const firstCol = firstDirection === 'across' ? CENTER - Math.floor(first.word.length / 2) : CENTER
   placeWord(cells, first.word, firstRow, firstCol, firstDirection)
   placements.push({ ...first, row: firstRow, col: firstCol, direction: firstDirection })
+  usedBases.add(first.base)
 
   let minCol = firstCol
   let maxCol = firstDirection === 'across' ? firstCol + first.word.length - 1 : firstCol
 
-  for (let i = 1; i < pool.length && placements.length < wordCount; i += 1) {
-    const candidate = pool[i]
+  for (let i = 0; i < rest.length && placements.length < wordCount; i += 1) {
+    const candidate = rest[i]
+    // Nunca dos acepciones del mismo verbo en el mismo crucigrama.
+    if (usedBases.has(candidate.base)) continue
     const placement = findBestPlacement(cells, candidate.word, { minCol, maxCol }, maxCols)
     if (!placement) continue
     placeWord(cells, candidate.word, placement.row, placement.col, placement.direction)
     placements.push({ ...candidate, row: placement.row, col: placement.col, direction: placement.direction })
+    usedBases.add(candidate.base)
     const candMinCol = placement.col
     const candMaxCol =
       placement.direction === 'across' ? placement.col + candidate.word.length - 1 : placement.col

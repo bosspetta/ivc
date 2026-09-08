@@ -23,7 +23,7 @@
     }
 
     &__label:not(&__label--site-name) {
-      font-family: 'Nunito', Georgia, serif;
+      font-family: $font-family-base;
       font-style: italic;
       color: rgba(var(--color-ink-rgb), 0.65);
       font-size: 1.875rem;
