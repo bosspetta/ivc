@@ -1,6 +1,23 @@
 import { useTranslation } from 'react-i18next'
 import Header from './components/Header.jsx'
 
+function InfoIcon() {
+  return (
+    <svg
+      className="app-footer__info-icon"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a1 1 0 0 0 0 2v3a1 1 0 0 0 1 1h1a1 1 0 1 0 0-2v-3a1 1 0 0 0-1-1H9Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  )
+}
+
 function HeartIcon() {
   return (
     <svg
@@ -39,6 +56,9 @@ function Layout({ children }) {
       <Header />
       <main className="app-main">{children}</main>
       <footer className="app-footer">
+        <p className="app-footer__notice">
+          <InfoIcon /> {t('layout.storageNotice')}
+        </p>
         <a
           className="app-footer__credit"
           href="https://www.linkedin.com/in/enriquerv"

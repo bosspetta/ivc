@@ -191,6 +191,7 @@
     "legendCrossword": "Crossword"
   },
   "layout": {
+    "storageNotice": "Your progress is saved only in this browser. If you switch device or browser, or clear your browsing data, you'll lose your stats.",
     "creditBefore": "Made with love",
     "creditTech": "and technology",
     "creditAuthor": "by Enrique Rodríguez."

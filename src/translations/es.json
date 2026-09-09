@@ -190,6 +190,7 @@
     "legendCrossword": "Crucigrama"
   },
   "layout": {
+    "storageNotice": "Tu progreso se guarda solo en este navegador. Si cambias de dispositivo o de navegador, o borras los datos de navegación, perderás tus estadísticas.",
     "creditBefore": "Hecho con amor",
     "creditTech": "y tecnología",
     "creditAuthor": "por Enrique Rodríguez."
