@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { generateCrossword } from '../../utils/crossword.js'
-import { addProgressEntry } from '../../utils/storage.js'
+import { addProgressEntry, getVerbStats, recordVerbResults } from '../../utils/storage.js'
+import { rankWeakVerbs, weakTargetCount } from '../../utils/weakVerbs.js'
+import { COMMON_VERBS } from '../../data/verbs.js'
 import { getResultTitleKey } from '../../utils/resultTitle.js'
 import CrosswordConfigModal from '../../components/CrosswordConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
@@ -167,6 +169,18 @@ function buildWordSummaries(puzzle, correctWordKeys, hintsUsedByWord, givenUpWor
   })
 }
 
+function buildPuzzle(wordCount, isMobile) {
+  const priorityWords = rankWeakVerbs(COMMON_VERBS, getVerbStats()).map(({ verb, weakestTense }) => ({
+    base: verb.base,
+    tense: weakestTense,
+  }))
+  return generateCrossword(wordCount, {
+    maxCols: isMobile ? MOBILE_MAX_COLS : undefined,
+    priorityWords,
+    priorityCount: weakTargetCount(wordCount),
+  })
+}
+
 function crosswordSummaryText(t, entry) {
   if (entry.givenUp) return t('crossword.summary.givenUp')
   if (!entry.correct) return t('crossword.summary.revealed')
@@ -185,11 +199,7 @@ function Crossword() {
 
   const [config, setConfig] = useState(initialConfig)
   const [puzzle, setPuzzle] = useState(() =>
-    initialConfig
-      ? generateCrossword(initialConfig.wordCount, {
-          maxCols: isMobile ? MOBILE_MAX_COLS : undefined,
-        })
-      : null,
+    initialConfig ? buildPuzzle(initialConfig.wordCount, isMobile) : null,
   )
   const [userGrid, setUserGrid] = useState(() => (puzzle ? buildEmptyGrid(puzzle) : null))
   const [selected, setSelected] = useState(() =>
@@ -237,9 +247,7 @@ function Crossword() {
   }
 
   function startChallenge(newConfig) {
-    const newPuzzle = generateCrossword(newConfig.wordCount, {
-      maxCols: isMobile ? MOBILE_MAX_COLS : undefined,
-    })
+    const newPuzzle = buildPuzzle(newConfig.wordCount, isMobile)
     setConfig(newConfig)
     setPuzzle(newPuzzle)
     setUserGrid(buildEmptyGrid(newPuzzle))
@@ -474,6 +482,13 @@ function Crossword() {
 
   function finishChallenge(score, total, percentage, summaries) {
     addProgressEntry({ correctCount: score, totalCount: total, type: 'crossword', percentage })
+    recordVerbResults(
+      summaries.map((entry) => ({
+        base: entry.base,
+        tense: entry.highlightedField,
+        percentage: entry.percentage,
+      })),
+    )
     setResult({ score, total, percentage })
     setWordSummaries(summaries)
     setFinished(true)

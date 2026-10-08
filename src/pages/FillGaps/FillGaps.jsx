@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS, VERB_DEFINITIONS, VERB_HINTS } from '../../data/verbs.js'
 import { findVerbFormMatch } from '../../utils/verbForm.js'
-import { isGapAnswerCorrect, shuffle } from '../../utils/verbAnswers.js'
-import { addProgressEntry } from '../../utils/storage.js'
+import { isGapAnswerCorrect } from '../../utils/verbAnswers.js'
+import { addProgressEntry, getVerbStats, recordVerbResults } from '../../utils/storage.js'
+import { pickRoundVerbs } from '../../utils/weakVerbs.js'
 import { getResultTitleKey } from '../../utils/resultTitle.js'
 import FillGapsConfigModal from '../../components/FillGapsConfigModal.jsx'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
@@ -16,6 +17,9 @@ import './FillGaps.scss'
 
 const MAX_ATTEMPTS = 3
 const HINT_PENALTY = 0.25
+// Solo para el registro de verbos flojos (no afecta a la puntuación mostrada):
+// cada intento fallido antes de acertar también cuenta como error.
+const WRONG_ATTEMPT_PENALTY = 0.25
 
 const GAP_FIELDS = [
   { tense: 'base', field: 'base', sentenceKey: 'example', candidatesKey: 'baseCandidates' },
@@ -64,17 +68,30 @@ function buildGapPool(verbs) {
 }
 
 function buildQuestions(sentenceCount) {
-  const pool = shuffle(buildGapPool(COMMON_VERBS))
-  const usedBases = new Set()
-  const selected = []
-  for (const entry of pool) {
-    if (selected.length >= sentenceCount) break
-    // Nunca dos frases del mismo verbo en la misma ronda.
-    if (usedBases.has(entry.base)) continue
-    usedBases.add(entry.base)
-    selected.push(entry)
+  const entriesByBase = new Map()
+  for (const entry of buildGapPool(COMMON_VERBS)) {
+    if (!entriesByBase.has(entry.base)) entriesByBase.set(entry.base, [])
+    entriesByBase.get(entry.base).push(entry)
   }
-  return selected
+  const verbs = COMMON_VERBS.filter((verb) => entriesByBase.has(verb.base))
+  // Un verbo por frase (nunca dos frases del mismo verbo en la misma ronda).
+  // En los verbos flojos se pregunta por la forma que más falla el usuario;
+  // en el resto, por una forma al azar.
+  return pickRoundVerbs(verbs, sentenceCount, getVerbStats()).map(({ verb, weakestTense }) => {
+    const entries = entriesByBase.get(verb.base)
+    return (
+      entries.find((entry) => entry.tense === weakestTense) ??
+      entries[Math.floor(Math.random() * entries.length)]
+    )
+  })
+}
+
+function buildVerbResults(questionSummaries) {
+  return questionSummaries.map((entry) => ({
+    base: entry.base,
+    tense: entry.highlightedField,
+    percentage: Math.max(entry.percentage - WRONG_ATTEMPT_PENALTY * 100 * entry.wrongAttempts, 0),
+  }))
 }
 
 function summaryText(t, entry) {
@@ -189,6 +206,7 @@ function FillGaps() {
         translation: question.translation,
         highlightedField: question.tense,
         hintUsed: hintShown,
+        wrongAttempts,
         revealed,
         percentage,
       },
@@ -211,6 +229,7 @@ function FillGaps() {
         type: 'fillGaps',
         percentage,
       })
+      recordVerbResults(buildVerbResults(questionSummaries))
       setFinalPercentage(percentage)
       setFinished(true)
       return

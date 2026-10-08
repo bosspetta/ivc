@@ -141,3 +141,37 @@
     opacity: 0.85;
   }
 }
+
+.hardest-verbs {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid var(--color-border);
+
+  &__intro {
+    color: rgba(var(--color-ink-rgb), 0.55);
+    margin-bottom: $spacing-md;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  &__item {
+    padding-block: $spacing-sm * 0.5;
+
+    & + & {
+      border-top: 1px solid rgba(var(--color-ink-rgb), 0.08);
+    }
+  }
+
+  &__mastery {
+    margin-left: $spacing-sm;
+    color: rgba(var(--color-ink-rgb), 0.55);
+    white-space: nowrap;
+
+    &::before {
+      content: '· ';
+    }
+  }
+}

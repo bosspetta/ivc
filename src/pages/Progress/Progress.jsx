@@ -10,7 +10,10 @@ import {
 } from 'recharts'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getProgress, averagePercentage } from '../../utils/storage.js'
+import { getProgress, averagePercentage, getVerbStats } from '../../utils/storage.js'
+import { getHardestVerbs } from '../../utils/weakVerbs.js'
+import { COMMON_VERBS } from '../../data/verbs.js'
+import VerbFormsRow from '../../components/VerbFormsRow.jsx'
 import './Progress.scss'
 
 function formatDate(isoDate, language) {
@@ -148,6 +151,45 @@ function CustomLegend({ payload, averages }) {
   )
 }
 
+const HARDEST_VERBS_LIMIT = 10
+
+function HardestVerbs() {
+  const { t } = useTranslation()
+  const stats = getVerbStats()
+  if (Object.keys(stats).length === 0) return null
+
+  const hardest = getHardestVerbs(COMMON_VERBS, stats, HARDEST_VERBS_LIMIT)
+
+  return (
+    <div className="hardest-verbs">
+      <h3>{t('progress.hardest.title')}</h3>
+      {hardest.length === 0 ? (
+        <p className="hardest-verbs__intro">{t('progress.hardest.none')}</p>
+      ) : (
+        <>
+          <p className="hardest-verbs__intro">{t('progress.hardest.intro')}</p>
+          <ol className="hardest-verbs__list">
+            {hardest.map(({ verb, mastery, weakestTense }) => (
+              <li key={verb.base} className="hardest-verbs__item">
+                <VerbFormsRow
+                  base={verb.base}
+                  pastSimple={verb.pastSimple}
+                  pastParticiple={verb.pastParticiple}
+                  highlightedField={weakestTense}
+                  translation={verb.translation}
+                />
+                <span className="hardest-verbs__mastery">
+                  {t('progress.hardest.mastery', { percentage: Math.round(mastery * 100) })}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+    </div>
+  )
+}
+
 function Progress() {
   const { t, i18n } = useTranslation()
   const entries = getProgress()
@@ -238,6 +280,8 @@ function Progress() {
           </ResponsiveContainer>
         </div>
       )}
+
+      <HardestVerbs />
     </section>
   )
 }

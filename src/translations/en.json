@@ -188,7 +188,13 @@
     "tooltipCrossword": "{{correct}}/{{total}} words ({{percentage}}%)",
     "legendTest": "Random irregulars",
     "legendFillGaps": "Fill in the gaps",
-    "legendCrossword": "Crossword"
+    "legendCrossword": "Crossword",
+    "hardest": {
+      "title": "Verbs you find hardest",
+      "intro": "They'll show up more often in your next challenges until you master them. The form you miss most is in bold.",
+      "none": "Well done! Right now there's no verb giving you trouble.",
+      "mastery": "{{percentage}}% mastered"
+    }
   },
   "layout": {
     "storageNotice": "Your progress is saved only in this browser. If you switch device or browser, or clear your browsing data, you'll lose your stats.",

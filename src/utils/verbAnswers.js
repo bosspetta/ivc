@@ -21,8 +21,10 @@ export function isGapAnswerCorrect(userInput, answer) {
   return userInput.trim().toLowerCase() === answer.trim().toLowerCase()
 }
 
-export function pickRandomForm() {
-  const forms = ['base', 'pastSimple', 'pastParticiple']
+// `exclude` permite no dar como pista la forma que el usuario más falla,
+// para que tenga que escribirla.
+export function pickRandomForm(exclude = null) {
+  const forms = ['base', 'pastSimple', 'pastParticiple'].filter((form) => form !== exclude)
   return forms[Math.floor(Math.random() * forms.length)]
 }
 

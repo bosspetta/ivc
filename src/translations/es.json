@@ -187,7 +187,13 @@
     "tooltipCrossword": "{{correct}}/{{total}} palabras ({{percentage}}%)",
     "legendTest": "Irregulares al azar",
     "legendFillGaps": "Rellena los huecos",
-    "legendCrossword": "Crucigrama"
+    "legendCrossword": "Crucigrama",
+    "hardest": {
+      "title": "Verbos que más te cuestan",
+      "intro": "Aparecerán más a menudo en tus próximos retos hasta que los domines. En negrita, la forma que más fallas.",
+      "none": "¡Enhorabuena! Ahora mismo no hay ningún verbo que se te resista.",
+      "mastery": "{{percentage}}% de dominio"
+    }
   },
   "layout": {
     "storageNotice": "Tu progreso se guarda solo en este navegador. Si cambias de dispositivo o de navegador, o borras los datos de navegación, perderás tus estadísticas.",

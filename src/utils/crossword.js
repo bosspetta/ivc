@@ -124,7 +124,20 @@ function findBestPlacement(cells, word, bounds, maxCols) {
 
 const MAX_ATTEMPTS = 30
 
-function attemptGeneration(wordCount, maxCols) {
+// Palabras prioritarias (verbos flojos del usuario) para la fase 1: para cada
+// verbo, la entrada de su forma más floja o, si esa palabra no está en el
+// banco (p. ej. formas idénticas como cut/cut/cut), cualquiera de ese verbo.
+function resolvePriorityEntries(pool, priorityWords) {
+  return priorityWords
+    .map(
+      ({ base, tense }) =>
+        pool.find((entry) => entry.base === base && entry.tense === tense) ??
+        pool.find((entry) => entry.base === base),
+    )
+    .filter(Boolean)
+}
+
+function attemptGeneration(wordCount, maxCols, priorityWords, priorityCount) {
   const shuffled = shuffle(buildWordPool())
   const cells = new Map()
   const placements = []
@@ -156,12 +169,11 @@ function attemptGeneration(wordCount, maxCols) {
   let minCol = firstCol
   let maxCol = firstDirection === 'across' ? firstCol + first.word.length - 1 : firstCol
 
-  for (let i = 0; i < rest.length && placements.length < wordCount; i += 1) {
-    const candidate = rest[i]
+  function tryPlace(candidate) {
     // Nunca dos acepciones del mismo verbo en el mismo crucigrama.
-    if (usedBases.has(candidate.base)) continue
+    if (usedBases.has(candidate.base)) return false
     const placement = findBestPlacement(cells, candidate.word, { minCol, maxCol }, maxCols)
-    if (!placement) continue
+    if (!placement) return false
     placeWord(cells, candidate.word, placement.row, placement.col, placement.direction)
     placements.push({ ...candidate, row: placement.row, col: placement.col, direction: placement.direction })
     usedBases.add(candidate.base)
@@ -170,15 +182,33 @@ function attemptGeneration(wordCount, maxCols) {
       placement.direction === 'across' ? placement.col + candidate.word.length - 1 : placement.col
     minCol = Math.min(minCol, candMinCol)
     maxCol = Math.max(maxCol, candMaxCol)
+    return true
+  }
+
+  // Fase 1: se intentan primero los verbos flojos del usuario, hasta cubrir
+  // su cuota. No se puede garantizar que todos encajen en la cuadrícula: es
+  // una preferencia, no una garantía.
+  const priorityBases = new Set(priorityWords.map(({ base }) => base))
+  let priorityPlaced = priorityBases.has(first.base) ? 1 : 0
+  for (const candidate of resolvePriorityEntries(rest, priorityWords)) {
+    if (priorityPlaced >= priorityCount || placements.length >= wordCount) break
+    if (tryPlace(candidate)) priorityPlaced += 1
+  }
+
+  // Fase 2: el resto, en orden aleatorio.
+  for (let i = 0; i < rest.length && placements.length < wordCount; i += 1) {
+    tryPlace(rest[i])
   }
 
   return { cells, placements }
 }
 
-export function generateCrossword(wordCount, { maxCols } = {}) {
-  let best = attemptGeneration(wordCount, maxCols)
+// priorityWords: [{ base, tense }] en orden de preferencia; se intentan colocar
+// antes que el resto hasta un máximo de priorityCount palabras.
+export function generateCrossword(wordCount, { maxCols, priorityWords = [], priorityCount = 0 } = {}) {
+  let best = attemptGeneration(wordCount, maxCols, priorityWords, priorityCount)
   for (let attempt = 1; attempt < MAX_ATTEMPTS && best.placements.length < wordCount; attempt += 1) {
-    const next = attemptGeneration(wordCount, maxCols)
+    const next = attemptGeneration(wordCount, maxCols, priorityWords, priorityCount)
     if (next.placements.length > best.placements.length) best = next
   }
   const { cells, placements } = best

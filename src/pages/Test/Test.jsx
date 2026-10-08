@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { COMMON_VERBS, getSpokenForm } from '../../data/verbs.js'
-import { addProgressEntry } from '../../utils/storage.js'
-import { isAnswerCorrect, pickRandomForm, shuffle } from '../../utils/verbAnswers.js'
+import { addProgressEntry, getVerbStats, recordVerbResults } from '../../utils/storage.js'
+import { isAnswerCorrect, pickRandomForm } from '../../utils/verbAnswers.js'
 import { getResultTitleKey } from '../../utils/resultTitle.js'
+import { pickRoundVerbs } from '../../utils/weakVerbs.js'
 import PronunciationToggle from '../../components/PronunciationToggle.jsx'
 import TestConfigModal from '../../components/TestConfigModal.jsx'
 import VerbFormsTable from '../../components/VerbFormsTable.jsx'
@@ -19,10 +20,10 @@ const FIELDS = ['base', 'pastSimple', 'pastParticiple']
 const HELP_ATTEMPTS = 3
 
 function buildQuestions(verbCount, randomForms) {
-  const selected = shuffle(COMMON_VERBS).slice(0, verbCount)
-  return selected.map((verb) => ({
+  const selected = pickRoundVerbs(COMMON_VERBS, verbCount, getVerbStats())
+  return selected.map(({ verb, weakestTense }) => ({
     verb,
-    hintForm: randomForms ? pickRandomForm() : 'base',
+    hintForm: randomForms ? pickRandomForm(weakestTense) : 'base',
   }))
 }
 
@@ -47,6 +48,19 @@ function buildFieldGroups(fieldFirstCorrect) {
     return a - b
   })
   return orderedKeys.map((key) => ({ attempt: key, fields: groups.get(key) }))
+}
+
+// Resultado por forma verbal para el registro de verbos flojos. La forma
+// dada como pista no cuenta: el usuario solo la copia.
+function buildVerbResults(questionSummaries) {
+  return questionSummaries.flatMap((entry) =>
+    FIELDS.filter((field) => field !== entry.highlightedField).map((field) => ({
+      base: entry.base,
+      tense: field,
+      percentage:
+        entry.fieldFirstCorrect[field] != null ? attemptCredit(entry.fieldFirstCorrect[field]) : 0,
+    })),
+  )
 }
 
 function getOrdinal(t, attempt) {
@@ -291,6 +305,7 @@ function Test() {
         type: 'test',
         percentage,
       })
+      recordVerbResults(buildVerbResults(questionSummaries))
       setFinalPercentage(percentage)
       setFinished(true)
       return
