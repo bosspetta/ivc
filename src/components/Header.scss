@@ -82,13 +82,13 @@
         font-family: $font-family-heading;
         color: $color-text;
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 1.5rem;
         white-space: nowrap;
         text-transform: uppercase;
         letter-spacing: 0.025rem;
 
         @include respond-below-md {
-          font-size: 0.85rem;
+          font-size: 1.25rem;
         }
 
         &.is-active {
@@ -165,7 +165,7 @@
     flex-shrink: 0;
 
     button {
-      font-family: $font-family-heading;
+      font-family: $font-family-base;
       padding: 4px $spacing-sm;
       background: none;
       border: none;
@@ -229,7 +229,7 @@
         margin: 0;
         overflow: visible;
         clip: auto;
-        font-family: $font-family-heading;
+        font-family: $font-family-base;
         text-transform: uppercase;
         font-size: 0.95rem;
         letter-spacing: 0.025rem;

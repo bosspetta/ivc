@@ -11,6 +11,11 @@
   padding-inline: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
+  > h2 {
+    line-height: 1.15;
+    margin-bottom: 0.875rem;
+  }
+
   &__count {
     color: rgba(var(--color-ink-rgb), 0.55);
     margin-bottom: $spacing-md;
@@ -110,7 +115,7 @@
     align-items: center;
     gap: $spacing-sm;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-transform: none;
     text-align: left;
     font-weight: 400;
@@ -203,7 +208,7 @@
     th {
       color: rgba(var(--color-ink-rgb), 0.55);
       font-size: 0.85rem;
-      font-family: $font-family-heading;
+      font-family: $font-family-base;
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
@@ -255,7 +260,7 @@
           display: block;
           color: rgba(var(--color-ink-rgb), 0.55);
           font-size: 0.85rem;
-          font-family: $font-family-heading;
+          font-family: $font-family-base;
           text-transform: uppercase;
           letter-spacing: 0.03em;
           margin-bottom: 2px;
@@ -300,7 +305,7 @@
   }
 
   &__example__vform__title {
-    font-family: $font-family-heading;
+    font-family: $font-family-base;
     font-style: normal;
     display: block;
     font-size: 1rem;
